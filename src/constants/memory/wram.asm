@@ -1164,8 +1164,9 @@ wEntitiesHitboxFlagsTable::
 wEntitiesHealthTable::
   ds $10 ; C360 - C36F
 
-; Unused value, likely declared for entities but never actually used.
-wEntitiesUnusedTableA::
+; LSD, was: Unused value, likely declared for entities but never actually used.
+; LSD: Store the tile offset for the entity sprites
+wEntitiesSpriteOffsetTable::
   ds $10 ; C370 - C37F
 
 ; Direction of the entity.
@@ -3798,6 +3799,7 @@ wAnimatedScrollingTilesStorage::
 .tile3::
   ds $10 ; DCF0 - DCFF
 
+wLoadedEntitySpritesheetsAge: ; LSD need 4 bytes to store which wLoadedEntitySpritesheets where last used.
 ; Unused data?
   ds $D1 ; DD00 - DDD0
 

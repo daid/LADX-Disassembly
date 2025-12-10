@@ -43,7 +43,7 @@ GhiniEntityHandler::
 
     ld   a, [wCollisionType]                      ;; 04:5C32 $FA $33 $C1
     and  a                                        ;; 04:5C35 $A7
-    jr   z, .return                               ;; 04:5C36 $28 $0A
+    ;LSD: jr   z, .return                               ;; 04:5C36 $28 $0A
 
     call IncrementEntityState                     ;; 04:5C38 $CD $12 $3B
     ld   [hl], b                                  ;; 04:5C3B $70
@@ -229,41 +229,41 @@ GhiniCorrectZPosition::
 
 GiantGhiniSpriteRectVariants::
 .variant0
-    db   $F8, $F8, $60, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $00, $62, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $08, $62, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $F8, $10, $60, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $F8, $64, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $08, $00, $66, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $08, $08, $68, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $08, $10, $6A, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $F8, $40, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $00, $42, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $08, $42, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $F8, $10, $40, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $F8, $44, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $08, $00, $46, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $08, $08, $48, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $08, $10, $4A, OAM_GBC_PAL_2 | OAMF_PAL0
 .variant1
-    db   $F8, $F8, $60, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $00, $62, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $08, $62, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $F8, $10, $60, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $F8, $64, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $08, $00, $6C, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $08, $08, $6E, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $08, $10, $6A, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $F8, $40, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $00, $42, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $08, $42, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $F8, $10, $40, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $F8, $44, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $08, $00, $4C, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $08, $08, $4E, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $08, $10, $4A, OAM_GBC_PAL_2 | OAMF_PAL0
 .variant0_flipped
-    db   $F8, $F8, $60, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $00, $62, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $08, $62, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $F8, $10, $60, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $F8, $6A, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $00, $68, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $08, $66, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $10, $64, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $F8, $F8, $40, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $00, $42, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $08, $42, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $F8, $10, $40, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $F8, $4A, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $00, $48, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $08, $46, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $10, $44, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant1_flipped
-    db   $F8, $F8, $60, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $00, $62, OAM_GBC_PAL_2 | OAMF_PAL0
-    db   $F8, $08, $62, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $F8, $10, $60, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $F8, $6A, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $00, $6E, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $08, $6C, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db   $08, $10, $64, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $F8, $F8, $40, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $00, $42, OAM_GBC_PAL_2 | OAMF_PAL0
+    db   $F8, $08, $42, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $F8, $10, $40, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $F8, $4A, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $00, $4E, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $08, $4C, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db   $08, $10, $44, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 
 RenderGiantGhini::
     call GhiniUpdateFlipAttribute                 ;; 04:5DA6 $CD $90 $7F

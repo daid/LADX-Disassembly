@@ -1,15 +1,6 @@
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 GibdoSpriteVariants::
 .variant0
-    db $74, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $76, OAM_GBC_PAL_2 | OAMF_PAL0
-.variant1
-    db $76, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-    db $74, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
-
-; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
-GibdoTurtleRockSpriteVariants::
-.variant0
     db $44, OAM_GBC_PAL_2 | OAMF_PAL0
     db $46, OAM_GBC_PAL_2 | OAMF_PAL0
 .variant1
@@ -24,11 +15,6 @@ LikeLikeGibdoSpeeds::
 
 GibdoEntityHandler::
     ld   de, GibdoSpriteVariants                  ;; 06:7E85 $11 $6F $7E
-    ldh  a, [hMapId]                              ;; 06:7E88 $F0 $F7
-    cp   MAP_TURTLE_ROCK                          ;; 06:7E8A $FE $07
-    jr   nz, .render                              ;; 06:7E8C $20 $03
-
-    ld   de, GibdoTurtleRockSpriteVariants        ;; 06:7E8E $11 $77 $7E
 
 .render:
     call RenderActiveEntitySpritesPair            ;; 06:7E91 $CD $C0 $3B

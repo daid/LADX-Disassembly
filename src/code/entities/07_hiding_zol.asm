@@ -8,17 +8,17 @@ HidingZol2SpriteVariants::
     db $FF, $FF
     db $FF, $FF
 .variant2
-    db $54, $00
-    db $54, $20
+    db $44, $00
+    db $44, $20
 .variant3
-    db $52, $00
-    db $52, $20
+    db $42, $00
+    db $42, $20
 
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 HidingZol1SpriteVariants::
 .variant0
-    db $56, $00
-    db $56, $00
+    db $46, $00
+    db $46, $00
 
 HidingZolEntityHandler::
     ldh  a, [hActiveEntitySpriteVariant]          ;; 07:72AF $F0 $F1

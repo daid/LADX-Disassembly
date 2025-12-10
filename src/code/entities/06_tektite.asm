@@ -1,11 +1,11 @@
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 TektiteSpriteVariants::
 .variant0
-    db $58, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $58, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $48, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $5A, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $5A, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $4A, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $4A, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 
 TektiteXSpeeds::
     db   $10, $F0, $10, $F0

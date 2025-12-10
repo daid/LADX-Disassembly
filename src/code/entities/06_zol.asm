@@ -21,9 +21,9 @@ ZolGelMakeInvisibleBeforeMagnifyingLens::
 
 GelSpriteVariants::
 .variant0
-    db $56, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_2 | OAMF_PAL0
 .variant1
-    db $56, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 
 GelEntityHandler::
     call ZolGelMakeInvisibleBeforeMagnifyingLens  ;; 06:7BFE $CD $E2 $7B
@@ -33,20 +33,20 @@ GelEntityHandler::
 
 ZolSpriteVariants::
 .variant0
-    db $52, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $52, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 
 ; Zols spawned by Slime Eye are green instead of red 
 ZolSlimeEyeSpriteVariants::
 .variant0
-    db $52, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $52, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $54, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $54, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 
 ZolEntityHandler::
     call ZolGelMakeInvisibleBeforeMagnifyingLens  ;; 06:7C19 $CD $E2 $7B

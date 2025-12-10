@@ -150,6 +150,7 @@ AnimateEntities::
 
 ResetEntity_trampoline::
     callsb ResetEntity                            ;; 00:3A0A $3E $15 $EA $00 $21 $CD $00 $40
+    callsb LSD_ResetEntity
     ld   a, $03                                   ;; 00:3A12 $3E $03
     ld   [rSelectROMBank], a                      ;; 00:3A14 $EA $00 $21
     ret                                           ;; 00:3A17 $C9
@@ -488,8 +489,10 @@ RenderActiveEntitySpritesPair::
     ldh  a, [hActiveEntityTilesOffset]            ;; 00:3BF7 $F0 $F5
     ld   c, a                                     ;; 00:3BF9 $4F
     ld   a, [hli]                                 ;; 00:3BFA $2A
+    bit  6, a ; LSD: check of $40-$7F range for hActiveEntityTilesOffset
+    jr   z, :+
     add  a, c                                     ;; 00:3BFB $81
-    ld   [de], a                                  ;; 00:3BFC $12
+:   ld   [de], a                                  ;; 00:3BFC $12
     and  $0F                                      ;; 00:3BFD $E6 $0F
     cp   $0F                                      ;; 00:3BFF $FE $0F
     jr   nz, .jr_3C08                             ;; 00:3C01 $20 $05
@@ -548,8 +551,10 @@ RenderActiveEntitySpritesPair::
     ldh  a, [hActiveEntityTilesOffset]            ;; 00:3C3A $F0 $F5
     ld   c, a                                     ;; 00:3C3C $4F
     ld   a, [hli]                                 ;; 00:3C3D $2A
+    bit  6, a ; LSD: check of $40-$7F range for hActiveEntityTilesOffset
+    jr   z, :+
     add  a, c                                     ;; 00:3C3E $81
-    ld   [de], a                                  ;; 00:3C3F $12
+:   ld   [de], a                                  ;; 00:3C3F $12
     and  $0F                                      ;; 00:3C40 $E6 $0F
     cp   $0F                                      ;; 00:3C42 $FE $0F
     jr   nz, .jr_3C4B                             ;; 00:3C44 $20 $05
@@ -653,6 +658,7 @@ RenderActiveEntitySprite::
     ld   [de], a                                  ;; 00:3CA7 $12
     inc  de                                       ;; 00:3CA8 $13
 
+
     ; Set OAM byte 2 (tile n°)
     ldh  a, [hActiveEntitySpriteVariant]          ;; 00:3CA9 $F0 $F1
     ld   c, a                                     ;; 00:3CAB $4F
@@ -661,7 +667,14 @@ RenderActiveEntitySprite::
     rl   b                                        ;; 00:3CB0 $CB $10
     pop  hl                                       ;; 00:3CB2 $E1
     add  hl, bc                                   ;; 00:3CB3 $09
+
+    ldh  a, [hActiveEntityTilesOffset]
+    ld   c, a
     ld   a, [hli]                                 ;; 00:3CB4 $2A
+    bit  6, a ; LSD: check of $40-$7F range for hActiveEntityTilesOffset
+    jr   z, :+
+    add  a, c
+
     ld   [de], a                                  ;; 00:3CB5 $12
 
     ; Set OAM byte 3 (tile attribute)
@@ -786,8 +799,10 @@ RenderActiveEntitySpritesRect::
     ld   c, a                                     ;; 00:3D1A $4F
     ld   a, [hli]                                 ;; 00:3D1B $2A
     push af                                       ;; 00:3D1C $F5
+    bit  6, a ; LSD: check of $40-$7F range for hActiveEntityTilesOffset
+    jr   z, :+
     add  a, c                                     ;; 00:3D1D $81
-    ld   [de], a                                  ;; 00:3D1E $12
+:   ld   [de], a                                  ;; 00:3D1E $12
     pop  af                                       ;; 00:3D1F $F1
     cp   $FF                                      ;; 00:3D20 $FE $FF
     jr   nz, .jp_3D28                             ;; 00:3D22 $20 $04

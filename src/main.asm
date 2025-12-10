@@ -81,20 +81,20 @@ include "data/rooms/overworld_a.asm"
 include "text/dialog_dx.asm"
 
 section "bank0A", romx[$4000], bank[$0A]
-IndoorsARoomPointers::
-include "data/maps/indoors_a.asm"
-IndoorsARooms::
-include "data/rooms/indoors_a.asm"
-ColorDungeonRoomPointers::
-include "data/maps/color_dungeon.asm"
-ColorDungeonRooms::
-include "data/rooms/color_dungeon.asm"
+; IndoorsARoomPointers::
+; include "data/maps/indoors_a.asm"
+; IndoorsARooms::
+; include "data/rooms/indoors_a.asm"
+; ColorDungeonRoomPointers::
+; include "data/maps/color_dungeon.asm"
+; ColorDungeonRooms::
+; include "data/rooms/color_dungeon.asm"
 
 section "bank0B", romx[$4000], bank[$0B]
-IndoorsBRoomPointers::
-include "data/maps/indoors_b.asm"
-IndoorsBRooms::
-include "data/rooms/indoors_b.asm"
+; IndoorsBRoomPointers::
+; include "data/maps/indoors_b.asm"
+; IndoorsBRooms::
+; include "data/rooms/indoors_b.asm"
 
 section "bank0C",romx[$4000],bank[$0C]
 LinkCharacterTiles::
@@ -345,11 +345,11 @@ section "bank15",romx[$4000],bank[$15]
 include "code/entities/bank15.asm"
 
 section "bank16",romx[$4000],bank[$16]
-include "data/entities/pointers_table.asm"
-include "data/entities/indoors_a.asm"
-include "data/entities/indoors_b.asm"
-include "data/entities/overworld.asm"
-include "data/entities/color_dungeon.asm"
+; include "data/entities/pointers_table.asm"
+; include "data/entities/indoors_a.asm"
+; include "data/entities/indoors_b.asm"
+; include "data/entities/overworld.asm"
+; include "data/entities/color_dungeon.asm"
 include "text/dialog_2.asm"
 
 section "bank17",romx[$4000],bank[$17]

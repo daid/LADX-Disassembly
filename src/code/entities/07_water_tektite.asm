@@ -1,11 +1,11 @@
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 WaterTektiteSpriteVariants::
 .variant0
-    db $70, $00
-    db $70, $20
+    db $40, $00
+    db $40, $20
 .variant1
-    db $72, $00
-    db $72, $20
+    db $42, $00
+    db $42, $20
 
 WaterTektiteEntityHandler::
     ld   de, WaterTektiteSpriteVariants           ;; 07:7535 $11 $2D $75

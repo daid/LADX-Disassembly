@@ -1111,168 +1111,7 @@ SelectRoomTilesets::
     ld   a, TILESET_LOAD_WORLD                    ;; 00:0D8D $3E $01
     ldh  [hNeedsUpdatingBGTiles], a               ;; 00:0D8F $E0 $90
 .tilesetEnd
-
-    ; ------------------------------------------------------------
-    ;
-    ; Select the new OAM tileset
-    ;
-    ; First lookup the spritesheet group index for the room.
-    ; Then this group index references a 4-bytes value, where each
-    ; byte is a spritesheet.
-    ; ------------------------------------------------------------
-
-    ; [hMultiPurpose0] = 0
-    xor  a                                        ;; 00:0D91 $AF
-    ldh  [hMultiPurpose0], a                      ;; 00:0D92 $E0 $D7
-    ; de = [hMapRoom]
-    ldh  a, [hMapRoom]                            ;; 00:0D94 $F0 $F6
-    ld   e, a                                     ;; 00:0D96 $5F
-    ld   d, $00                                   ;; 00:0D97 $16 $00
-    ; Data starts at RoomSpritesheetGroupsTable
-    ld   hl, RoomSpritesheetGroupsTable           ;; 00:0D99 $21 $D3 $70
-    ; If indoors, add $100 to de
-    ld   a, [wIsIndoor]                           ;; 00:0D9C $FA $A5 $DB
-    ld   d, a                                     ;; 00:0D9F $57
-    ; If the map uses rooms in the indoors_b rooms group, add $100 to de again
-    ldh  a, [hMapId]                              ;; 00:0DA0 $F0 $F7
-    cp   MAP_INDOORS_B_END                        ;; 00:0DA2 $FE $1A
-    jr   nc, .indoorsBEnd                         ;; 00:0DA4 $30 $05
-    cp   MAP_INDOORS_B_START                      ;; 00:0DA6 $FE $06
-    jr   c, .indoorsBEnd                          ;; 00:0DA8 $38 $01
-    inc  d                                        ;; 00:0DAA $14
-.indoorsBEnd
-
-    ; Read the spritesheet group for the room.
-    ; e = RoomSpritesheetGroupsTable[de + roomId]
-    add  hl, de                                   ;; 00:0DAB $19
-    ld   e, [hl]                                  ;; 00:0DAC $5E
-
-    ; Special cases for the spritesheet group
-
-    ; If not the overworld…
-    ld   a, d                                     ;; 00:0DAD $7A
-    and  a                                        ;; 00:0DAE $A7
-    jr   z, .oamTilesetOnOverworld                ;; 00:0DAF $28 $10
-    ; …and inside the camera shop…
-    ldh  a, [hMapId]                              ;; 00:0DB1 $F0 $F7
-    cp   MAP_HOUSE                                ;; 00:0DB3 $FE $10
-    jr   nz, .spritesheetGroupDone                ;; 00:0DB5 $20 $24
-    ldh  a, [hMapRoom]                            ;; 00:0DB7 $F0 $F6
-    cp   ROOM_INDOOR_B_CAMERA_SHOP                ;; 00:0DB9 $FE $B5
-    jr   nz, .spritesheetGroupDone                ;; 00:0DBB $20 $1E
-    ; e = 0x3D
-    ld   e, $3D                                   ;; 00:0DBD $1E $3D
-    jr   .spritesheetGroupDone                    ;; 00:0DBF $18 $1A
-
-.oamTilesetOnOverworld
-    ld   a, e                                     ;; 00:0DC1 $7B
-    cp   $23                                      ;; 00:0DC2 $FE $23
-    jr   nz, .sirenRoomEnd                        ;; 00:0DC4 $20 $08
-    ld   a, [wOverworldRoomStatus + ROOM_OW_SIREN] ;; 00:0DC6 $FA $C9 $D8
-    and  OW_ROOM_STATUS_OWL_TALKED                ;; 00:0DC9 $E6 $20
-    jr   z, .sirenRoomEnd                         ;; 00:0DCB $28 $01
-    inc  e                                        ;; 00:0DCD $1C
-.sirenRoomEnd
-
-    ld   a, e                                     ;; 00:0DCE $7B
-    cp   $21                                      ;; 00:0DCF $FE $21
-    jr   nz, .spritesheetGroupDone                ;; 00:0DD1 $20 $08
-    ld   a, [wOverworldRoomStatus + ROOM_OW_WALRUS] ;; 00:0DD3 $FA $FD $D8
-    and  $20                                      ;; 00:0DD6 $E6 $20
-    jr   z, .spritesheetGroupDone                 ;; 00:0DD8 $28 $01
-    inc  e                                        ;; 00:0DDA $1C
-
-.spritesheetGroupDone
-
-    ; Compute the starting address of the 4 spritesheets ids
-
-    ; de = e * 4
-    ld   d, $00                                   ;; 00:0DDB $16 $00
-    sla  e                                        ;; 00:0DDD $CB $23
-    rl   d                                        ;; 00:0DDF $CB $12
-    sla  e                                        ;; 00:0DE1 $CB $23
-    rl   d                                        ;; 00:0DE3 $CB $12
-
-    ; On the Color Dungeon, spritesheets are loaded in a different way. Exit now.
-    ldh  a, [hMapId]                              ;; 00:0DE5 $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 00:0DE7 $FE $FF
-    jr   nz, .useStandardSpritesheetsTables       ;; 00:0DE9 $20 $06
-    ld   a, TRUE                                  ;; 00:0DEB $3E $01
-    ldh  [hNeedsUpdatingEntityTilesA], a          ;; 00:0DED $E0 $91
-    jr   .return                                  ;; 00:0DEF $18 $40
-.useStandardSpritesheetsTables
-    ; Select which spritesheets table to use (overworld or indoors)
-    ld   hl, OverworldEntitySpritesheetsTable     ;; 00:0DF1 $21 $F3 $73
-    ld   a, [wIsIndoor]                           ;; 00:0DF4 $FA $A5 $DB
-    and  a                                        ;; 00:0DF7 $A7
-    jr   z, .spritesheetsTableEnd                 ;; 00:0DF8 $28 $03
-    ld   hl, IndoorEntitySpritesheetsTable        ;; 00:0DFA $21 $3B $76
-.spritesheetsTableEnd
-
-    ; Make hl point at the first of the 4-bytes spritesheets
-    ; hl = spritesheets-table[spritesheet-group]
-    add  hl, de                                   ;; 00:0DFD $19
-
-    ; ------------------------------------------------------------
-    ;
-    ; Schedule spritesheets copy
-    ;
-    ; ------------------------------------------------------------
-
-    ;
-    ; This loop iterates on the 4 spritesheet values for this room, and
-    ; schedule the loading for at most two of them.
-    ;
-    ; It looks for the currently loaded spritesheets, and request the ones
-    ; that are not loaded yet. (If more than two spritesheets are different,
-    ; only the last two ones are scheduled.)
-    ;
-
-    ld   d, $00                                   ;; 00:0DFE $16 $00
-    ld   bc, wLoadedEntitySpritesheets            ;; 00:0E00 $01 $93 $C1
-
-.loop
-    ld   e, [hl]                                  ;; 00:0E03 $5E
-    ld   a, [bc]                                  ;; 00:0E04 $0A
-    ; If the spritesheet is already loaded, skip to the next
-    cp   e                                        ;; 00:0E05 $BB
-    jr   z, .continue                             ;; 00:0E06 $28 $21
-    ; If the spritesheet is "KEEP CURRENT", skip to the next
-    ld   a, e                                     ;; 00:0E08 $7B
-    cp   $FF                                      ;; 00:0E09 $FE $FF
-    jr   z, .continue                             ;; 00:0E0B $28 $1C
-    ; Copy the spritesheet value to the wLoadedEntitySpritesheets slot
-    ld   [bc], a                                  ;; 00:0E0D $02
-
-    ; Request the first spritesheet using hNeedsUpdatingEntityTilesA,
-    ; and the second using wNeedsUpdatingEntityTilesB.
-    ldh  a, [hMultiPurpose0]                      ;; 00:0E0E $F0 $D7
-    and  a                                        ;; 00:0E10 $A7
-    jr   z, .useVariantA                          ;; 00:0E11 $28 $0B
-    ld   a, d                                     ;; 00:0E13 $7A
-    ld   [wEntityTilesSpriteslotIndexB], a        ;; 00:0E14 $EA $0D $C1
-    ld   a, TRUE                                  ;; 00:0E17 $3E $01
-    ld   [wNeedsUpdatingEntityTilesB], a          ;; 00:0E19 $EA $0E $C1
-    jr   .continue                                ;; 00:0E1C $18 $0B
-
-.useVariantA
-    inc  a                                        ;; 00:0E1E $3C
-    ldh  [hMultiPurpose0], a                      ;; 00:0E1F $E0 $D7
-    ld   a, d                                     ;; 00:0E21 $7A
-    ld   [wEntityTilesSpriteslotIndexA], a        ;; 00:0E22 $EA $97 $C1
-    ld   a, TRUE                                  ;; 00:0E25 $3E $01
-    ldh  [hNeedsUpdatingEntityTilesA], a          ;; 00:0E27 $E0 $91
-
-.continue
-    ; Loop until all four slots are done
-    inc  hl                                       ;; 00:0E29 $23
-    inc  bc                                       ;; 00:0E2A $03
-    inc  d                                        ;; 00:0E2B $14
-    ld   a, d                                     ;; 00:0E2C $7A
-    cp   $04                                      ;; 00:0E2D $FE $04
-    jr   nz, .loop                                ;; 00:0E2F $20 $D2
-
-.return
+    ; LSD: Removed all code related to loading spritesheets.
     jp   ReloadSavedBank                          ;; 00:0E31 $C3 $1D $08
 
 ExecuteGameplayHandler::
@@ -2855,54 +2694,12 @@ LinkMotionMapFadeOutHandler::
 
 .label_1909
     ld   c, a                                     ;; 00:1909 $4F
-    ld   a, $14                                   ;; 00:190A $3E $14
-    call SwitchBank                               ;; 00:190C $CD $0C $08
     push hl                                       ;; 00:190F $E5
-    ; This code tries to set de = 64*[hMapId].
-    ; However, it assumes that [hMapId] < $10, i.e. that the upper
-    ; nibble is 0. If [hMapId] >= $10, the result will be wrong.
-    ; Probably does not matter, since maps with id > $0A do not have
-    ; a map layout.
-    ldh  a, [hMapId]                              ;; 00:1910 $F0 $F7
-    swap a                                        ;; 00:1912 $CB $37
-    ld   e, a                                     ;; 00:1914 $5F
-    ld   d, $00                                   ;; 00:1915 $16 $00
-    sla  e                                        ;; 00:1917 $CB $23
-    rl   d                                        ;; 00:1919 $CB $12
-    sla  e                                        ;; 00:191B $CB $23
-    rl   d                                        ;; 00:191D $CB $12
-    ld   hl, MapLayout0                           ;; 00:191F $21 $20 $42
-    add  hl, de                                   ;; 00:1922 $19
-    ldh  a, [hMapId]                              ;; 00:1923 $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 00:1925 $FE $FF
-    jr   nz, .colorDungeonEnd                     ;; 00:1927 $20 $05
-    ld   hl, MapLayout11                          ;; 00:1929 $21 $E0 $44
-    jr   .label_193C                              ;; 00:192C $18 $0E
-.colorDungeonEnd
 
-    cp   MAP_EAGLES_TOWER           ; Is this Eagle's Tower? ;; 00:192E $FE $06
-    jr   nz, .label_193C            ; If not, skip this... ;; 00:1930 $20 $0A
-    ld   a, [wHasInstrument7]       ; Otherwise, check if the pillars have all been dunked... ;; 00:1932 $FA $6B $DB
-    and  $04                                      ;; 00:1935 $E6 $04
-    jr   z, .label_193C             ; If not, skip this... ;; 00:1937 $28 $03
-    ld   hl, MapLayout12            ; Otherwise, swap to the alternate Eagle's Tower map (post-3F collapse) ;; 00:1939 $21 $20 $45
-
-.label_193C
-    ld   e, $00                                   ;; 00:193C $1E $00
-
-; Search the room with id c in the map layout...
-.loop_193E
-    ld   a, [hli]                                 ;; 00:193E $2A
-    cp   c                                        ;; 00:193F $B9
-    jr   z, .break_1948                           ;; 00:1940 $28 $06
-    inc  e                                        ;; 00:1942 $1C
-    ld   a, e                                     ;; 00:1943 $7B
-    cp   $40                                      ;; 00:1944 $FE $40
-    jr   nz, .loop_193E                           ;; 00:1946 $20 $F6
-.break_1948
+    callsb DoI_GenerateMap
 
 ; ...and save the position of the room in [wIndoorRoom].
-    ld   a, e                                     ;; 00:1948 $7B
+    ldh  a, [hMapRoom]
     ld   [wIndoorRoom], a                         ;; 00:1949 $EA $AE $DB
 
     ldh  a, [hFreeWarpDataAddress]                ;; 00:194C $F0 $E6
@@ -5858,6 +5655,9 @@ LoadRoom::
     ;
     ; Select the bank and address for the map pointers table
     ;
+    ;LSD: Added setting the SRAM bank for dynamic room data
+    ld   a, BANK(sDynamicRoomData)
+    ld   [rRAMB], a
 
     ; bc = hMapRoom
     ldh  a, [hMapRoom]                            ;; 00:316D $F0 $F6
@@ -5885,19 +5685,6 @@ LoadRoom::
     jp   .fetchRoomAddress                        ;; 00:318C $C3 $24 $32
 .colorDungeonEnd
 
-    ; If have the Magnifying Lens, load an alternate Goriya room (where the Goriya NPC is actually present)
-    cp   MAP_CAVE_WATER                           ;; 00:318F $FE $1F
-    jr   nz, .goriyaRoomEnd                       ;; 00:3191 $20 $13
-    ldh  a, [hMapRoom]                            ;; 00:3193 $F0 $F6
-    cp   ROOM_INDOOR_A_GORIYA                     ;; 00:3195 $FE $F5
-    jr   nz, .goriyaRoomEnd                       ;; 00:3197 $20 $0D
-    ld   a, [wTradeSequenceItem]                  ;; 00:3199 $FA $0E $DB
-    cp   TRADING_ITEM_MAGNIFYING_LENS             ;; 00:319C $FE $0E
-    jr   nz, .goriyaRoomEnd                       ;; 00:319E $20 $06
-    ld   bc, IndoorsAF5Alt                        ;; 00:31A0 $01 $55 $78
-    jp   .parseRoomHeader                         ;; 00:31A3 $C3 $3A $32
-.goriyaRoomEnd
-
     ; If the map is in between MAP_INDOORS_B_START and MAP_INDOORS_B_END…
     ld   hl, IndoorsARoomPointers                 ;; 00:31A6 $21 $00 $40
     ldh  a, [hMapId]                              ;; 00:31A9 $F0 $F7
@@ -5913,66 +5700,7 @@ LoadRoom::
     jr   .fetchRoomAddress                        ;; 00:31BD $18 $65
 
 .isIndoorEnd
-
-    ;
-    ; Swap some Overworld rooms with alternative layouts
-    ;
-
-    ldh  a, [hMapRoom]                            ;; 00:31BF $F0 $F6
-    cp   ROOM_OW_EAGLES_TOWER                     ;; 00:31C1 $FE $0E
-    jr   nz, .endEaglesTowerAlt                   ;; 00:31C3 $20 $0C
-    ld   a, [wOverworldRoomStatus + ROOM_OW_EAGLES_TOWER] ;; 00:31C5 $FA $0E $D8
-    and  OW_ROOM_STATUS_CHANGED                   ;; 00:31C8 $E6 $10
-    jr   z, .altRoomsEnd                          ;; 00:31CA $28 $55
-    ld   bc, Overworld0EAlt ; Eagle's Tower open  ;; 00:31CC $01 $EC $47
-    jr   .loadBankForOverworldRooms               ;; 00:31CF $18 $5E
-.endEaglesTowerAlt
-
-    cp   $8C                                      ;; 00:31D1 $FE $8C
-    jr   nz, .endSouthFaceShrineAlt               ;; 00:31D3 $20 $0C
-    ld   a, [wOverworldRoomStatus + $8C]          ;; 00:31D5 $FA $8C $D8
-    and  OW_ROOM_STATUS_CHANGED                   ;; 00:31D8 $E6 $10
-    jr   z, .altRoomsEnd                          ;; 00:31DA $28 $45
-    ld   bc, Overworld8CAlt ; South Face Shrine open ;; 00:31DC $01 $4E $43
-    jr   .loadBankForOverworldRooms               ;; 00:31DF $18 $4E
-.endSouthFaceShrineAlt
-
-    cp   $79                                      ;; 00:31E1 $FE $79
-    jr   nz, .endUpperTalTalHeightsAlt            ;; 00:31E3 $20 $0C
-    ld   a, [wOverworldRoomStatus + $79]          ;; 00:31E5 $FA $79 $D8
-    and  OW_ROOM_STATUS_CHANGED                   ;; 00:31E8 $E6 $10
-    jr   z, .altRoomsEnd                          ;; 00:31EA $28 $35
-    ld   bc, Overworld79Alt ; Kanalet Castle open ;; 00:31EC $01 $13 $65
-    jr   .loadBankForOverworldRooms               ;; 00:31EF $18 $3E
-.endUpperTalTalHeightsAlt
-
-    cp   $06                                      ;; 00:31F1 $FE $06
-    jr   nz, .endWindfishsEggAlt                  ;; 00:31F3 $20 $0C
-    ld   a, [wOverworldRoomStatus + $06]          ;; 00:31F5 $FA $06 $D8
-    and  OW_ROOM_STATUS_CHANGED                   ;; 00:31F8 $E6 $10
-    jr   z, .altRoomsEnd                          ;; 00:31FA $28 $25
-    ld   bc, Overworld06Alt ; Windfish's Egg open ;; 00:31FC $01 $96 $44
-    jr   .loadBankForOverworldRooms               ;; 00:31FF $18 $2E
-.endWindfishsEggAlt
-
-    cp   $1B                                      ;; 00:3201 $FE $1B
-    jr   nz, .endTalTalHeightsAlt                 ;; 00:3203 $20 $0C
-    ld   a, [wOverworldRoomStatus + $2B]          ;; 00:3205 $FA $2B $D8
-    and  OW_ROOM_STATUS_CHANGED                   ;; 00:3208 $E6 $10
-    jr   z, .altRoomsEnd                          ;; 00:320A $28 $15
-    ld   bc, Overworld1BAlt ; Angler's Tunnel upper water dry ;; 00:320C $01 $0F $4C
-    jr   .loadBankForOverworldRooms               ;; 00:320F $18 $1E
-.endTalTalHeightsAlt
-
-    cp   $2B                                      ;; 00:3211 $FE $2B
-    jr   nz, .altRoomsEnd                         ;; 00:3213 $20 $0C
-    ld   a, [wOverworldRoomStatus + $2B]          ;; 00:3215 $FA $2B $D8
-    and  OW_ROOM_STATUS_CHANGED                   ;; 00:3218 $E6 $10
-    jr   z, .altRoomsEnd                          ;; 00:321A $28 $05
-    ld   bc, Overworld2BAlt ; Angler's Tunnel open ;; 00:321C $01 $9A $50
-    jr   .loadBankForOverworldRooms               ;; 00:321F $18 $0E
-
-.altRoomsEnd
+    ;LSD: Removed overworld ALT rooms code
 
     ;
     ; Get room address from index
@@ -6016,6 +5744,8 @@ LoadRoom::
     ; bc: address of room header data
     ;
 .parseRoomHeader
+    ld   a, BANK(sDynamicRoomData)
+    ld   [$4000], a
 
     ; Parse header first byte (animated tiles group)
     ld   a, [bc]                                  ;; 00:323A $0A
@@ -7344,6 +7074,9 @@ LoadRoomEntities::
 
     ld   a, BANK(OverworldEntitiesPointersTable)  ;; 00:3806 $3E $16
     ld   [rSelectROMBank], a                      ;; 00:3808 $EA $00 $21
+    ;LSD: Load right sram bank
+    ld   a, BANK(sDynamicEntityData)
+    ld   [rRAMB], a
 
     ; Reset the entities load order
     xor  a                                        ;; 00:380B $AF

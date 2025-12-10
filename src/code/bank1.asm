@@ -458,6 +458,12 @@ jr_001_531D::
     ld   [wWreckingBallPosX], a                   ;; 01:53CE $EA $70 $DB
     ld   a, $27                                   ;; 01:53D1 $3E $27
     ld   [wWreckingBallPosY], a                   ;; 01:53D3 $EA $71 $DB
+    ;LSD setup start item
+    ld   a, $01
+    ld   [wInventoryItems], a
+    ld   [wSwordLevel], a
+    ld   a, $0A
+    ld   [wInventoryItems+1], a
     jr   .finish                                  ;; 01:53D6 $18 $B6
 
 Data_001_53D8::
@@ -1462,87 +1468,6 @@ jr_001_5DCC::
     ret                                           ;; 01:5DE5 $C9
 
 SaveGameToFile::
-IF __RECALCULATE_MAX_HEARTS__
-    ; Recalculate max health before saving
-    call RecalculateMaxHearts
-ENDC
-    ; Does the player have any health?
-    ld   a, [wHealth]                             ;; 01:5DE6 $FA $5A $DB
-    and  a                                        ;; 01:5DE9 $A7
-    jr   nz, .skipHealthReset                     ;; 01:5DEA $20 $0E
-    ; If not, get the current max health
-    ld   a, [wMaxHearts]                          ;; 01:5DEC $FA $5B $DB
-    ld   e, a                                     ;; 01:5DEF $5F
-    ld   d, $00                                   ;; 01:5DF0 $16 $00
-    ; and use it as an index into the table
-    ld   hl, MaxHeartsToStartingHealthTable       ;; 01:5DF2 $21 $95 $52
-    add  hl, de                                   ;; 01:5DF5 $19
-    ; to provide the starting health value.
-    ld   a, [hl]                                  ;; 01:5DF6 $7E
-    ld   [wHealth], a                             ;; 01:5DF7 $EA $5A $DB
-
-.skipHealthReset:
-    call SynchronizeDungeonsItemFlags_trampoline  ;; 01:5DFA $CD $02 $28
-    ld   a, [wSaveSlot]                           ;; 01:5DFD $FA $A6 $DB
-    sla  a                                        ;; 01:5E00 $CB $27
-    ld   e, a                                     ;; 01:5E02 $5F
-    ld   d, $00                                   ;; 01:5E03 $16 $00
-    ld   hl, SaveGameTable                        ;; 01:5E05 $21 $F8 $49
-    add  hl, de                                   ;; 01:5E08 $19
-    ld   a, [hli]                                 ;; 01:5E09 $2A
-    ld   h, [hl]                                  ;; 01:5E0A $66
-    ld   l, a                                     ;; 01:5E0B $6F
-    ld   bc, wOverworldRoomStatus                 ;; 01:5E0C $01 $00 $D8
-    ld   de, SAVE_MAIN_SIZE                       ;; 01:5E0F $11 $80 $03
-
-.loopSaveMain
-    call EnableSRAM                               ;; 01:5E12 $CD $D0 $27
-    ld   a, [bc]                                  ;; 01:5E15 $0A
-    inc  bc                                       ;; 01:5E16 $03
-    call EnableSRAM                               ;; 01:5E17 $CD $D0 $27
-    ldi  [hl], a                                  ;; 01:5E1A $22
-    dec  de                                       ;; 01:5E1B $1B
-    ld   a, e                                     ;; 01:5E1C $7B
-    or   d                                        ;; 01:5E1D $B2
-    jr   nz, .loopSaveMain                        ;; 01:5E1E $20 $F2
-    ld   bc, wColorDungeonItemFlags               ;; 01:5E20 $01 $DA $DD
-    ld   de, SAVE_DX1_SIZE                        ;; 01:5E23 $11 $05 $00
-
-.loopSaveDX1
-    call EnableSRAM                               ;; 01:5E26 $CD $D0 $27
-    ld   a, [bc]                                  ;; 01:5E29 $0A
-    inc  bc                                       ;; 01:5E2A $03
-    call EnableSRAM                               ;; 01:5E2B $CD $D0 $27
-    ldi  [hl], a                                  ;; 01:5E2E $22
-    dec  de                                       ;; 01:5E2F $1B
-    ld   a, e                                     ;; 01:5E30 $7B
-    or   d                                        ;; 01:5E31 $B2
-    jr   nz, .loopSaveDX1                         ;; 01:5E32 $20 $F2
-    ld   bc, wColorDungeonRoomStatus              ;; 01:5E34 $01 $E0 $DD
-    ld   de, SAVE_DX2_SIZE                        ;; 01:5E37 $11 $20 $00
-
-.loopSaveDX2
-    call EnableSRAM                               ;; 01:5E3A $CD $D0 $27
-    ld   a, [bc]                                  ;; 01:5E3D $0A
-    inc  bc                                       ;; 01:5E3E $03
-    call EnableSRAM                               ;; 01:5E3F $CD $D0 $27
-    ldi  [hl], a                                  ;; 01:5E42 $22
-    dec  de                                       ;; 01:5E43 $1B
-    ld   a, e                                     ;; 01:5E44 $7B
-    or   d                                        ;; 01:5E45 $B2
-    jr   nz, .loopSaveDX2                         ;; 01:5E46 $20 $F2
-    call EnableSRAM                               ;; 01:5E48 $CD $D0 $27
-    ld   a, [wTunicType]                          ;; 01:5E4B $FA $0F $DC
-    call EnableSRAM                               ;; 01:5E4E $CD $D0 $27
-    ldi  [hl], a                                  ;; 01:5E51 $22
-    call EnableSRAM                               ;; 01:5E52 $CD $D0 $27
-    ld   a, [wPhotos1]                            ;; 01:5E55 $FA $0C $DC
-    call EnableSRAM                               ;; 01:5E58 $CD $D0 $27
-    ldi  [hl], a                                  ;; 01:5E5B $22
-    call EnableSRAM                               ;; 01:5E5C $CD $D0 $27
-    ld   a, [wPhotos2]                            ;; 01:5E5F $FA $0D $DC
-    call EnableSRAM                               ;; 01:5E62 $CD $D0 $27
-    ldi  [hl], a                                  ;; 01:5E65 $22
     ret                                           ;; 01:5E66 $C9
 
 IF __RECALCULATE_MAX_HEARTS__
@@ -1882,28 +1807,6 @@ UpdateRecentRoomsList::
     ret                                           ;; 01:5F2D $C9
 
 HideAllSprites::
-    ; $0000 controls whether to enable external RAM
-    ld   hl, rRAMG                                ;; 01:5F2E $21 $00 $00
-
-    ; If CGB…
-    ldh  a, [hIsGBC]                              ;; 01:5F31 $F0 $FE
-    and  a                                        ;; 01:5F33 $A7
-    jr   z, .enableSRAM                           ;; 01:5F34 $28 $04
-    ; disable external RAM
-    ; (probably because an extra RAM bank available on CGB can be used)
-    ld   [hl], CART_SRAM_DISABLE                  ;; 01:5F36 $36 $00
-    jr   .endIf                                   ;; 01:5F38 $18 $02
-
-.enableSRAM
-    ; else write $FF to rRAMG, which also should disable
-    ; external RAM; only a value of $0A enables external
-    ; RAM (SRAM) on MBC5 according to Pandocs. SRAM is also
-    ; not used in this subroutine. What's actually going on
-    ; here? Stubbed out code that hasn't been removed even
-    ; though it's run every frame?
-    ld   [hl], $FF                                ;; 01:5F3A $36 $FF
-.endIf
-
     ; loop counter
     ld   b, OAM_COUNT                             ;; 01:5F3C $06 $28
     ; value to write

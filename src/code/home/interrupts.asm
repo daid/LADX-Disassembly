@@ -623,28 +623,7 @@ LoadOverworldBGTiles::
     ret                                           ;; 00:069D $C9
 
 LoadEntityTiles::
-    ; If on GBC and inside the Color Dungeon…
-    ldh  a, [hIsGBC]                              ;; 00:069E $F0 $FE
-    and  a                                        ;; 00:06A0 $A7
-    jr   z, .colorDungeonEnd                      ;; 00:06A1 $28 $28
-    ldh  a, [hMapId]                              ;; 00:06A3 $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 00:06A5 $FE $FF
-    jr   nz, .colorDungeonEnd                     ;; 00:06A7 $20 $22
-    ; … skip the defined commands, and load hardcoded titles
-    ; for the Color Dungeon objects and entities.
-    callsb LoadColorDungeonTiles                  ;; 00:06A9 $3E $20 $EA $00 $21 $CD $5A $47
-    xor  a                                        ;; 00:06B1 $AF
-    ld   [wNeedsUpdatingEntityTilesB], a          ;; 00:06B2 $EA $0E $C1
-    ld   [wEntityTilesLoadingStageB], a           ;; 00:06B5 $EA $0F $C1
-    ld   hl, vTiles2                              ;; 00:06B8 $21 $00 $90
-    ld   bc, $00                                  ;; 00:06BB $01 $00 $00
-    call GetColorDungeonTilesAddress              ;; 00:06BE $CD $16 $46
-    ld   c, $90                                   ;; 00:06C1 $0E $90
-    ld   b, h                                     ;; 00:06C3 $44
-    ld   h, $00                                   ;; 00:06C4 $26 $00
-    call CopyDataToVRAM                           ;; 00:06C6 $CD $13 $0A
-    jr   .clearEnemiesTilesLoadCommand            ;; 00:06C9 $18 $6D
-.colorDungeonEnd
+    ; LSD: Removed color dungeon related code
 
     ;
     ; Copy requested entity tiles to VRAM
@@ -687,43 +666,21 @@ ENDC
 .adjustBankEnd
 
     ld   [rSelectROMBank], a                      ;; 00:06F7 $EA $00 $21
-    ldh  a, [hEntityTilesLoadingStageA]           ;; 00:06FA $F0 $93
-    ld   c, a                                     ;; 00:06FC $4F
-    ld   b, $00                                   ;; 00:06FD $06 $00
-    sla  c                                        ;; 00:06FF $CB $21
-    rl   b                                        ;; 00:0701 $CB $10
-    sla  c                                        ;; 00:0703 $CB $21
-    rl   b                                        ;; 00:0705 $CB $10
-    sla  c                                        ;; 00:0707 $CB $21
-    rl   b                                        ;; 00:0709 $CB $10
-    sla  c                                        ;; 00:070B $CB $21
-    rl   b                                        ;; 00:070D $CB $10
-    sla  c                                        ;; 00:070F $CB $21
-    rl   b                                        ;; 00:0711 $CB $10
-    sla  c                                        ;; 00:0713 $CB $21
-    rl   b                                        ;; 00:0715 $CB $10
-    ld   hl, NpcTilesDataStart                    ;; 00:0717 $21 $00 $40
-    add  hl, bc                                   ;; 00:071A $09
-    add  hl, de                                   ;; 00:071B $19
-    push hl                                       ;; 00:071C $E5
-    ld   a, [wEntityTilesSpriteslotIndexA]        ;; 00:071D $FA $97 $C1
-    ld   d, a                                     ;; 00:0720 $57
-    ld   hl, vTilesSpriteslots                    ;; 00:0721 $21 $00 $84
-    add  hl, bc                                   ;; 00:0724 $09
-    add  hl, de                                   ;; 00:0725 $19
-    ld   e, l                                     ;; 00:0726 $5D
-    ld   d, h                                     ;; 00:0727 $54
-    pop  hl                                       ;; 00:0728 $E1
-    ld   bc, $40                                  ;; 00:0729 $01 $40 $00
-    call CopyData                                 ;; 00:072C $CD $14 $29
-
-    ; Increment the loading stage
-    ldh  a, [hEntityTilesLoadingStageA]           ;; 00:072F $F0 $93
-    inc  a                                        ;; 00:0731 $3C
-    ldh  [hEntityTilesLoadingStageA], a           ;; 00:0732 $E0 $93
-    ; If the loading stage is >= $04, we're done
-    cp   $04                                      ;; 00:0734 $FE $04
-    jr   nz, .return                              ;; 00:0736 $20 $05
+    ; LSD: Use HDMA to load sprite tiles instead of slow copy
+    ; d = tile row (source addr = (d*$100+$4000))
+    ld  a, d
+    add a, $40
+    ld  hl, rHDMA1
+    ld  [hl+], a
+    xor a
+    ld  [hl+], a
+    ld  a, [wEntityTilesSpriteslotIndexA]
+    add a, $84
+    ld  [hl+], a
+    xor a
+    ld  [hl+], a
+    ld  a, $0F
+    ld  [hl], a
 
 .clearEnemiesTilesLoadCommand
     xor  a                                        ;; 00:0738 $AF
@@ -765,43 +722,23 @@ UpdateEntityTilesB::
 .jp_0764
 
     ld   [rSelectROMBank], a                      ;; 00:0764 $EA $00 $21
-    ld   a, [wEntityTilesLoadingStageB]           ;; 00:0767 $FA $0F $C1
-    ld   c, a                                     ;; 00:076A $4F
-    ld   b, $00                                   ;; 00:076B $06 $00
-    sla  c                                        ;; 00:076D $CB $21
-    rl   b                                        ;; 00:076F $CB $10
-    sla  c                                        ;; 00:0771 $CB $21
-    rl   b                                        ;; 00:0773 $CB $10
-    sla  c                                        ;; 00:0775 $CB $21
-    rl   b                                        ;; 00:0777 $CB $10
-    sla  c                                        ;; 00:0779 $CB $21
-    rl   b                                        ;; 00:077B $CB $10
-    sla  c                                        ;; 00:077D $CB $21
-    rl   b                                        ;; 00:077F $CB $10
-    sla  c                                        ;; 00:0781 $CB $21
-    rl   b                                        ;; 00:0783 $CB $10
-    ld   hl, NpcTilesDataStart                    ;; 00:0785 $21 $00 $40
-    add  hl, bc                                   ;; 00:0788 $09
-    add  hl, de                                   ;; 00:0789 $19
-    push hl                                       ;; 00:078A $E5
-    ld   a, [wEntityTilesSpriteslotIndexB]        ;; 00:078B $FA $0D $C1
-    ld   d, a                                     ;; 00:078E $57
-    ld   hl, vTilesSpriteslots                    ;; 00:078F $21 $00 $84
-    add  hl, bc                                   ;; 00:0792 $09
-    add  hl, de                                   ;; 00:0793 $19
-    ld   e, l                                     ;; 00:0794 $5D
-    ld   d, h                                     ;; 00:0795 $54
-    pop  hl                                       ;; 00:0796 $E1
-    ld   bc, $40                                  ;; 00:0797 $01 $40 $00
-    call CopyData                                 ;; 00:079A $CD $14 $29
 
-    ; Increment the loading stage
-    ld   a, [wEntityTilesLoadingStageB]           ;; 00:079D $FA $0F $C1
-    inc  a                                        ;; 00:07A0 $3C
-    ; If the loading stage is >= $04, we're done
-    ld   [wEntityTilesLoadingStageB], a           ;; 00:07A1 $EA $0F $C1
-    cp   $04                                      ;; 00:07A4 $FE $04
-    jr   nz, .return                              ;; 00:07A6 $20 $07
+    ; LSD: Use HDMA to load sprite tiles instead of slow copy
+    ; d = tile row (source addr = (d*$100+$4000))
+    ld  a, d
+    add a, $40
+    ld  hl, rHDMA1
+    ld  [hl+], a
+    xor a
+    ld  [hl+], a
+    ld  a, [wEntityTilesSpriteslotIndexB]
+    add a, $84
+    ld  [hl+], a
+    xor a
+    ld  [hl+], a
+    ld  a, $0F
+    ld  [hl], a
+
     xor  a                                        ;; 00:07A8 $AF
     ld   [wNeedsUpdatingEntityTilesB], a          ;; 00:07A9 $EA $0E $C1
     ld   [wEntityTilesLoadingStageB], a           ;; 00:07AC $EA $0F $C1
