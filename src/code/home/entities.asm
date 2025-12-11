@@ -674,8 +674,7 @@ RenderActiveEntitySprite::
     bit  6, a ; LSD: check of $40-$7F range for hActiveEntityTilesOffset
     jr   z, :+
     add  a, c
-
-    ld   [de], a                                  ;; 00:3CB5 $12
+:   ld   [de], a                                  ;; 00:3CB5 $12
 
     ; Set OAM byte 3 (tile attribute)
 
