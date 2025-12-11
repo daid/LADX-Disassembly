@@ -2696,7 +2696,7 @@ LinkMotionMapFadeOutHandler::
     ld   c, a                                     ;; 00:1909 $4F
     push hl                                       ;; 00:190F $E5
 
-    callsb DoI_GenerateMap
+    callsb LSD_GenerateMap
 
 ; ...and save the position of the room in [wIndoorRoom].
     ldh  a, [hMapRoom]

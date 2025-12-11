@@ -3799,10 +3799,7 @@ wAnimatedScrollingTilesStorage::
 .tile3::
   ds $10 ; DCF0 - DCFF
 
-wLoadedEntitySpritesheetsAge: ; LSD need 4 bytes to store which wLoadedEntitySpritesheets where last used.
-; Unused data?
-  ds $D1 ; DD00 - DDD0
-
+SECTION "WRAMX_DDD1", WRAMX[$DDD1], BANK[1]
 ; Palette flags for copying palettes to hardware.
 ; bit 0: If set, copy background palette to hardware during vblank
 ; bit 1: If set, copy object palette to hardware during vblank

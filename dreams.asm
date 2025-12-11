@@ -9,6 +9,7 @@ BANKED_WRAM = 1
 GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 
 #INCLUDE "LSD/entitygfx.asm"
+#INCLUDE "LSD/rand.asm"
 
 #SECTION "IndoorRoomsA", ROMX, BANK[$0A] {
 IndoorsARoomPointers:
@@ -104,7 +105,7 @@ wRandomMapData = $D700 ; use wRoomObjectsArea as scratch area during map generat
 wSafetyCheck = $D7FF
 wFinalRoom = $D7FE
 
-DoI_GenerateMap:
+LSD_GenerateMap:
     ; If we warp to room $FF generate a new map and warp to that.
     ldh  a, [hMapRoom]
     inc  a
@@ -134,7 +135,7 @@ BuildMainPath:
     ; safety check
     ld   hl, wSafetyCheck
     dec  [hl]
-    jr   z, DoI_GenerateMap.restartGen
+    jr   z, LSD_GenerateMap.restartGen
     call MapGenRandomMove
     jr   z, .retry
     ld   h, HIGH(wRandomMapData)
@@ -158,7 +159,7 @@ BuildSidePaths:
 .retry:
     ld   hl, wSafetyCheck
     dec  [hl]
-    jr   z, DoI_GenerateMap.restartGen
+    jr   z, LSD_GenerateMap.restartGen
     call GetRandomByte
     and  $3F
     ld   e, a
@@ -186,7 +187,7 @@ BuildCycles:
 .retry:
     ld   hl, wSafetyCheck
     dec  [hl]
-    jr   z, DoI_GenerateMap.restartGen
+    jr   z, LSD_GenerateMap.restartGen
     call GetRandomByte
     and  $3F
     ld   e, a

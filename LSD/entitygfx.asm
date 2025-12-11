@@ -1,5 +1,10 @@
 ; This code deals with setting up the right sprite graphics for entities.
 
+#SECTION "EntitySpritesheetSetupRam", WRAMX, BANK[1] {
+wLoadedEntitySpritesheetsAge: ; LSD need 4 bytes to store which wLoadedEntitySpritesheets where last used.
+  ds 4
+}
+
 #SECTION "EntitySpritesheetSetup", ROMX, BANK[$20] {
 LSD_ResetEntity:
     ; First, reset our offset.
