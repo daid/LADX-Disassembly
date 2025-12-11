@@ -23,26 +23,9 @@ ASFLAGS := \
   -Weverything \
   -Wtruncation=1
 
-LD      := $(RGBDS)rgblink
-LDFLAGS := \
-  -Weverything \
-  -Wtruncation=1
-
-FX      := $(RGBDS)rgbfix
-FXFLAGS := \
-  --color-compatible \
-  --sgb-compatible \
-  --ram-size 0x03 \
-  --old-licensee 0x33 \
-  --new-licensee "01" \
-  --mbc-type 0x1B \
-  --pad-value 0xFF \
-  --validate \
-  -Weverything
-
 # Default target: build and test only the US 1.0 revision.
 # (Use `make all` to build and test all targets.)
-default: build test
+default: build
 
 #
 # Generic rules
@@ -50,6 +33,7 @@ default: build test
 
 # Dependencies for the base version (English 1.0)
 asm_files :=  $(call rwildcard,src,*.asm)
+LSD_files :=  $(call rwildcard,LSD,*.asm)
 # this is the only .inc file in the repo
 asm_files +=  src/constants/hardware.inc
 gfx_files :=  $(call rwildcard,src/gfx,*.png)
@@ -77,9 +61,8 @@ src/main.%.o: src/main.asm $(asm_files) $(gfx_files:.png=.2bpp) $(bin_files)
 # Link object files into a GBC executable rom
 # The arguments used are both the global options (e.g. `LDFLAGS`) and the
 # locale-specific options (e.g. `azlg-r1_LDFLAGS`).
-%.gbc: src/main.%.o
-	$(LD) $(LDFLAGS) $($*_LDFLAGS) -n $*.sym -o $@ $^
-	$(FX) $(FXFLAGS) $($*_FXFLAGS) $@
+%.gbc: src/main.%.o dreams.asm $(LSD_files)
+	python3 ../GB.HLA/main.py dreams.asm --output $@ --symbols $*.sym
 
 # Make may attempt to re-generate the Makefile; prevent this.
 Makefile: ;
