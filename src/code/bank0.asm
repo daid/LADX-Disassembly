@@ -7070,7 +7070,7 @@ FillRoomMapWithObject::
 
 ; Retrieve the entities list for this room, and load each entity from its definition.
 LoadRoomEntities::
-    callsb UpdateRecentRoomsList                  ;; 00:37FE $3E $01 $EA $00 $21 $CD $02 $5F
+    ;LSD: Removed UpdateRecentRoomsList call, as we want to keep enemies dead forever.
 
     ld   a, BANK(OverworldEntitiesPointersTable)  ;; 00:3806 $3E $16
     ld   [rSelectROMBank], a                      ;; 00:3808 $EA $00 $21

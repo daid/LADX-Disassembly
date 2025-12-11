@@ -1754,58 +1754,6 @@ PrepareEntityPositionForRoomTransition::
     pop  bc                                       ;; 01:5F00 $C1
     ret                                           ;; 01:5F01 $C9
 
-; Add the current room to the recent rooms list (if not already present).
-UpdateRecentRoomsList::
-    ; The recent rooms list has 6 slots
-    ld   c, $06                                   ;; 01:5F02 $0E $06
-    ldh  a, [hMapRoom]                            ;; 01:5F04 $F0 $F6
-    ld   hl, wRecentRooms                         ;; 01:5F06 $21 $81 $CE
-
-    ; For each slot…
-.findRoomInList
-    ; if the slot already contains the current room,
-    ; don't add it again and simply return.
-    cp   [hl]                                     ;; 01:5F09 $BE
-    jr   z, .return                               ;; 01:5F0A $28 $21
-    inc  hl                                       ;; 01:5F0C $23
-    dec  c                                        ;; 01:5F0D $0D
-    jr   nz, .findRoomInList                      ;; 01:5F0E $20 $F9
-
-    ;
-    ; Append the current room to the recents rooms list
-    ;
-
-    ; Increment the index of the next slot
-    ld   a, [wRecentRoomsIndex]                   ;; 01:5F10 $FA $80 $CE
-    inc  a                                        ;; 01:5F13 $3C
-    ; (if the index goes past 5, reset it to 0)
-    cp   $06                                      ;; 01:5F14 $FE $06
-    jr   nz, .wrapIndexEnd                        ;; 01:5F16 $20 $01
-    xor  a                                        ;; 01:5F18 $AF
-.wrapIndexEnd
-    ld   [wRecentRoomsIndex], a                   ;; 01:5F19 $EA $80 $CE
-
-    ; Read the previous value of the slot into DE
-    ld   e, a                                     ;; 01:5F1C $5F
-    ld   d, $00                                   ;; 01:5F1D $16 $00
-    ld   hl, wRecentRooms                         ;; 01:5F1F $21 $81 $CE
-    add  hl, de                                   ;; 01:5F22 $19
-    ld   e, [hl]                                  ;; 01:5F23 $5E
-
-    ; Write the current room id to the slot
-    ldh  a, [hMapRoom]                            ;; 01:5F24 $F0 $F6
-    ld   [hl], a                                  ;; 01:5F26 $77
-
-    ; Clear the flag indicating cleared entities for the evicted room.
-    ; (This means that enemies will not respawn in a room before 6
-    ; other different rooms have been visited.)
-    ld   hl, wEntitiesClearedRooms                ;; 01:5F27 $21 $00 $CF
-    add  hl, de                                   ;; 01:5F2A $19
-    ld   [hl], $00                                ;; 01:5F2B $36 $00
-
-.return
-    ret                                           ;; 01:5F2D $C9
-
 HideAllSprites::
     ; loop counter
     ld   b, OAM_COUNT                             ;; 01:5F3C $06 $28

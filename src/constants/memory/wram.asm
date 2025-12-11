@@ -1570,7 +1570,7 @@ wCE87::
 ; Used to avoid respawning enemies as soon as the player moves to
 ; the next room.
 wEntitiesClearedRooms::
-  ds $FF ; CF00 - CFFF
+  ds $100 ; CF00 - CFFF
 
 section "WRAM Bank1", wramx[$D000], bank[1]
 
