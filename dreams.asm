@@ -11,6 +11,7 @@ GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 #INCLUDE "LSD/entitygfx.asm"
 #INCLUDE "LSD/rand.asm"
 #INCLUDE "LSD/roomtables.asm"
+#INCLUDE "LSD/inventory.asm"
 
 #SECTION "MapBuildCode", ROMX, BANK[$0A] {
 

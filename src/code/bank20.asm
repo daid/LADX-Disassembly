@@ -4108,7 +4108,7 @@ InventoryInteractiveHandler::
     call func_020_6111                            ;; 20:63CD $CD $11 $61
     call func_020_62A2                            ;; 20:63D0 $CD $A2 $62
     call func_020_635C                            ;; 20:63D3 $CD $5C $63
-    call func_020_62DE                            ;; 20:63D6 $CD $DE $62
+    ; LSD: do not show [press select] text call func_020_62DE                            ;; 20:63D6 $CD $DE $62
     ld   a, [wCloseInventoryAfterOcarinaMenuClosed] ;; 20:63D9 $FA $BA $C1
     and  a                                        ;; 20:63DC $A7
     jr   z, .jr_63F5                              ;; 20:63DD $28 $16
@@ -4131,26 +4131,8 @@ InventoryInteractiveHandler::
     and  J_SELECT                                 ;; 20:63F7 $E6 $40
     jr   z, jr_020_641E                           ;; 20:63F9 $28 $23
 
-    ld   a, GAMEPLAY_INVENTORY_STATUS_IN          ;; 20:63FB $3E $09
-    ld   [wGameplaySubtype], a                    ;; 20:63FD $EA $96 $DB
-    ld   a, $90                                   ;; 20:6400 $3E $90
-    ld   [wDE0A], a                               ;; 20:6402 $EA $0A $DE
-    ld   a, [ROM_DebugTool3]                      ;; 20:6405 $FA $05 $00
-    and  a                                        ;; 20:6408 $A7
-    jr   z, .jr_641C                              ;; 20:6409 $28 $11
-
-    ld   a, [wFreeMovementMode]                   ;; 20:640B $FA $7B $C1
-    xor  $01                                      ;; 20:640E $EE $01
-    ld   [wFreeMovementMode], a                   ;; 20:6410 $EA $7B $C1
-
-IF !__PATCH_3__
-    ld   a, $01                                   ;; 20:6413 $3E $01
-    ld   [wPhotos1], a                            ;; 20:6415 $EA $0C $DC
-    xor  a                                        ;; 20:6418 $AF
-    ld   [wPhotos2], a                            ;; 20:6419 $EA $0D $DC
-ENDC
-
-.jr_641C
+    ; LSD: On select, drop current targeted item.
+    call LSD_DropItemFromInventoryScreen
     jr   CloseInventory.return                    ;; 20:641C $18 $27
 
 jr_020_641E:

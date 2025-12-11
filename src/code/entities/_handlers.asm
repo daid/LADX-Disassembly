@@ -32,7 +32,7 @@ EntityHandlersTable::
 ._10 far_pointer HidingGhiniEntityHandler
 ._11 far_pointer GiantGhiniEntityHandler
 ._12 far_pointer GhiniEntityHandler
-._13 far_pointer Entity13Handler
+._13 far_pointer EntityInventoryDropHandler
 ._14 far_pointer MoblinSwordEntityHandler ; $14
 ._15 far_pointer AntiFairyEntityHandler
 ._16 far_pointer SparkClockwiseEntityHandler
