@@ -74,10 +74,18 @@ LSD_ResetEntity:
             add  hl, bc
             ld   [hl], a
 
+            ldh  a, [hNeedsUpdatingEntityTilesA]
+            and  a, a
             ld   a, d
-            ldh  [hNeedsUpdatingEntityTilesA], a
-            dec  a
-            ld   [wEntityTilesSpriteslotIndexA], a
+            if   z {
+                ldh  [hNeedsUpdatingEntityTilesA], a
+                dec  a
+                ld   [wEntityTilesSpriteslotIndexA], a
+            } else {
+                ld   [wNeedsUpdatingEntityTilesB], a
+                dec  a
+                ld   [wEntityTilesSpriteslotIndexB], a
+            }
             ret
         }
         dec hl
