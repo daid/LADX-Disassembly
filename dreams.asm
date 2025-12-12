@@ -164,8 +164,12 @@ BuildRooms:
     ; Clear wGlobalInventoryTable
     ld   a, BANK(wGlobalInventoryTable)
     ldh  [rSVBK], a
-    ld   hl, wGlobalInventoryTable
     xor  a
+    ld   hl, wGlobalInventoryTable
+.clearwGlobalInventoryTableLoop:
+    ld   [hl+], a
+    bit  5, h
+    jr   z, .clearwGlobalInventoryTableLoop
     ldh  [rSVBK], a
 
     ret
