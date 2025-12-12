@@ -14,7 +14,7 @@ LSD_DropItemFromInventoryScreen:
     ld   a, [hl]
     and  a, a
     ret  z ; no item
-    ldh  [hMultiPurposeE], a
+    ldh  [hLSDTemporary1], a
     pushpop hl, bc {
         ld   a, $13 ; ENTITY_INVENTORY_DROP
         call SpawnNewEntity_trampoline
@@ -30,9 +30,9 @@ LSD_DropItemFromInventoryScreen:
         ld   hl, wEntitiesStateTable
         add  hl, de
         ld   [hl], $01 ; set state to StateWaitForLinkDistance
-        ld   hl, wEntitiesPrivateState1Table
+        ld   hl, wEntitiesSpriteVariantTable
         add  hl, de
-        ldh  a, [hMultiPurposeE]
+        ldh  a, [hLSDTemporary1]
         ld   [hl], a
     }
     ld   a, $13 ; JINGLE_VALIDATE
@@ -96,7 +96,7 @@ LSD_LoadGlobalFloorItems:
                 ld   hl, wEntitiesStateTable
                 add  hl, de
                 ld   [hl], $02 ; set state to StateOldPickup
-                ld   hl, wEntitiesPrivateState1Table
+                ld   hl, wEntitiesSpriteVariantTable
                 add  hl, de
                 ld   [hl], b  ; store item type
                 ld   hl, wEntitiesPrivateState2Table
@@ -108,6 +108,13 @@ LSD_LoadGlobalFloorItems:
                 ld   hl, wEntitiesPrivateState3Table
                 add  hl, de
                 ld   [hl], a
+                ld   hl, wEntitiesPosXSignTable
+                add  hl, de
+                ld   [hl], d
+                ld   hl, wEntitiesPosYSignTable
+                add  hl, de
+                ld   [hl], d
+                call PrepareEntityPositionForRoomTransition_trampoline
             }
         } else {
             inc hl
@@ -133,7 +140,7 @@ EntityInventoryDropHandler:
     and  a
     call z, InventoryAddToGlobalInventoryTable
 
-    ld   de, EntityInventoryDropSprite
+    ld   de, EntityInventoryDropSprite - 2
     call RenderActiveEntitySprite
     ldh  a, [hActiveEntityState]
     rst  0
@@ -189,9 +196,8 @@ EntityInventoryDropHandler:
         ret  z
     }
 
-    ld   hl, wEntitiesPrivateState1Table
-    add  hl, bc
-    ld   d, [hl]
+    ldh  a, [hActiveEntitySpriteVariant]
+    ld   d, a
     ; TODO: Handle full inventory
     call GiveInventoryItem_trampoline
 
@@ -202,6 +208,9 @@ EntityInventoryDropHandler:
     ld   [hl], $03
     call GetEntityTransitionCountdown
     ld   [hl], $20
+
+    ld   a, $02
+    ldh  [hLinkInteractiveMotionBlocked], a
 
     ; Remove ourselfs from the wGlobalInventoryTable
     ld   hl, wEntitiesPrivateState2Table
@@ -272,10 +281,8 @@ InventoryAddToGlobalInventoryTable:
         ld   hl, wEntitiesPrivateState2Table
         add  hl, bc
         ld   [hl], e
-        ld   hl, wEntitiesPrivateState1Table
-        add  hl, bc
-        ld   a, [hl]
     }
+    ldh  a, [hActiveEntitySpriteVariant]
     ld   [hl+], a
     ldh  a, [hMapRoom]
     ld   [hl+], a

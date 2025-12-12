@@ -7167,8 +7167,15 @@ LoadRoomEntities::
     call LoadEntityFromDefinition                 ;; 00:3872 $CD $83 $38
     jr   .loop                                    ;; 00:3875 $18 $F6
 .break
+    
+    ld   a, [wCurrentBank]
+    push af
+    ld   a, BANK(LSD_LoadGlobalFloorItems)
+    call SwitchBank
+    call LSD_LoadGlobalFloorItems
+    pop  af
+    ld   [wCurrentBank], a
 
-    callsb LSD_LoadGlobalFloorItems
     call ReloadSavedBank                          ;; 00:3877 $CD $1D $08
     ret                                           ;; 00:387A $C9
 

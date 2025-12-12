@@ -6,6 +6,8 @@ IntroSeaPaletteTable::
     db   $C6, $C2, $C0, $C2                       ;; 01:6E19
 
 IntroHandlerEntryPoint::
+    call LSD_randSRAM ; LSD run our map seed every frame on the intro sequence
+
     ldh  a, [hButtonsInactiveDelay]               ;; 01:6E1D $F0 $B5
     and  a  ; if ButtonsInactiveDelay == 0        ;; 01:6E1F $A7
     jr   z, .checkJoypad                          ;; 01:6E20 $28 $06

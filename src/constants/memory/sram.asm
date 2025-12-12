@@ -51,3 +51,6 @@ SaveGame3:
 .dx3:
     ds SAVE_DX3_SIZE
 .end:
+
+sRandState:
+    ds 4

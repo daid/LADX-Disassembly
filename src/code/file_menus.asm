@@ -15,6 +15,8 @@
 DEF NameEntryCharacterTableSize EQUS "(NameEntryCharacterTable.end - NameEntryCharacterTable)"
 
 FileSelectionEntryPoint::
+    call LSD_randSRAM ; LSD run our map seed every frame on the intro sequence
+
     call func_5DC0                                ;; 01:47CE $CD $C0 $5D
     ld   a, [wGameplaySubtype]                    ;; 01:47D1 $FA $96 $DB
     JP_TABLE                                      ;; 01:47D4 $C7

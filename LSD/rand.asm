@@ -33,7 +33,6 @@ wRandState: ds 4
 ; x[i + 1] = x[i] * 0x01010101 + 0x31415927
 ; @return A=B=state bits 31-24 (which have the best entropy),
 ; C=state bits 23-16
-rand:
 _rand8:  ; uint8_t rand8(void) __preserves_regs(d, e, h, l)
 _rand16: ; uint16_t rand16(void) __preserves_regs(d, e, h, l)
     push hl
@@ -73,5 +72,26 @@ _rand16: ; uint16_t rand16(void) __preserves_regs(d, e, h, l)
     ld b,a
     pop de
     pop hl
+    ret
+
+; Run the seed forward and store it in SRAM. This causes the main map generation seed to constantly change
+; Only call this outside the usual game.
+LSD_randSRAM:
+    call EnableSRAM
+    ld   hl, sRandState
+    ld   de, wRandState
+    loop c, 4 {
+        ld  a, [hl+]
+        ld  [de], a
+        inc de
+    }
+    call _rand8
+    ld   de, wRandState
+    ld   hl, sRandState
+    loop c, 4 {
+        ld  a, [hl+]
+        ld  [de], a
+        inc de
+    }
     ret
 }
