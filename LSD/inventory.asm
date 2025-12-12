@@ -129,9 +129,31 @@ LSD_LoadGlobalFloorItems:
     ret
 }
 
+#SECTION "PrepareEntityPositionForRoomTransition_trampoline", ROM0 {
+; We need a trampoline for the function that can setup entities proper for scrolling in view.
+PrepareEntityPositionForRoomTransition_trampoline:
+    ld   a, BANK(PrepareEntityPositionForRoomTransition)
+    ld   [$2100], a
+    call PrepareEntityPositionForRoomTransition
+    jp   ReloadSavedBank
+}
+
 #SECTION "InventoryDropItem", ROMX, BANK[$3E] {
 EntityInventoryDropSprite:
-    db  $04, $00
+    db  $84, $05 ; INVENTORY_SWORD
+    db  $80, $05 ; INVENTORY_BOMBS
+    db  $82, $04 ; INVENTORY_POWER_BRACELET
+    db  $86, $04 ; INVENTORY_SHIELD
+    db  $88, $04 ; INVENTORY_BOW
+    db  $8A, $04 ; INVENTORY_HOOKSHOT
+    db  $8C, $04 ; INVENTORY_MAGIC_ROD
+    db  $98, $04 ; INVENTORY_PEGASUS_BOOTS
+    db  $90, $05 ; INVENTORY_OCARINA
+    db  $92, $04 ; INVENTORY_ROCS_FEATHER
+    db  $96, $04 ; INVENTORY_SHOVEL
+    db  $8E, $04 ; INVENTORY_MAGIC_POWDER
+    db  $A4, $04 ; INVENTORY_BOOMERANG
+
 
 EntityInventoryDropHandler:
     ld   hl, wEntitiesPrivateState2Table
