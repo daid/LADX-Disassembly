@@ -160,6 +160,14 @@ BuildRooms:
             add  hl, de
         }
     }
+
+    ; Clear wGlobalInventoryTable
+    ld   a, BANK(wGlobalInventoryTable)
+    ldh  [rSVBK], a
+    ld   hl, wGlobalInventoryTable
+    xor  a
+    ldh  [rSVBK], a
+
     ret
 
 CopyRoomPart:

@@ -1,3 +1,9 @@
+#SECTION "GlobalInventoryTable", WRAMX[$D000], BANK[6] {
+wGlobalInventoryTable:
+    ; Store TypeID/X/Y/Map/Amount of item dropped on the floor
+    ds $1000
+}
+
 #SECTION "Inventory", ROMX, BANK[$20] {
 LSD_DropItemFromInventoryScreen:
     ld   hl, wInventoryItems.subscreen
@@ -47,16 +53,22 @@ EntityInventoryDropSprite:
     db  $04, $00
 
 EntityInventoryDropHandler:
+    ld   hl, wEntitiesPrivateState2Table
+    add  hl, bc
+    ld   a, [hl]
+    and  a
+    call z, InventoryAddToGlobalInventoryTable
+
     ld   de, EntityInventoryDropSprite
     call RenderActiveEntitySprite
     ldh  a, [hActiveEntityState]
     rst  0
-    dw   StateNewPickup
-    dw   StateWaitForLinkDistance
-    dw   StateOldPickup
-    dw   StateDoingPickup
+    dw   .StateNewPickup
+    dw   .StateWaitForLinkDistance
+    dw   .StateOldPickup
+    dw   .StateDoingPickup
 
-StateWaitForLinkDistance:
+.StateWaitForLinkDistance:
     ldh  a, [hLinkPositionX]
     ld   hl, wEntitiesPosXTable
     add  hl, bc
@@ -73,8 +85,13 @@ StateWaitForLinkDistance:
     ret  c
     jp   IncrementEntityState
 
-StateNewPickup:
-StateOldPickup:
+.StateNewPickup:
+.StateOldPickup:
+    ; If we cannot act, ignore picking up the item.
+    ldh  a, [hLinkInteractiveMotionBlocked]
+    and  a, a
+    ret  nz
+
     ldh  a, [hLinkPositionX]
     ld   hl, wEntitiesPosXTable
     add  hl, bc
@@ -89,21 +106,31 @@ StateOldPickup:
     add  $08
     cp   $10
     ret  nc
-    ld   a, $01 ; JINGLE_TREASURE_FOUND
-    ldh  [hJingle], a
+    ldh  a, [hActiveEntityState]
+    and  a
+    if   nz {
+        ; If it isn't a new item, we need a A/B press to pick it up.
+        ldh  a, [hJoypadState]
+        and  $30 ; A/B
+        ret  z
+    }
 
     ld   hl, wEntitiesPrivateState1Table
     add  hl, bc
     ld   d, [hl]
+    ; TODO: Handle full inventory
     call GiveInventoryItem_trampoline
+
+    ld   a, $01 ; JINGLE_TREASURE_FOUND
+    ldh  [hJingle], a
 
     call IncrementEntityState
     ld   [hl], $03
     call GetEntityTransitionCountdown
-    ld   [hl], $30
+    ld   [hl], $20
     ret
 
-StateDoingPickup:
+.StateDoingPickup:
     ldh  a, [hLinkPositionX]
     ld   hl, wEntitiesPosXTable
     add  hl, bc
@@ -121,7 +148,55 @@ StateDoingPickup:
     ld   a, $6C ; LINK_ANIMATION_STATE_GOT_ITEM
     ldh  [hLinkAnimationState], a
 
+    ld   a, $02
+    ldh  [hLinkInteractiveMotionBlocked], a
+
     call GetEntityTransitionCountdown
     ret  nz
     jp   UnloadEntity
+
+; Search a free spot in wGlobalInventoryTable and add this item.
+; And store the index+1 in wEntitiesPrivateState2Table
+InventoryAddToGlobalInventoryTable:
+    ld   a, BANK(wGlobalInventoryTable)
+    ldh  [rSVBK], a
+    ld   hl, wGlobalInventoryTable
+    ld   e, 1
+    
+.searchEmptyGlobalTableEntryLoop:
+    ld   a, [hl]
+    and  a, a
+    jr   z, .EmptySpotFound
+    inc  e
+    inc  hl
+    inc  hl
+    inc  hl
+    inc  hl
+    inc  hl
+    jr   .searchEmptyGlobalTableEntryLoop
+.EmptySpotFound:
+    pushpop hl {
+        ld   hl, wEntitiesPrivateState2Table
+        add  hl, bc
+        ld   [hl], e
+        ld   hl, wEntitiesPrivateState1Table
+        add  hl, bc
+        ld   a, [hl]
+    }
+    ld   [hl+], a
+    ldh  a, [hActiveEntityPosX]
+    ld   [hl+], a
+    ldh  a, [hActiveEntityPosY]
+    ld   [hl+], a
+    ldh  a, [hMapRoom]
+    ld   [hl+], a
+    pushpop hl {
+        ld   hl, wEntitiesPrivateState3Table
+        add  hl, bc
+        ld   a, [hl]
+    }
+    ld   [hl+], a
+    xor  a
+    ldh  [rSVBK], a
+    ret
 }
