@@ -3,8 +3,8 @@
 
 #define DIR_RIGHT 0
 #define DIR_LEFT 1
-#define DIR_UP 2
-#define DIR_DOWN 3
+#define DIR_DOWN 2
+#define DIR_UP 3
 
 extern uint8_t randomMapData[0x40];
 extern __sfr hMapRoom;
@@ -74,17 +74,17 @@ uint8_t generateRandomMove(uint8_t from)
 {
     uint8_t move_dir = rand8() & 3;
     switch(move_dir) {
-    case DIR_RIGHT: //right
+    case DIR_RIGHT:
         if ((from & 0x07) == 0x07) return 0xFF;
         return move_dir;
-    case DIR_LEFT: //left
+    case DIR_LEFT:
         if ((from & 0x07) == 0) return 0xFF;
         return move_dir;
-    case DIR_UP: //up
-        if ((from & 0x38) == 0) return 0xFF;
-        return move_dir;
-    case DIR_DOWN: //down
+    case DIR_DOWN:
         if ((from & 0x38) == 0x38) return 0xFF;
+        return move_dir;
+    case DIR_UP:
+        if ((from & 0x38) == 0) return 0xFF;
         return move_dir;
     }
 }
@@ -94,55 +94,8 @@ uint8_t doMove(uint8_t from, uint8_t dir)
     switch(dir) {
     case DIR_RIGHT: return from + 1;
     case DIR_LEFT: return from - 1;
-    case DIR_UP: return from - 8;
     case DIR_DOWN: return from + 8;
+    case DIR_UP: return from - 8;
     }
     return from;
 }
-
-/*
-; e = source room
-; d = target room
-; b = direction
-setRoomEdgeOpen:
-    ld   h, HIGH(wRandomMapData)
-    ld   a, b
-    and  a
-    jr   z, .right
-    dec  a
-    jr   z, .left
-    dec  a
-    jr   z, .up
-.down:
-    ld   l, e
-    set  7, [hl]
-    set  2, [hl]
-    ld   l, d
-    set  7, [hl]
-    set  3, [hl]
-    ret
-.up:
-    ld   l, e
-    set  7, [hl]
-    set  3, [hl]
-    ld   l, d
-    set  7, [hl]
-    set  2, [hl]
-    ret
-.left:
-    ld   l, e
-    set  7, [hl]
-    set  1, [hl]
-    ld   l, d
-    set  7, [hl]
-    set  0, [hl]
-    ret
-.right:
-    ld   l, e
-    set  7, [hl]
-    set  0, [hl]
-    ld   l, d
-    set  7, [hl]
-    set  1, [hl]
-    ret
-*/

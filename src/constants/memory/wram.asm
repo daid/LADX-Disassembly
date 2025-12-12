@@ -3055,6 +3055,7 @@ wBGMapToLoad::
 ;
 ; First section is FF values padding…
 _randomMapData: ; LSD: Temporary storage for random map data during map generation
+wRandomMapData:
 wRoomObjectsArea::
   ds $11 ; D700 - D710
 
