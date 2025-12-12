@@ -128,6 +128,25 @@ EntityInventoryDropHandler:
     ld   [hl], $03
     call GetEntityTransitionCountdown
     ld   [hl], $20
+
+    ; Remove ourselfs from the wGlobalInventoryTable
+    ld   hl, wEntitiesPrivateState2Table
+    add  hl, bc
+    ld   e, [hl]
+    dec  e
+    ld   d, b
+    ld   hl, wGlobalInventoryTable
+    add  hl, de
+    add  hl, de
+    add  hl, de
+    add  hl, de
+    add  hl, de
+    ld   a, BANK(wGlobalInventoryTable)
+    ldh  [rSVBK], a
+    xor  a
+    ld   [hl], a
+    ldh  [rSVBK], a
+
     ret
 
 .StateDoingPickup:
