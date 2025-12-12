@@ -33,7 +33,7 @@ default: build
 
 # Dependencies for the base version (English 1.0)
 asm_files :=  $(call rwildcard,src,*.asm)
-LSD_files :=  $(call rwildcard,LSD,*.asm)
+LSD_files :=  $(call rwildcard,LSD,*.asm) $(call rwildcard,LSD,*.png)
 LSD_c_files :=  $(call rwildcard,LSD,*.c)
 LSD_h_files :=  $(call rwildcard,LSD,*.h)
 LSD_rel_files := $(addprefix .obj/, $(LSD_c_files:.c=.rel) )

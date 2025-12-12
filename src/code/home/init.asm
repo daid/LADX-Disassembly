@@ -36,6 +36,7 @@ Init::
 
     ; Super GameBoy detection and initialization
     callsb SuperGameBoyInit                       ;; 00:0177 $3E $3C $EA $00 $21 $CD $22 $6A
+    callsb LSD_VRAM1_init
 
     ; Clear registers
     xor  a                                        ;; 00:017F $AF

@@ -86,8 +86,8 @@ LSD_randSRAM:
         inc de
     }
     call _rand8
-    ld   de, wRandState
-    ld   hl, sRandState
+    ld   de, sRandState
+    ld   hl, wRandState
     loop c, 4 {
         ld  a, [hl+]
         ld  [de], a

@@ -462,8 +462,14 @@ jr_001_531D::
     ld   a, $01
     ld   [wInventoryItems], a
     ld   [wSwordLevel], a
-    ld   a, $0A
+    ld   a, $0E
     ld   [wInventoryItems+1], a
+    ld   a, $0F
+    ld   [wInventoryItems+2], a
+    ld   a, $10
+    ld   [wInventoryItems+3], a
+    ld   a, $0A
+    ld   [wInventoryItems+4], a
     jr   .finish                                  ;; 01:53D6 $18 $B6
 
 Data_001_53D8::

@@ -2868,7 +2868,7 @@ func_020_5BB9::
     ld   d, $00                                   ;; 20:5BBE $16 $00
     ld   hl, wDrawCommandVRAM1                    ;; 20:5BC0 $21 $91 $DC
     add  hl, de                                   ;; 20:5BC3 $19
-    add  $05                                      ;; 20:5BC4 $C6 $05
+    add  $0A                                      ;; 20:5BC4 $C6 $05
     ld   [wDrawCommandsVRAM1Size], a              ;; 20:5BC6 $EA $90 $DC
     push hl                                       ;; 20:5BC9 $E5
     sla  c                                        ;; 20:5BCA $CB $21
@@ -2882,51 +2882,55 @@ func_020_5BB9::
     ld   [hl+], a                                 ;; 20:5BD5 $22
     ld   a, [de]                                  ;; 20:5BD6 $1A
     ld   [hl+], a                                 ;; 20:5BD7 $22
-    ld   a, $81                                   ;; 20:5BD8 $3E $81
+    ld   a, $01                                   ;; 20:5BD8 $3E $81
     ld   [hl+], a                                 ;; 20:5BDA $22
     push hl                                       ;; 20:5BDB $E5
     ldh  a, [hMultiPurpose1]                      ;; 20:5BDC $F0 $D8
     sla  a                                        ;; 20:5BDE $CB $27
+    sla  a
     ld   c, a                                     ;; 20:5BE0 $4F
     ld   hl, InventoryItemPaletteIndexes          ;; 20:5BE1 $21 $14 $5C
     add  hl, bc                                   ;; 20:5BE4 $09
     push hl                                       ;; 20:5BE5 $E5
     pop  de                                       ;; 20:5BE6 $D1
     pop  hl                                       ;; 20:5BE7 $E1
-    cp   $06                                      ;; 20:5BE8 $FE $06
-    jr   nz, .jr_5BF9                             ;; 20:5BEA $20 $0D
 
-    ld   a, [wPowerBraceletLevel]                 ;; 20:5BEC $FA $43 $DB
-    cp   $02                                      ;; 20:5BEF $FE $02
-    jr   nz, .jr_5BF9                             ;; 20:5BF1 $20 $06
-
-    ld   a, $02                                   ;; 20:5BF3 $3E $02
-    ld   [hl+], a                                 ;; 20:5BF5 $22
-    ld   [hl+], a                                 ;; 20:5BF6 $22
-    jr   .jr_020_5C10                             ;; 20:5BF7 $18 $17
-
-.jr_5BF9
-    cp   $18                                      ;; 20:5BF9 $FE $18
-    jr   nz, .jr_5C0B                             ;; 20:5BFB $20 $0E
-
-    ld   a, [wHasToadstool]                       ;; 20:5BFD $FA $4B $DB
-    and  a                                        ;; 20:5C00 $A7
-    jr   z, .jr_5C0B                              ;; 20:5C01 $28 $08
-
-    ld   a, $02                                   ;; 20:5C03 $3E $02
-    ld   [hl+], a                                 ;; 20:5C05 $22
-    ld   a, $03                                   ;; 20:5C06 $3E $03
-    ld   [hl+], a                                 ;; 20:5C08 $22
-    jr   .jr_020_5C10                             ;; 20:5C09 $18 $05
-
-.jr_5C0B
+    ; Copy first two attributes
     ld   a, [de]                                  ;; 20:5C0B $1A
     inc  de                                       ;; 20:5C0C $13
     ld   [hl+], a                                 ;; 20:5C0D $22
     ld   a, [de]                                  ;; 20:5C0E $1A
+    inc  de
     ld   [hl+], a                                 ;; 20:5C0F $22
 
-.jr_020_5C10:
+    push de
+    ; Get the VRAM destination address + $20 of the first two bytes
+    ld   a, l
+    sub  5
+    ld   l, a
+    ld   d, [hl]
+    inc  hl
+    ld   a, [hl+]
+    add  a, $20
+    ld   e, a
+    inc  hl
+    inc  hl
+    inc  hl
+    ld   [hl], d
+    inc  hl
+    ld   [hl], e
+    inc  hl
+    ld   [hl], $01
+    inc  hl
+    pop  de
+    ; Bottom two tile attributes
+    ld   a, [de]
+    inc  de
+    ld   [hl+], a
+    ld   a, [de]
+    inc  de
+    ld   [hl+], a
+
     xor  a                                        ;; 20:5C10 $AF
     ld   [hl], a                                  ;; 20:5C11 $77
     pop  bc                                       ;; 20:5C12 $C1
@@ -2936,19 +2940,39 @@ InventoryItemPaletteIndexes::
     ; Palettes used by the inventory items. This only affects the
     ; leftmost column.
     db  $01, $01 ; (blank)
+    db  $01, $01
     db  $01, $01 ; INVENTORY_SWORD
+    db  $01, $01
     db  $01, $01 ; INVENTORY_BOMBS
+    db  $01, $01
     db  $01, $01 ; INVENTORY_POWER_BRACELET  (note: L2 has special code elsewhere)
+    db  $01, $01
     db  $01, $01 ; INVENTORY_SHIELD
-    db  $03, $03 ; INVENTORY_BOW
-    db  $01, $02 ; INVENTORY_HOOKSHOT
+    db  $01, $01
+    db  $03, $01 ; INVENTORY_BOW
+    db  $03, $01
+    db  $01, $01 ; INVENTORY_HOOKSHOT
+    db  $02, $01
     db  $02, $01 ; INVENTORY_MAGIC_ROD
-    db  $03, $03 ; INVENTORY_PEGASUS_BOOTS
-    db  $02, $02 ; INVENTORY_OCARINA
-    db  $03, $03 ; INVENTORY_ROCS_FEATHER
+    db  $01, $01
+    db  $03, $01 ; INVENTORY_PEGASUS_BOOTS
+    db  $03, $01
+    db  $02, $01 ; INVENTORY_OCARINA
+    db  $02, $01
+    db  $03, $01 ; INVENTORY_ROCS_FEATHER
+    db  $03, $01
     db  $03, $01 ; INVENTORY_SHOVEL
-    db  $03, $03 ; INVENTORY_MAGIC_POWDER
-    db  $02, $02 ; INVENTORY_BOOMERANG
+    db  $01, $01
+    db  $03, $01 ; INVENTORY_MAGIC_POWDER
+    db  $03, $01
+    db  $02, $01 ; INVENTORY_BOOMERANG
+    db  $02, $01
+    db  $0B, $2B ; INVENTORY_PIECE_OF_POWER
+    db  $0B, $2B
+    db  $01, $01 ; INVENTORY_POTION
+    db  $02, $01
+    db  $01, $01 ; INVENTORY_POTION2
+    db  $01, $01
 
 InventoryItemTiles::
     ; Tiles used for the inventory items.
@@ -2981,6 +3005,12 @@ InventoryItemTiles::
     db $8F, $7F, $7F ;
     db $A4, $7F, $7F ; INVENTORY_BOOMERANG
     db $A5, $7F, $7F ;
+    db $80, $80, $7F ; INVENTORY_PIECE_OF_POWER
+    db $81, $81, $7F ;
+    db $A0, $7F, $7F ; INVENTORY_POTION
+    db $A1, $7F, $7F ;
+    db $A0, $7F, $7F ; INVENTORY_POTION2
+    db $A1, $7F, $7F ;
 
 
 InventoryTileMapPositions::

@@ -20,10 +20,20 @@ LSD_DropItemFromInventoryScreen:
         call SpawnNewEntity_trampoline
         jr   c, .exit
         ldh  a, [hLinkPositionX]
+        ld   h, a
+        call GetRandomByte
+        and  7
+        sub  3
+        add  h
         ld   hl, wEntitiesPosXTable
         add  hl, de
         ld   [hl], a
         ldh  a, [hLinkPositionY]
+        ld   h, a
+        call GetRandomByte
+        and  7
+        sub  3
+        add  h
         ld   hl, wEntitiesPosYTable
         add  hl, de
         ld   [hl], a
@@ -153,7 +163,12 @@ EntityInventoryDropSprite:
     db  $96, $04 ; INVENTORY_SHOVEL
     db  $8E, $04 ; INVENTORY_MAGIC_POWDER
     db  $A4, $04 ; INVENTORY_BOOMERANG
+    db  $00, $00 ; INVENTORY_PIECE_OF_POWER
+    db  $A0, $04 ; INVENTORY_POTION
+    db  $A0, $05 ; INVENTORY_POTION2
 
+EntityInventoryDropSprite2:
+    db  $80, $0C, $80, $2C
 
 EntityInventoryDropHandler:
     ld   hl, wEntitiesPrivateState2Table
@@ -162,8 +177,15 @@ EntityInventoryDropHandler:
     and  a
     call z, InventoryAddToGlobalInventoryTable
 
-    ld   de, EntityInventoryDropSprite - 2
-    call RenderActiveEntitySprite
+    ldh  a, [hActiveEntitySpriteVariant]
+    cp   $0E ; INVENTORY_PIECE_OF_POWER
+    if z {
+        ld   de, EntityInventoryDropSprite2 - $0E * 4
+        call RenderActiveEntitySpritesPair
+    } else {
+        ld   de, EntityInventoryDropSprite - 2
+        call RenderActiveEntitySprite
+    }
     ldh  a, [hActiveEntityState]
     rst  0
     dw   .StateNewPickup
@@ -218,10 +240,17 @@ EntityInventoryDropHandler:
         ret  z
     }
 
+    ld   hl, wInventoryItems
+    loop e, $0C {
+        ld  a, [hl+]
+        and a, a
+        jr  z, .emptySlotFound
+    }
+    ret
+.emptySlotFound:
     ldh  a, [hActiveEntitySpriteVariant]
-    ld   d, a
-    ; TODO: Handle full inventory
-    call GiveInventoryItem_trampoline
+    dec  hl
+    ld   [hl], a
 
     ld   a, $01 ; JINGLE_TREASURE_FOUND
     ldh  [hJingle], a
