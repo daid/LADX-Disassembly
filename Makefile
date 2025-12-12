@@ -1,6 +1,6 @@
 .POSIX:
 .SUFFIXES:
-.PRECIOUS: %.2bpp oam_%.2bpp
+.PRECIOUS: %.2bpp oam_%.2bpp .obj/LSD/%.rel
 .PHONY: default build build-all test test-all all clean tidy
 
 # Recursive `wildcard` function.
@@ -34,6 +34,9 @@ default: build
 # Dependencies for the base version (English 1.0)
 asm_files :=  $(call rwildcard,src,*.asm)
 LSD_files :=  $(call rwildcard,LSD,*.asm)
+LSD_c_files :=  $(call rwildcard,LSD,*.c)
+LSD_h_files :=  $(call rwildcard,LSD,*.h)
+LSD_rel_files := $(addprefix .obj/, $(LSD_c_files:.c=.rel) )
 # this is the only .inc file in the repo
 asm_files +=  src/constants/hardware.inc
 gfx_files :=  $(call rwildcard,src/gfx,*.png)
@@ -58,11 +61,15 @@ oam_%.2bpp: oam_%.png
 src/main.%.o: src/main.asm $(asm_files) $(gfx_files:.png=.2bpp) $(bin_files)
 	$(ASM) $(ASFLAGS) $($*_ASFLAGS) -I src/ -o $@ $<
 
+.obj/LSD/%.rel: LSD/%.c $(LSD_h_files)
+	mkdir -p $(dir $@)
+	sdcc -msm83 $< -c -o $@
+
 # Link object files into a GBC executable rom
 # The arguments used are both the global options (e.g. `LDFLAGS`) and the
 # locale-specific options (e.g. `azlg-r1_LDFLAGS`).
-%.gbc: src/main.%.o dreams.asm $(LSD_files)
-	python3 ../GB.HLA/main.py dreams.asm --output $@ --symbols $*.sym
+%.gbc: src/main.%.o dreams.asm $(LSD_files) $(LSD_rel_files)
+	python3 ../GB.HLA/main.py dreams.asm --output $@ --symbols $*.sym --include-path .obj/
 	python3 ../BadBoy/tools/ips.py ../LADX-Disassembly/$@ $@ $*.ips
 
 # Make may attempt to re-generate the Makefile; prevent this.
@@ -183,6 +190,7 @@ clean: tidy
 	rm -f $(azlj_gfx:.png=.2bpp)
 	rm -f $(azlg_gfx:.png=.2bpp)
 	rm -f $(azlf_gfx:.png=.2bpp)
+	rm -rf .obj
 
 ### Debug Print ###
 

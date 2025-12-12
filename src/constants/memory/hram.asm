@@ -507,6 +507,7 @@ hActiveEntityTilesOffset::
   ds 1 ; FFF5
 
 ; Room id on the active map
+_hMapRoom: ; LSD: Allow c access
 hMapRoom:: ; FFF6
   ds 1
 

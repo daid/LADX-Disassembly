@@ -3054,6 +3054,7 @@ wBGMapToLoad::
 ; - wRoomObjectsArea must be $10-bytes aligned (otherwise various copy loops break)
 ;
 ; First section is FF values padding…
+_randomMapData: ; LSD: Temporary storage for random map data during map generation
 wRoomObjectsArea::
   ds $11 ; D700 - D710
 

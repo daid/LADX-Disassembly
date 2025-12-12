@@ -5,6 +5,7 @@ BANKED_WRAM = 1
 #INCLUDE "gbz80/extra/if.asm"
 
 #INCRGBDS "src/main.azle.o"
+#INCSDCC "LSD/mapgen.rel"
 
 GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 
