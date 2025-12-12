@@ -1,6 +1,6 @@
 #SECTION "GlobalInventoryTable", WRAMX[$D000], BANK[6] {
 wGlobalInventoryTable:
-    ; Store TypeID/X/Y/Map/Amount of item dropped on the floor
+    ; Store TypeID/Map/X/Y/Amount of item dropped on the floor
     ds $1000
 }
 
@@ -45,6 +45,80 @@ LSD_DropItemFromInventoryScreen:
 .exit:
     pop  bc
     pop  hl
+    ret
+}
+
+#SECTION "LoadGlobalFloorItems", ROMX, BANK[$3E] {
+LSD_GetGlobalInventoryTable:
+    ld   a, BANK(wGlobalInventoryTable)
+    ldh  [rSVBK], a
+    ld   a, [hl+]
+    ldh  [hLSDTemporary0], a
+    xor  a
+    ldh  [rSVBK], a
+    ldh  a, [hLSDTemporary0]
+    ret
+
+LSD_LoadGlobalFloorItems:
+    ld   hl, wGlobalInventoryTable
+    ld   c, 1
+.loop:
+    call LSD_GetGlobalInventoryTable
+    and  a, a
+    if   z {
+        ld  de, 4
+        add hl, de
+    } else {
+        ld  b, a ; store item type
+        call LSD_GetGlobalInventoryTable
+        ld  d, a
+        ldh a, [hMapRoom]
+        cp  d
+        if  z { ; our current room, so create this floor inventory item
+            pushpop hl, bc {
+                ld   a, $13 ; ENTITY_INVENTORY_DROP
+                call SpawnNewEntity_trampoline
+                if c {
+                    db $dd ; TODO: Handle spawn failure
+                }
+            }
+            call LSD_GetGlobalInventoryTable ; X
+            pushpop hl {
+                ld   hl, wEntitiesPosXTable
+                add  hl, de
+                ld   [hl], a
+            }
+            call LSD_GetGlobalInventoryTable ; Y
+            pushpop hl {
+                ld   hl, wEntitiesPosYTable
+                add  hl, de
+                ld   [hl], a
+                ld   hl, wEntitiesStateTable
+                add  hl, de
+                ld   [hl], $02 ; set state to StateOldPickup
+                ld   hl, wEntitiesPrivateState1Table
+                add  hl, de
+                ld   [hl], b  ; store item type
+                ld   hl, wEntitiesPrivateState2Table
+                add  hl, de
+                ld   [hl], c  ; store global inventory index
+            }
+            call LSD_GetGlobalInventoryTable ; amount
+            pushpop hl {
+                ld   hl, wEntitiesPrivateState3Table
+                add  hl, de
+                ld   [hl], a
+            }
+        } else {
+            inc hl
+            inc hl
+            inc hl
+        }
+    }
+    inc c
+    jr  nz, .loop
+    xor  a
+    ldh  [rSVBK], a    
     ret
 }
 
@@ -203,11 +277,11 @@ InventoryAddToGlobalInventoryTable:
         ld   a, [hl]
     }
     ld   [hl+], a
+    ldh  a, [hMapRoom]
+    ld   [hl+], a
     ldh  a, [hActiveEntityPosX]
     ld   [hl+], a
     ldh  a, [hActiveEntityPosY]
-    ld   [hl+], a
-    ldh  a, [hMapRoom]
     ld   [hl+], a
     pushpop hl {
         ld   hl, wEntitiesPrivateState3Table

@@ -7168,6 +7168,7 @@ LoadRoomEntities::
     jr   .loop                                    ;; 00:3875 $18 $F6
 .break
 
+    callsb LSD_LoadGlobalFloorItems
     call ReloadSavedBank                          ;; 00:3877 $CD $1D $08
     ret                                           ;; 00:387A $C9
 
