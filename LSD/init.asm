@@ -7,6 +7,8 @@ VRAM1InitGfx:
 LSD_VRAM1_init:
     ld   a, 1
     ldh  [rVBK], a
+    xor  a
+    ld   [rLCDC], a
 
     ld  hl, rHDMA1
     ld  [hl], HIGH(VRAM1InitGfx)

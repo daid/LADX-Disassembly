@@ -1,7 +1,7 @@
 #SECTION "GlobalInventoryTable", WRAMX[$D000], BANK[6] {
 wGlobalInventoryTable:
     ; Store TypeID/Map/X/Y/Amount of item dropped on the floor
-    ds $1000
+    ds 5 * $100
 }
 
 #SECTION "Inventory", ROMX, BANK[$20] {
@@ -43,6 +43,15 @@ LSD_DropItemFromInventoryScreen:
         ld   hl, wEntitiesSpriteVariantTable
         add  hl, de
         ldh  a, [hLSDTemporary1]
+        ld   [hl], a
+        ; store the amount, and remove the amount we have.
+        pushpop de {
+            call getAmountPtrForInventory
+        }
+        ld   a, [hl]
+        ld   [hl], 0
+        ld   hl, wEntitiesPrivateState3Table
+        add  hl, de
         ld   [hl], a
     }
     ld   a, $13 ; JINGLE_VALIDATE
@@ -136,6 +145,25 @@ LSD_LoadGlobalFloorItems:
     jr  nz, .loop
     xor  a
     ldh  [rSVBK], a    
+    ret
+}
+
+#SECTION "getAmountPtrForInventory", ROM0 {
+; Get the pointers to item quantities for specific inventory items.
+; In: A = Item type
+; Out: hl = pointer to amount
+;      de = pointer to max amount
+getAmountPtrForInventory:
+    ld   hl, wBombCount
+    ld   de, wMaxBombs
+    cp   $02 ; INVENTORY_BOMBS
+    ret  z
+    ld   hl, wArrowCount
+    ld   de, wMaxArrows
+    cp   $05 ; INVENTORY_BOW
+    ret  z
+    ld   hl, wColorDungeonItemFlags ; per default use some dummy location
+    ld   de, wColorDungeonItemFlags
     ret
 }
 
@@ -240,16 +268,45 @@ EntityInventoryDropHandler:
         ret  z
     }
 
+    ldh  a, [hActiveEntitySpriteVariant]
+    call getAmountPtrForInventory
+    if   z { ; this item has an amount, so try to stack it.
+        ld   hl, wInventoryItems
+        loop e, $0C {
+            cp  [hl]
+            inc hl
+            jr  z, .usableSlotFound
+        }
+    }
+
     ld   hl, wInventoryItems
     loop e, $0C {
         ld  a, [hl+]
         and a, a
-        jr  z, .emptySlotFound
+        jr  z, .usableSlotFound
     }
     ret
-.emptySlotFound:
+.usableSlotFound:
+    ; Store the inventory type in our inventory
     ldh  a, [hActiveEntitySpriteVariant]
     dec  hl
+    ld   [hl], a
+
+    ; Get the amount, and store it.
+    ld   hl, wEntitiesPrivateState3Table
+    add  hl, bc
+    ld   a, [hl]
+    pushpop af {
+        ldh  a, [hActiveEntitySpriteVariant]
+        call getAmountPtrForInventory
+        ld   a, [de] ; get max
+        ld   e, a
+    }
+    add  [hl]
+    cp   e
+    if   nc { ; clamp to max
+        ld a, e
+    }
     ld   [hl], a
 
     ld   a, $01 ; JINGLE_TREASURE_FOUND
