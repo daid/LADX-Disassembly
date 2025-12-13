@@ -3644,7 +3644,11 @@ wSmallKeysCount::
 
 ; Unlabeled
 wDBD1::
-  ds $2F ; DBD1 - DBFF
+  ds 1 ; DBD1
+  
+  ;ds $2F ; DBD1 - DBFF
+
+SECTION "WRAMX_DC00", WRAMX[$DC00], BANK[1]
 
 ; TODO comment
 wFile1DeathCountHigh::
@@ -3793,7 +3797,9 @@ wAnimatedScrollingTilesStorage::
 .tile3::
   ds $10 ; DCF0 - DCFF
 
-SECTION "WRAMX_DDD1", WRAMX[$DDD1], BANK[1]
+; Continuation of wDrawCommandVRAM1 data
+  ds $D1 ; DD00 - DDD0
+
 ; Palette flags for copying palettes to hardware.
 ; bit 0: If set, copy background palette to hardware during vblank
 ; bit 1: If set, copy object palette to hardware during vblank
