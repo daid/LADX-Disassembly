@@ -2112,6 +2112,8 @@ jr_014_58ED:
 
 func_014_5900::
     ldh  a, [hMapRoom]                            ;; 14:5900 $F0 $F6
+    cp   $40
+    jr   c, .loadFromSRAM
     ld   e, a                                     ;; 14:5902 $5F
     ld   a, [wIsIndoor]                           ;; 14:5903 $FA $A5 $DB
     ld   d, a                                     ;; 14:5906 $57
@@ -2121,7 +2123,7 @@ func_014_5900::
 
     ld   d, $00                                   ;; 14:590D $16 $00
     ld   hl, ColorDungeonRoomChestsTable          ;; 14:590F $21 $60 $48
-    jr   jr_014_5920                              ;; 14:5912 $18 $0C
+    jr   .jr_014_5920                              ;; 14:5912 $18 $0C
 
 .jr_5914
     cp   $1A                                      ;; 14:5914 $FE $1A
@@ -2135,19 +2137,22 @@ func_014_5900::
 .jr_591D
     ld   hl, RoomChestsTable                      ;; 14:591D $21 $60 $45
 
-jr_014_5920:
+.jr_014_5920:
     add  hl, de                                   ;; 14:5920 $19
     ld   a, [hl]                                  ;; 14:5921 $7E
-    cp   $20                                      ;; 14:5922 $FE $20
-    jr   nz, .jr_5931                             ;; 14:5924 $20 $0B
-
-    ld   a, [wSwordLevel]                         ;; 14:5926 $FA $4E $DB
-    cp   $02                                      ;; 14:5929 $FE $02
-    ld   a, $20                                   ;; 14:592B $3E $20
-    jr   c, .jr_5931                              ;; 14:592D $38 $02
-
-    ld   a, $1C                                   ;; 14:592F $3E $1C
 
 .jr_5931
     ldh  [hMultiPurpose8], a                      ;; 14:5931 $E0 $DF
     ret                                           ;; 14:5933 $C9
+
+.loadFromSRAM:
+    add  a, LOW(sDungenChestContents)
+    ld   l, a
+    adc  a, HIGH(sDungenChestContents)
+    sub  l
+    ld   h, a
+    ld   a, BANK(sDungenChestContents)
+    ld   [rRAMB], a
+    ld   a, [hl]
+    ldh  [hMultiPurpose8], a
+    ret

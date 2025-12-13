@@ -6,8 +6,13 @@
 #define DIR_DOWN 2
 #define DIR_UP 3
 
+#define ROOM_FINAL 0x80
+#define ROOM_START 0x40
+#define ROOM_SIDE_PATH 0x20
+
 extern uint8_t randomMapData[0x40];
 extern uint8_t sDungeonMinimap[0x40];
+extern uint8_t sDungenChestContents[0x40];
 extern __sfr hMapRoom;
 extern uint8_t rRAMB;
 extern uint8_t b_sDungeonMinimap;
@@ -15,6 +20,13 @@ extern uint8_t b_sDungeonMinimap;
 uint8_t generateRandomMove(uint8_t from);
 uint8_t doMove(uint8_t from, uint8_t dir);
 uint8_t flipDir(uint8_t dir);
+
+const uint8_t random_treasure_list[16] = {
+    0x02, 0x0E, 0x0A, 0x0D,
+    0x02, 0x0E, 0x07, 0x10,
+    0x02, 0x0E, 0x07, 0x10,
+    0x02, 0x0E, 0x07, 0x10,
+};
 
 void generateRandomMap(void)
 {
@@ -27,7 +39,7 @@ retry:
     uint8_t start_room = rand8() & 0x3F;
     if ((start_room & 0x38) == 38) goto retry; // Final room cannot be a the bottom row.
     //Mark the final room, and make a door downwards
-    randomMapData[start_room] |= 0x80 | (1 << DIR_DOWN);
+    randomMapData[start_room] |= ROOM_FINAL | (1 << DIR_DOWN);
     uint8_t current_room = start_room + 8;
     randomMapData[current_room] |= (1 << DIR_UP);
     for(uint8_t count=0; count<10;) {
@@ -43,7 +55,7 @@ retry:
     }
     //Mark start room
     hMapRoom = current_room;
-    randomMapData[current_room] |= 0x40;
+    randomMapData[current_room] |= ROOM_START;
 
     //Build side paths
     safety = 0;
@@ -58,6 +70,7 @@ retry:
         if (randomMapData[target_room]) continue;
         randomMapData[current_room] |= 1 << move_dir;
         randomMapData[target_room] |= 1 << (move_dir ^ 1);
+        randomMapData[target_room] |= ROOM_SIDE_PATH;
         count++;
     }
 
@@ -84,6 +97,7 @@ retry:
             sDungeonMinimap[n] = 0xEF;
         else
             sDungeonMinimap[n] = 0x7D;
+        sDungenChestContents[n] = random_treasure_list[rand8() & 0x0F];
     }
 }
 

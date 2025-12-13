@@ -2913,6 +2913,9 @@ func_020_5BB9::
     ld   a, [hl+]
     add  a, $20
     ld   e, a
+    adc  d
+    sub  e
+    ld   d, a
     inc  hl
     inc  hl
     inc  hl

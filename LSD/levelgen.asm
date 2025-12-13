@@ -2,6 +2,9 @@
 sDungeonMinimap:
 _sDungeonMinimap:
   ds 8 * 8
+sDungenChestContents:
+_sDungenChestContents:
+  ds 8 * 8
 }
 
 #SECTION "MapBuildCode", ROMX, BANK[$0A] {
@@ -30,6 +33,9 @@ RoomRightDoorPart: db   .end - @ - 1
 RoomPartFloorWarp: db   .end - @ - 1
   db   $11, $1D
   db   $E1, $00, $ff, $58, $52 ; object
+.end:
+RoomPartChest: db   .end - @ - 1
+  db   $11, $A0
 .end:
 
 RandomEntitiesTable:
@@ -131,6 +137,9 @@ BuildRooms:
                 call nz, CopyRoomPart
                 bit  7, b
                 ld   de, RoomPartFloorWarp
+                call nz, CopyRoomPart
+                bit  5, b
+                ld   de, RoomPartChest
                 call nz, CopyRoomPart
 
                 ld   [hl], $FE ; end of room data indicator
