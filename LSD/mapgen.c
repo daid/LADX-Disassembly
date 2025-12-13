@@ -25,8 +25,11 @@ retry:
     //Build the main path
     uint8_t safety = 0;
     uint8_t start_room = rand8() & 0x3F;
-    hMapRoom = start_room;
-    uint8_t current_room = start_room;
+    if ((start_room & 0x38) == 38) goto retry; // Final room cannot be a the bottom row.
+    //Mark the final room, and make a door downwards
+    randomMapData[start_room] |= 0x80 | (1 << DIR_DOWN);
+    uint8_t current_room = start_room + 8;
+    randomMapData[current_room] |= (1 << DIR_UP);
     for(uint8_t count=0; count<10;) {
         if (++safety == 0) goto retry;
         uint8_t move_dir = generateRandomMove(current_room);
@@ -38,8 +41,9 @@ retry:
         current_room = target_room;
         count++;
     }
-    //Mark final room
-    randomMapData[current_room] |= 0x80;
+    //Mark start room
+    hMapRoom = current_room;
+    randomMapData[current_room] |= 0x40;
 
     //Build side paths
     safety = 0;
@@ -47,6 +51,7 @@ retry:
         if (++safety == 0) goto retry;
         current_room = rand8() & 0x3F;
         if (!randomMapData[current_room]) continue;
+        if (randomMapData[current_room] & 0x80) continue; // no side paths from final room.
         uint8_t move_dir = generateRandomMove(current_room);
         if (move_dir == 0xFF) continue;
         uint8_t target_room = doMove(current_room, move_dir);
@@ -62,10 +67,12 @@ retry:
         if (++safety == 0) goto retry;
         current_room = rand8() & 0x3F;
         if (!randomMapData[current_room]) continue;
+        if (randomMapData[current_room] & 0x80) continue; // no cycles from final room.
         uint8_t move_dir = generateRandomMove(current_room);
         if (move_dir == 0xFF) continue;
         uint8_t target_room = doMove(current_room, move_dir);
         if (!randomMapData[target_room]) continue;
+        if (randomMapData[target_room] & 0x80) continue; // no cycles from final room.
         randomMapData[current_room] |= 1 << move_dir;
         randomMapData[target_room] |= 1 << (move_dir ^ 1);
         count++;
