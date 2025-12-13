@@ -3133,8 +3133,8 @@ wGoldenLeavesCount::
   ds 1 ; DB15
 
 ;LSD: Removed dungeon item flags (yay, free space!)
+  ds $2D
 
-SECTION "WRAMX_DB43", WRAMX[$DB43], BANK[1]
 ; TODO comment
 wPowerBraceletLevel::
   ds 1 ; DB43
