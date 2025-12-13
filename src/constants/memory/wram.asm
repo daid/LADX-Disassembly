@@ -3132,17 +3132,9 @@ wHasBirdKey::
 wGoldenLeavesCount::
   ds 1 ; DB15
 
-; Beginning of dungeon item flags.
-; 5 bytes for each dungeon.
-; For each dungeon:
-; byte 0 = has map?,
-; byte 1 = has compass?
-; byte 2 = has stone slab?,
-; byte 3 = has boss key?,
-; byte 4 = small keys count
-wDungeonItemFlags::
-  ds $2D ; DB16 - DB42
+;LSD: Removed dungeon item flags (yay, free space!)
 
+SECTION "WRAMX_DB43", WRAMX[$DB43], BANK[1]
 ; TODO comment
 wPowerBraceletLevel::
   ds 1 ; DB43

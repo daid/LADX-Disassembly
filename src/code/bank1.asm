@@ -458,18 +458,21 @@ jr_001_531D::
     ld   [wWreckingBallPosX], a                   ;; 01:53CE $EA $70 $DB
     ld   a, $27                                   ;; 01:53D1 $3E $27
     ld   [wWreckingBallPosY], a                   ;; 01:53D3 $EA $71 $DB
-    ;LSD setup start item
+    ;LSD setup start items
     ld   a, $01
-    ld   [wInventoryItems], a
+    ld   hl, wInventoryItems
+    ld   [hl+], a
     ld   [wSwordLevel], a
     ld   a, $0E
-    ld   [wInventoryItems+1], a
+    ld   [hl+], a
     ld   a, $0F
-    ld   [wInventoryItems+2], a
+    ld   [hl+], a
     ld   a, $10
-    ld   [wInventoryItems+3], a
+    ld   [hl+], a
     ld   a, $0A
-    ld   [wInventoryItems+4], a
+    ld   [hl+], a
+    ld   a, $11
+    ld   [hl+], a
     jr   .finish                                  ;; 01:53D6 $18 $B6
 
 Data_001_53D8::
@@ -1595,62 +1598,7 @@ ClampMaxHearts:
     ret                                           ;; 01:5F29 $C9
 ENDC
 
-
-; Copy the current dungeon item flags to the global and persistent
-; dungeons item flags table.
-SynchronizeDungeonsItemFlags::
-    push bc                                       ;; 01:5E67 $C5
-
-    ; If on overworld, do nothing
-    ld   a, [wIsIndoor]                           ;; 01:5E68 $FA $A5 $DB
-    and  a                                        ;; 01:5E6B $A7
-    jr   z, .return                               ;; 01:5E6C $28 $27
-
-    ; If inside the Color dungeon…
-    ldh  a, [hMapId]                              ;; 01:5E6E $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 01:5E70 $FE $FF
-    jr   nz, .notColorDungeon                     ;; 01:5E72 $20 $05
-
-    ; hl = wColorDungeonItemFlags
-    ld   hl, wColorDungeonItemFlags               ;; 01:5E74 $21 $DA $DD
-    jr   .endIf                                   ;; 01:5E77 $18 $11
-
-.notColorDungeon
-    ; If the map is not a dungeon, return.
-    cp   MAP_CAVE_B                               ;; 01:5E79 $FE $0A
-    jr   nc, .return                              ;; 01:5E7B $30 $18
-
-    ; Select the correct item flags slot for the current dungeon
-    ; hl = wDungeonItemFlags + (hMapId * 5)
-IF !LANG_DE
-    ld   hl, wDungeonItemFlags                    ;; 01:5E7D $21 $16 $DB
-ENDC
-    ld   e, a                                     ;; 01:5E80 $5F
-    sla  a                                        ;; 01:5E81 $CB $27
-    sla  a                                        ;; 01:5E83 $CB $27
-    add  a, e                                     ;; 01:5E85 $83
-    ld   e, a                                     ;; 01:5E86 $5F
-    ld   d, $00                                   ;; 01:5E87 $16 $00
-IF LANG_DE
-    ld   hl, wDungeonItemFlags
-ENDC
-    add  hl, de                                   ;; 01:5E89 $19
-.endIf
-
-    ; Copy 5 values from wCurrentDungeonItemFlags to wDungeonItemFlags
-    ld   de, wCurrentDungeonItemFlags             ;; 01:5E8A $11 $CC $DB
-    ld   c, $05                                   ;; 01:5E8D $0E $05
-.loop
-    ld   a, [de]                                  ;; 01:5E8F $1A
-    inc  de                                       ;; 01:5E90 $13
-    ldi  [hl], a                                  ;; 01:5E91 $22
-    ; loop while c > 0
-    dec  c                                        ;; 01:5E92 $0D
-    jr   nz, .loop                                ;; 01:5E93 $20 $FA
-
-.return
-    pop  bc                                       ;; 01:5E95 $C1
-    ret                                           ;; 01:5E96 $C9
+;LSD: Removed SynchronizeDungeonsItemFlags, we only have current
 
 EntityPosXOffsetTable::
 .right:  db $A0                                   ;; 01:5E97
@@ -3023,70 +2971,6 @@ include "code/oam_dma.asm"
 IntroRainTiles::
 incbin "src/gfx/intro/rain.2bpp"
 
-; Background tile where the Dungeon entrance arrow should be displayed
-MinimapEntrancePosition::
-    dw vBGMap1 + $20B + MINIMAP_ARROW_TAIL_CAVE   ;; 01:6DCA
-    dw vBGMap1 + $20B + MINIMAP_ARROW_BOTTLE_GROTTO ;; 01:6DCC
-    dw vBGMap1 + $20B + MINIMAP_ARROW_KEY_CAVERN  ;; 01:6DCE
-    dw vBGMap1 + $20B + MINIMAP_ARROW_ANGLERS_TUNNEL ;; 01:6DD0
-    dw vBGMap1 + $20B + MINIMAP_ARROW_CATFISHS_MAW ;; 01:6DD2
-    dw vBGMap1 + $20B + MINIMAP_ARROW_FACE_SHRINE ;; 01:6DD4
-    dw vBGMap1 + $20B + MINIMAP_ARROW_EAGLES_TOWER ;; 01:6DD6
-    dw vBGMap1 + $20B + MINIMAP_ARROW_TURTLE_ROCK ;; 01:6DD8
-    dw $0    ; (unused)                           ;; 01:6DDA
-    dw $0    ; (unused)                           ;; 01:6DDC
-    dw $0    ; (unused)                           ;; 01:6DDE
-    dw $0    ; (unused)                           ;; 01:6DE0
-    dw $0    ; (unused)                           ;; 01:6DE2
-    dw $0    ; (unused)                           ;; 01:6DE4
-    dw $0    ; (unused)                           ;; 01:6DE6
-    dw vBGMap1 + $20B + MINIMAP_ARROW_COLOR_DUNGEON ;; 01:6DE8
-
-; Called after tiles are copied to the BG when loading a map all at once
-UpdateMinimapEntranceArrowAndReturn::
-    ; If DebugTool2 is enabled, return immediately
-    ld   a, [ROM_DebugTool2]                      ;; 01:6DEA $FA $04 $00
-    and  a                                        ;; 01:6DED $A7
-    ret  nz                                       ;; 01:6DEE $C0
-
-    ; If IsIndoor…
-    ld   a, [wIsIndoor]                           ;; 01:6DEF $FA $A5 $DB
-    and  a                                        ;; 01:6DF2 $A7
-    jr   z, .return                               ;; 01:6DF3 $28 $23
-    ; then a = (MapId == MAP_COLOR_DUNGEON ? $0F : MapId)
-    ldh  a, [hMapId]                              ;; 01:6DF5 $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 01:6DF7 $FE $FF
-    jr   nz, .notColorDungeon                     ;; 01:6DF9 $20 $04
-    ld   a, $0F                                   ;; 01:6DFB $3E $0F
-    jr   .endIf                                   ;; 01:6DFD $18 $04
-
-.notColorDungeon
-    ; If MapId >= 8 (not a dungeon), return
-    cp   $08                                      ;; 01:6DFF $FE $08
-    jr   nc, .return                              ;; 01:6E01 $30 $15
-.endIf
-
-    ; hl = MinimapEntrancePosition[MapId]
-    sla  a                                        ;; 01:6E03 $CB $27
-    ld   e, a                                     ;; 01:6E05 $5F
-    ld   d, $00                                   ;; 01:6E06 $16 $00
-    ld   hl, MinimapEntrancePosition              ;; 01:6E08 $21 $CA $6D
-    add  hl, de                                   ;; 01:6E0B $19
-    ld   a, [hli]                                 ;; 01:6E0C $2A
-    ld   h, [hl]                                  ;; 01:6E0D $66
-    ld   l, a                                     ;; 01:6E0E $6F
-
-    ; Display the Minimap Arrow tile ($A3) at the target address
-    ld   [hl], $A3                                ;; 01:6E0F $36 $A3
-
-    ; If IsSideScrolling…
-    ldh  a, [hIsSideScrolling]                    ;; 01:6E11 $F0 $F9
-    and  a                                        ;; 01:6E13 $A7
-    jr   z, .return                               ;; 01:6E14 $28 $02
-    ; … hide the arrow.
-    ld   [hl], $7F                                ;; 01:6E16 $36 $7F
-
-.return
-    ret                                           ;; 01:6E18 $C9
+; LSD: Removed UpdateMinimapEntranceArrowAndReturn
 
 include "code/intro.asm"

@@ -7,7 +7,10 @@
 #define DIR_UP 3
 
 extern uint8_t randomMapData[0x40];
+extern uint8_t sDungeonMinimap[0x40];
 extern __sfr hMapRoom;
+extern uint8_t rRAMB;
+extern uint8_t b_sDungeonMinimap;
 
 uint8_t generateRandomMove(uint8_t from);
 uint8_t doMove(uint8_t from, uint8_t dir);
@@ -66,6 +69,14 @@ retry:
         randomMapData[current_room] |= 1 << move_dir;
         randomMapData[target_room] |= 1 << (move_dir ^ 1);
         count++;
+    }
+
+    // Update the minimap
+    for(uint8_t n=0; n<64; n++) {
+        if (randomMapData[n])
+            sDungeonMinimap[n] = 0xEF;
+        else
+            sDungeonMinimap[n] = 0x7D;
     }
 }
 

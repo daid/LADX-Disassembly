@@ -2,46 +2,25 @@ Data_002_66F9::
     db   $00, $02, $03, $07, $05, $0A, $0B, $0F, $04, $08, $09, $0E, $06, $0C, $0D, $01
 
 LoadMinimap::
-IF !__PATCH_0__
-    ; Check if this is room E8, which is Evil Eagle's boss room
-    ; If so, don't actually load the map
-    ldh  a, [hMapRoom]                            ;; 02:6709 $F0 $F6
-    cp   ROOM_INDOOR_B_EAGLES_TOWER_BOSS          ;; 02:670B $FE $E8
-    ret  z                                        ;; 02:670D $C8
-ENDC
+    ; LSD: Update wHasDungeonMap based on if we have the map in our inventory
+    xor  a
+    ld   [wHasDungeonMap], a
+    ld   hl, wInventoryItems
+    ld   e, $0C
+.checkMapLoop:   ld   a, [hl+]
+    cp   $11
+    jr   nz, .notMap
+    ld   a, $01
+    ld   [wHasDungeonMap], a
+.notMap:
+    dec e
+    jr   nz, .checkMapLoop
 
-    ; Load special minimap for Color Dungeon
-    ld   hl, MinimapsTable                        ;; 02:670E $21 $79 $64
-    ldh  a, [hMapId]                              ;; 02:6711 $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 02:6713 $FE $FF
-    jr   nz, .computeRegularMinimapAddress        ;; 02:6715 $20 $05
-
-    ld   hl, ColorDungeonMinimap                  ;; 02:6717 $21 $B9 $66
-    jr   .minimapAddressEnd                       ;; 02:671A $18 $0E
-
-.computeRegularMinimapAddress
-    ; Compute minimap address from map id
-    swap a                                        ;; 02:671C $CB $37
-    ld   e, a                                     ;; 02:671E $5F
-    ld   d, $00                                   ;; 02:671F $16 $00
-    sla  e                                        ;; 02:6721 $CB $23
-    rl   d                                        ;; 02:6723 $CB $12
-    sla  e                                        ;; 02:6725 $CB $23
-    rl   d                                        ;; 02:6727 $CB $12
-    add  hl, de                                   ;; 02:6729 $19
-.minimapAddressEnd
-
-    ; Load special minimap for collapsed Eagle's Tower
-    ldh  a, [hMapId]                              ;; 02:672A $F0 $F7
-    cp   MAP_EAGLES_TOWER                         ;; 02:672C $FE $06
-    jr   nz, .eaglesTowerEnd                      ;; 02:672E $20 $0A
-
-    ld   a, [wHasInstrument7]                     ;; 02:6730 $FA $6B $DB
-    and  $04                                      ;; 02:6733 $E6 $04
-    jr   z, .eaglesTowerEnd                       ;; 02:6735 $28 $03
-
-    ld   hl, EaglesTowerCollapsedMinimap          ;; 02:6737 $21 $79 $66
-.eaglesTowerEnd
+    ; LSD: Load minimap from SRAM instead
+    call EnableSRAM
+    ld   hl, rRAMB
+    ld   [hl], BANK(sDungeonMinimap)
+    ld   hl, sDungeonMinimap
 
     ; Load the minimap into WRAM
     ld   de, wDungeonMinimap                      ;; 02:673A $11 $80 $D4

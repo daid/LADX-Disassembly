@@ -194,6 +194,7 @@ EntityInventoryDropSprite:
     db  $00, $00 ; INVENTORY_PIECE_OF_POWER
     db  $A0, $04 ; INVENTORY_POTION
     db  $A0, $05 ; INVENTORY_POTION2
+    db  $C0, $04 ; INVENTORY_MAP
 
 EntityInventoryDropSprite2:
     db  $80, $0C, $80, $2C
@@ -406,5 +407,31 @@ InventoryAddToGlobalInventoryTable:
     ld   [hl+], a
     xor  a
     ldh  [rSVBK], a
+    ret
+}
+
+#SECTION "UsePieceOfPower", ROMX, BANK[2] {
+UsePieceOfPower:
+    ld   a, $0E ; INVENTORY_PIECE_OF_POWER
+    ld   hl, wInventoryItems.BButtonSlot
+    cp   [hl]
+    jr   z, .itemFound
+    ld   hl, wInventoryItems.AButtonSlot
+    cp   [hl]
+    jr   z, .itemFound
+    ret
+.itemFound:
+    ld   [hl], 0
+    ld   a, $01
+    ld   [wActivePowerUp], a
+
+    xor  a
+    ld   [wPowerUpHits], a
+    ld   a, $27 ; MUSIC_OBTAIN_POWERUP
+    ld   [wMusicTrackToPlay], a
+    ld   a, $49 ; MUSIC_ACTIVE_POWER_UP
+    ldh  [hDefaultMusicTrackAlt], a
+    ldh  [hNextDefaultMusicTrack], a
+
     ret
 }

@@ -3057,7 +3057,6 @@ TryOpenLockedDoor::
     ; Decrease the player small key count
     dec  a                                        ;; 02:53BE $3D
     ld   [wSmallKeysCount], a                     ;; 02:53BF $EA $D0 $DB
-    call SynchronizeDungeonsItemFlags_trampoline  ;; 02:53C2 $CD $02 $28
     call EnqueueDoorUnlockedSfx                   ;; 02:53C5 $CD $20 $54
 
     ; Mark the room as opened
@@ -5288,7 +5287,7 @@ jr_002_6477:
     and  a                                        ;; 02:6478 $A7
 
 MinimapsTable::
-include "data/minimaps.asm"
+; include "data/minimaps.asm"
 include "code/minimap.asm"
 
 Data_002_68AB::
@@ -6909,7 +6908,6 @@ jr_002_7147:
     ld   [wDBAC], a                               ;; 02:714F $EA $AC $DB
     inc  a                                        ;; 02:7152 $3C
     ld   [wC188], a                               ;; 02:7153 $EA $88 $C1
-    call SynchronizeDungeonsItemFlags_trampoline  ;; 02:7156 $CD $02 $28
     call EnqueueDoorUnlockedSfx                   ;; 02:7159 $CD $20 $54
     jp   ApplyCollisionWithSolid                  ;; 02:715C $C3 $77 $72
 

@@ -2015,13 +2015,7 @@ label_014_57E1:
 ; Outputs:
 ;   hl   room status address
 GetRoomStatusAddressForMapPosition::
-    cp   MAP_DUNGEON_G1                           ;; 14:5841 $FE $0B
-    jr   nc, ret_014_5883                         ;; 14:5843 $30 $3E
-
-    ld   hl, MapLayout0                           ;; 14:5845 $21 $20 $42
-    add  hl, de                                   ;; 14:5866 $19
-    ld   a, [hl]                                  ;; 14:5867 $7E
-    ld   e, a                                     ;; 14:5868 $5F
+    ; LSD: Simplified as room position == room id
     ld   d, $00                                   ;; 14:5869 $16 $00
     ld   hl, wIndoorARoomStatus                   ;; 14:586B $21 $00 $D9
     ldh  a, [hMapId]                              ;; 14:586E $F0 $F7

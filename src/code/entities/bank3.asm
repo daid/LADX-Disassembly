@@ -1760,7 +1760,6 @@ ENDC
     ld   hl, wHasDungeonMap                       ;; 03:50E5 $21 $CC $DB
     add  hl, de                                   ;; 03:50E8 $19
     inc  [hl]                                     ;; 03:50E9 $34
-    call SynchronizeDungeonsItemFlags_trampoline  ;; 03:50EA $CD $02 $28
     jr   MarkRoomCompleted                        ;; 03:50ED $18 $3B
 
 .jr_50EF
@@ -4693,7 +4692,6 @@ jr_003_64AD:
     call MarkRoomCompleted                        ;; 03:64AD $CD $2A $51
     ld   hl, wSmallKeysCount                      ;; 03:64B0 $21 $D0 $DB
     inc  [hl]                                     ;; 03:64B3 $34
-    jp   SynchronizeDungeonsItemFlags_trampoline  ;; 03:64B4 $C3 $02 $28
 
 PickDroppableHeart::
     ld   a, $08                                   ;; 03:64B7 $3E $08

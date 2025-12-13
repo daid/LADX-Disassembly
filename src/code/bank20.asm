@@ -2973,6 +2973,8 @@ InventoryItemPaletteIndexes::
     db  $02, $01
     db  $01, $01 ; INVENTORY_POTION2
     db  $01, $01
+    db  $03, $01 ; INVENTORY_MAP
+    db  $03, $01
 
 InventoryItemTiles::
     ; Tiles used for the inventory items.
@@ -3011,6 +3013,8 @@ InventoryItemTiles::
     db $A1, $7F, $7F ;
     db $A0, $7F, $7F ; INVENTORY_POTION2
     db $A1, $7F, $7F ;
+    db $C0, $7F, $7F ; INVENTORY_MAP
+    db $C1, $7F, $7F ;
 
 
 InventoryTileMapPositions::

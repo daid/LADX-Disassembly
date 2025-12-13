@@ -1,3 +1,8 @@
+#SECTION "DungeonMinimap", SRAM, BANK[6] {
+sDungeonMinimap:
+_sDungeonMinimap:
+  ds 8 * 8
+}
 
 #SECTION "MapBuildCode", ROMX, BANK[$0A] {
 
@@ -85,6 +90,9 @@ LSD_GenerateMap:
     inc  a
     ret  nz
 .restartGen:
+    call EnableSRAM
+    ld   a, BANK(sDungeonMinimap)
+    ld   [$4000], a
     call _generateRandomMap ; call our C function to randomly generate the map layout
     call _rand8
     and  a, 7
@@ -159,6 +167,16 @@ BuildRooms:
     bit  5, h
     jr   z, .clearwGlobalInventoryTableLoop
     ldh  [rSVBK], a
+
+    ; Clear room status for all rooms
+    ld   hl, wOverworldRoomStatus
+    ld   de, $300
+    xor  a
+    loop d {
+      loop e {
+        ld   [hl+], a
+      }
+    }
 
     ret
 

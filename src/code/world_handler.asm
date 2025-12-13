@@ -14,24 +14,6 @@ WorldHandlerEntryPoint::
 ._6 dw GameplayWorldLoad6Handler                  ;; 01:4381
 ._7 dw WorldInteractiveHandler                    ;; 01:4383
 
-MinimapLayoutTable::
-._00 db MINIMAP_STYLE_TAIL_CAVE                   ;; 01:4385
-._01 db MINIMAP_STYLE_BOTTLE_GROTTO               ;; 01:4386
-._02 db MINIMAP_STYLE_KEY_CAVERN                  ;; 01:4387
-._03 db MINIMAP_STYLE_ANGLERS_TUNNEL              ;; 01:4388
-._04 db MINIMAP_STYLE_CATFISHS_MAW                ;; 01:4389
-._05 db MINIMAP_STYLE_FACE_SHRINE                 ;; 01:438A
-._06 db MINIMAP_STYLE_EAGLES_TOWER                ;; 01:438B
-._07 db MINIMAP_STYLE_TURTLE_ROCK                 ;; 01:438C
-._08 db INVENTORY_MINIMAP_SINGLE_FLOOR            ;; 01:438D
-._09 db INVENTORY_MINIMAP_SINGLE_FLOOR            ;; 01:438E
-._0A db INVENTORY_MINIMAP_SINGLE_FLOOR            ;; 01:438F
-._0B db INVENTORY_MINIMAP_SINGLE_FLOOR            ;; 01:4390
-._0C db INVENTORY_MINIMAP_SINGLE_FLOOR            ;; 01:4391
-._0D db INVENTORY_MINIMAP_SINGLE_FLOOR            ;; 01:4392
-._0E db INVENTORY_MINIMAP_SINGLE_FLOOR            ;; 01:4393
-._0F db MINIMAP_STYLE_COLOR_DUNGEON ; probably    ;; 01:4394
-
 GameplayWorldLoad0Handler::
     ;
     ; Unload the audio track?
@@ -59,47 +41,7 @@ ENDC
     and  a                                        ;; 01:43AA $A7
     jr   z, .loadOverworldInventory               ;; 01:43AB $28 $67
 
-    ldh  a, [hMapId]                              ;; 01:43AD $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 01:43AF $FE $FF
-    jr   nz, .jr_43B8                             ;; 01:43B1 $20 $05
-    ld   hl, wColorDungeonItemFlags               ;; 01:43B3 $21 $DA $DD
-    jr   .jr_001_43C5                             ;; 01:43B6 $18 $0D
-
-.jr_43B8
-    ld   e, a                                     ;; 01:43B8 $5F
-    sla  a                                        ;; 01:43B9 $CB $27
-    sla  a                                        ;; 01:43BB $CB $27
-    add  a, e                                     ;; 01:43BD $83
-    ld   e, a                                     ;; 01:43BE $5F
-    ld   d, $00                                   ;; 01:43BF $16 $00
-    ld   hl, wDungeonItemFlags                    ;; 01:43C1 $21 $16 $DB
-    add  hl, de                                   ;; 01:43C4 $19
-
-.jr_001_43C5
-    ld   de, wHasDungeonMap                       ;; 01:43C5 $11 $CC $DB
-    ld   c, $05                                   ;; 01:43C8 $0E $05
-
-.jr_001_43CA
-    ldh  a, [hMapId]                              ;; 01:43CA $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 01:43CC $FE $FF
-    jr   z, .jr_001_43DB                          ;; 01:43CE $28 $0B
-    cp   MAP_WINDFISHS_EGG                        ;; 01:43D0 $FE $08
-    jr   z, .jr_43D8                              ;; 01:43D2 $28 $04
-    cp   MAP_CAVE_B                               ;; 01:43D4 $FE $0A
-    jr   c, .jr_001_43DB                          ;; 01:43D6 $38 $03
-
-.jr_43D8
-    xor  a                                        ;; 01:43D8 $AF
-    jr   z, .jr_001_43DC                          ;; 01:43D9 $28 $01
-
-.jr_001_43DB
-    ld   a, [hli]                                 ;; 01:43DB $2A
-
-.jr_001_43DC
-    ld   [de], a                                  ;; 01:43DC $12
-    inc  de                                       ;; 01:43DD $13
-    dec  c                                        ;; 01:43DE $0D
-    jr   nz, .jr_001_43CA                         ;; 01:43DF $20 $E9
+    ; LSD: Removed code that synchornized dungeon items
 
     ; If inside the color dungeon ($FF),
     ; lookup for dungeon $0F in the table instead.
@@ -110,11 +52,8 @@ ENDC
 .colorDungeonIndexEnd
 
     ; Lookup the minimap layout for the dungeon
-    ld   e, a                                     ;; 01:43E9 $5F
-    ld   d, $00                                   ;; 01:43EA $16 $00
-    ld   hl, MinimapLayoutTable                   ;; 01:43EC $21 $85 $43
-    add  hl, de                                   ;; 01:43EF $19
-    ld   a, [hl]                                  ;; 01:43F0 $7E
+    ; LSD: Always have the same layout
+    xor  a
     ld   [wMinimapLayout], a                      ;; 01:43F1 $EA $B0 $DB
 
     ldh  a, [hMapId]                              ;; 01:43F4 $F0 $F7

@@ -133,7 +133,6 @@ LoadGameOverStage2Handler::
     ld   hl, hGameOverStage                       ;; 01:42AF $21 $9C $FF
     inc  [hl]                                     ;; 01:42B2 $34
     call LoadFileMenuBG_trampoline                ;; 01:42B3 $CD $05 $09
-    call SynchronizeDungeonsItemFlags_trampoline  ;; 01:42B6 $CD $02 $28
     ret                                           ;; 01:42B9 $C9
 
 ; Unused data

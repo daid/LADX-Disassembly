@@ -1617,31 +1617,25 @@ include "code/home/check_items_to_use.asm"
 ;   a    inventory item to use
 UseItem::
     ld   c, a                                     ;; 00:129C $4F
-    cp   INVENTORY_SWORD                          ;; 00:129D $FE $01
-    jp   z, UseSword                              ;; 00:129F $CA $28 $15
-    cp   INVENTORY_SHIELD                         ;; 00:12A2 $FE $04
-    jp   z, UseShield                             ;; 00:12A4 $CA $EE $12
-    cp   INVENTORY_BOMBS                          ;; 00:12A7 $FE $02
-    jp   z, PlaceBomb                             ;; 00:12A9 $CA $5A $13
-    cp   INVENTORY_POWER_BRACELET                 ;; 00:12AC $FE $03
-    jp   z, UsePowerBracelet                      ;; 00:12AE $CA $82 $13
-    cp   INVENTORY_BOW                            ;; 00:12B1 $FE $05
-    jp   z, ShootArrow                            ;; 00:12B3 $CA $BD $13
-    cp   INVENTORY_BOOMERANG                      ;; 00:12B6 $FE $0D
-    jp   z, UseBoomerang                          ;; 00:12B8 $CA $83 $13
-    cp   INVENTORY_HOOKSHOT                       ;; 00:12BB $FE $06
-    jp   z, UseHookshot                           ;; 00:12BD $CA $19 $13
-    cp   INVENTORY_ROCS_FEATHER                   ;; 00:12C0 $FE $0A
-    jp   z, UseRocsFeather                        ;; 00:12C2 $CA $CB $14
-    cp   INVENTORY_OCARINA                        ;; 00:12C5 $FE $09
-    jp   z, UseOcarina                            ;; 00:12C7 $CA $FC $41
-    cp   INVENTORY_MAGIC_POWDER                   ;; 00:12CA $FE $0C
-    jp   z, UseMagicPowder                        ;; 00:12CC $CA $8D $14
-    cp   INVENTORY_SHOVEL                         ;; 00:12CF $FE $0B
-    jp   z, UseShovel                             ;; 00:12D1 $CA $F8 $12
-    cp   INVENTORY_MAGIC_ROD                      ;; 00:12D4 $FE $07
-    jr   nz, .return                              ;; 00:12D6 $20 $15
-    ; fallthrough
+    rst  0
+    dw   .return
+    dw   UseSword
+    dw   PlaceBomb
+    dw   UsePowerBracelet
+    dw   UseShield
+    dw   ShootArrow
+    dw   UseHookshot
+    dw   .useMagicRod
+    dw   UsePegasusBoots
+    dw   UseOcarina
+    dw   UseRocsFeather
+    dw   UseShovel
+    dw   UseMagicPowder
+    dw   UseBoomerang
+    dw   UsePieceOfPower
+    dw   .return
+    dw   .return
+    dw   .return
 
 .useMagicRod
     ld   hl, wSwordAnimationState                 ;; 00:12D8 $21 $37 $C1
@@ -4063,9 +4057,7 @@ label_27F2::
 .skip
     jp   ReloadSavedBank                          ;; 00:27FF $C3 $1D $08
 
-SynchronizeDungeonsItemFlags_trampoline::
-    callsb SynchronizeDungeonsItemFlags           ;; 00:2802 $3E $01 $EA $00 $21 $CD $67 $5E
-    jp   ReloadSavedBank                          ;; 00:280A $C3 $1D $08
+;LSD: Removed SynchronizeDungeonsItemFlags, we only have current
 
 ; Return a random number in `a`
 GetRandomByte::
@@ -4748,17 +4740,7 @@ LoadIndoorTiles::
     ld   [rSelectROMBank], a                      ;; 00:2CDD $EA $00 $21
     ld   hl, InventoryIndoorItemsTiles            ;; 00:2CE0 $21 $00 $7D
 
-    ; If indoor, but not in a dungeon…
-    ldh  a, [hMapId]                              ;; 00:2CE3 $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 00:2CE5 $FE $FF
-    jr   z, .inventoryItemsEnd                    ;; 00:2CE7 $28 $0C
-    cp   MAP_CAVE_B                               ;; 00:2CE9 $FE $0A
-    jr   c, .inventoryItemsEnd                    ;; 00:2CEB $38 $08
-    ; …use the overworld inventory items (instead of the dungeon ones)
-    ld   a, BANK(InventoryOverworldItemsTiles)    ;; 00:2CED $3E $0C
-    call SwitchAdjustedBank                       ;; 00:2CEF $CD $13 $08
-    ld   hl, InventoryOverworldItemsTiles         ;; 00:2CF2 $21 $00 $4C
-.inventoryItemsEnd
+    ; LSD: Always load dungeon item tiles
 
     ld   de, vTiles1 + $400                       ;; 00:2CF5 $11 $00 $8C
     ld   bc, TILE_SIZE * $30                      ;; 00:2CF8 $01 $00 $03
@@ -4766,12 +4748,7 @@ LoadIndoorTiles::
 
 .patchInventoryTiles
 
-    ; Replace Magic Powder tile by Toadstool if needed
-    ld   a, [wHasToadstool]                       ;; 00:2CFE $FA $4B $DB
-    and  a                                        ;; 00:2D01 $A7
-    jr   z, .noToadstoolEnd                       ;; 00:2D02 $28 $03
-    call ReplaceMagicPowderTilesByToadstool       ;; 00:2D04 $CD $2B $1E
-.noToadstoolEnd
+    ; LSD: Never load toadstool graphics
 
     ; Replace Slime Key tile by Golden Leaf if needed
     ld   a, [wIsIndoor]                           ;; 00:2D07 $FA $A5 $DB
@@ -5554,7 +5531,7 @@ ASSERT LOW(wRoomObjectsArea) & $0F == 0, "wRoomObjectsArea must be aligned on $1
     dec  c                                        ;; 00:30E9 $0D
     jr   nz, .loop                                ;; 00:30EA $20 $BD
 
-    jpsb UpdateMinimapEntranceArrowAndReturn      ;; 00:30EC $3E $01 $EA $00 $21 $C3 $EA $6D
+    ret
 
 ; Load room objects
 LoadRoom::
