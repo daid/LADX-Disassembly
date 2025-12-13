@@ -57,7 +57,10 @@ IndoorsAEntitiesPointersTable:
         dw NoEntities
     }
 IndoorsBEntitiesPointersTable:
-    #FOR n, 0, $100 {
+    #FOR n, 0, 64 {
+        dw sDynamicEntityData + n * $80
+    }
+    #FOR n, 64, $100 {
         dw NoEntities
     }
 ColorDungeonEntitiesPointersTable:
