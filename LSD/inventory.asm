@@ -217,7 +217,7 @@ EntityInventoryDropHandler:
     }
     ldh  a, [hActiveEntityState]
     rst  0
-    dw   .StateNewPickup
+    dw   .StateFromChest
     dw   .StateWaitForLinkDistance
     dw   .StateOldPickup
     dw   .StateDoingPickup
@@ -239,7 +239,16 @@ EntityInventoryDropHandler:
     ret  c
     jp   IncrementEntityState
 
-.StateNewPickup:
+.StateFromChest:
+    ldh  a, [hLinkPositionX]
+    ld   hl, wEntitiesPosXTable
+    add  hl, bc
+    ld   [hl], a
+    ldh  a, [hLinkPositionY]
+    ld   hl, wEntitiesPosYTable
+    add  hl, bc
+    ld   [hl], a
+
 .StateOldPickup:
     ; If we cannot act, ignore picking up the item.
     ldh  a, [hLinkInteractiveMotionBlocked]
@@ -411,16 +420,16 @@ InventoryAddToGlobalInventoryTable:
 }
 
 #SECTION "UsePieceOfPower", ROMX, BANK[2] {
-UsePieceOfPower:
-    ld   a, $0E ; INVENTORY_PIECE_OF_POWER
+GetUsedItemSlot:
+    ld   a, c
     ld   hl, wInventoryItems.BButtonSlot
     cp   [hl]
-    jr   z, .itemFound
+    ret  z
     ld   hl, wInventoryItems.AButtonSlot
-    cp   [hl]
-    jr   z, .itemFound
     ret
-.itemFound:
+
+UsePieceOfPower:
+    call GetUsedItemSlot
     ld   [hl], 0
     ld   a, $01
     ld   [wActivePowerUp], a
@@ -434,4 +443,22 @@ UsePieceOfPower:
     ldh  [hNextDefaultMusicTrack], a
 
     ret
+UsePotion1:
+    call GetUsedItemSlot
+    ld   [hl], 0
+    ld   hl, wAddHealthBuffer
+    ld   a, [hl]
+    add  a, 8 * 5 ; health 5 hearts
+    ld   [hl], a
+    ret
+
+UsePotion2:
+    call GetUsedItemSlot
+    ld   [hl], 0
+    ld   hl, wAddHealthBuffer
+    ld   a, [hl]
+    add  a, 8 * 10 ; health 10 hearts
+    ld   [hl], a
+    ret
+
 }

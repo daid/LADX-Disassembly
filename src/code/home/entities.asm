@@ -102,7 +102,7 @@ AnimateEntities::
     ld   a, [hl]                                  ;; 00:39CA $7E
     ld   [wOAMNextAvailableSlot], a               ;; 00:39CB $EA $C0 $C3
     callsb func_020_4303                          ;; 00:39CE $3E $20 $EA $00 $21 $CD $03 $43
-    xor  a                                        ;; 00:39D6 $AF
+    ld   a, 1 ; xor  a                                        ;; 00:39D6 $AF
     ld   [rSelectROMBank], a                      ;; 00:39D7 $EA $00 $21
     ld   a, [wDialogState]                        ;; 00:39DA $FA $9F $C1
     and  a                                        ;; 00:39DD $A7

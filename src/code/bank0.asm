@@ -1633,8 +1633,8 @@ UseItem::
     dw   UseMagicPowder
     dw   UseBoomerang
     dw   UsePieceOfPower
-    dw   .return
-    dw   .return
+    dw   UsePotion1
+    dw   UsePotion2
     dw   .return
 
 .useMagicRod
@@ -5721,8 +5721,10 @@ LoadRoom::
     ; bc: address of room header data
     ;
 .parseRoomHeader
+    ld   a, CART_SRAM_ENABLE
+    ld   [rRAMG], a
     ld   a, BANK(sDynamicRoomData)
-    ld   [$4000], a
+    ld   [rRAMB], a
 
     ; Parse header first byte (animated tiles group)
     ld   a, [bc]                                  ;; 00:323A $0A

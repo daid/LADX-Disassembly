@@ -81,8 +81,24 @@ Data_007_7BBB::
     db $01, $01, $01, $01, $01, $01, $01, $01
     db $01, $00
 
+LSD_ChestWithItemEntityHandler_turnIntoInventoryDrop:
+    ld   hl, wEntitiesSpriteVariantTable
+    add  hl, bc
+    ld   [hl], a
+    ld   hl, wEntitiesTypeTable
+    add  hl, bc
+    ld   [hl], $13
+    ld   hl, wEntitiesPrivateState3Table
+    add  hl, bc
+    ld   [hl], $10 ; Set the default item amount
+    ret
+
 ; Also used when an object is spit out after a Like-like ate it
 ChestWithItemEntityHandler::
+    ldh  a, [hActiveEntitySpriteVariant]
+    sub  a, $80
+    jr   nc, LSD_ChestWithItemEntityHandler_turnIntoInventoryDrop
+
     ld   a, $02                                   ;; 07:7BDD $3E $02
     ldh  [hLinkInteractiveMotionBlocked], a       ;; 07:7BDF $E0 $A1
     ; wSwordAnimationState = SWORD_ANIMATION_STATE_NONE

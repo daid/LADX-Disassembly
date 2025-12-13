@@ -8706,3 +8706,4 @@ ELSE
 ENDC
     ; Fall through NOPs $7C00-$7F7F and land
     ; in src/audio/sfx_fade.asm ?
+    jp $7F80
