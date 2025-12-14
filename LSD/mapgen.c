@@ -6,9 +6,10 @@
 #define DIR_DOWN 2
 #define DIR_UP 3
 
-#define ROOM_START 0x80
-#define ROOM_FINAL 0x40
+#define ROOM_START     0x80
+#define ROOM_FINAL     0x40
 #define ROOM_SIDE_PATH 0x20
+#define ROOM_TREASURE  0x10
 
 uint8_t generateRandomMove(uint8_t from);
 uint8_t doMove(uint8_t from, uint8_t dir);
@@ -82,6 +83,16 @@ retry:
         randomMapData[current_room] |= 1 << move_dir;
         randomMapData[target_room] |= 1 << (move_dir ^ 1);
         count++;
+    }
+
+    for(uint8_t n=0; n<64; n++) {
+        if (randomMapData[n] & (ROOM_START | ROOM_FINAL)) continue;
+        if (rand8() < 64) {
+            randomMapData[n] |= ROOM_TREASURE;
+        }
+        if ((randomMapData[n] & ROOM_SIDE_PATH) && (rand8() < 128)) {
+            randomMapData[n] |= ROOM_TREASURE;
+        }
     }
 
     SET_SRAM_BANK_CONTAINING(sDungeonMinimap);

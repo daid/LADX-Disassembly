@@ -174,6 +174,7 @@ async function load_room_edit(room_id) {
     span.appendChild(filterOption("Left", 0x02));
     span.appendChild(filterOption("Down", 0x04));
     span.appendChild(filterOption("Up", 0x08));
+    span.appendChild(filterOption("Treasure", 0x10));
     span.appendChild(filterOption("Final", 0x40));
     span.appendChild(filterOption("Start", 0x80));
     document.getElementById("content").appendChild(span);

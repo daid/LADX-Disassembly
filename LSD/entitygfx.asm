@@ -241,7 +241,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 8c 8C
     db $FF ; 8d 8D
     db $FF ; 8e CUE_BALL
-    db $FF ; 8f MASKED_MIMIC_GORIYA
+    db $58 ; 8f MASKED_MIMIC_GORIYA
     db $FF ; 90 THREE_OF_A_KIND
     db $55 ; 91 ANTI_KIRBY
     db $FF ; 92 SMASHER

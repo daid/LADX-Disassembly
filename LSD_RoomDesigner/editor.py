@@ -120,7 +120,7 @@ class Editor:
             'tiles': [n if n is not None else 0x0D for n in RoomTemplate(0x0F).tiles],
             'variations': [],
             'map_id': 0,
-            'filter_mask': 0xC0,
+            'filter_mask': 0xD0,
             'filter_value': 0x00,
             'sidescroll': False,
             'tileset': 0xFF,

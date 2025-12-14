@@ -1,29 +1,29 @@
 ; Entity handler for both the Masked Mimic and Goriya
 MaskedMimicGoriyaSpriteVariants::
 .variant0
-    db $6A, $22
-    db $68, $22
+    db $4A, $22
+    db $48, $22
 .variant1
-    db $6E, $22
-    db $6C, $22
+    db $4E, $22
+    db $4C, $22
 .variant2
-    db $68, $02
-    db $6A, $02
+    db $48, $02
+    db $4A, $02
 .variant3
-    db $6C, $02
-    db $6E, $02
+    db $4C, $02
+    db $4E, $02
 .variant4
-    db $64, $02
-    db $66, $02
+    db $44, $02
+    db $46, $02
 .variant5
-    db $66, $22
-    db $64, $22
+    db $46, $22
+    db $44, $22
 .variant6
-    db $60, $02
-    db $62, $02
+    db $40, $02
+    db $42, $02
 .variant7
-    db $62, $22
-    db $60, $22
+    db $42, $22
+    db $40, $22
 
 Data_019_47B6::
     db   $00, $F4, $0C
