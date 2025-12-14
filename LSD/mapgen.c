@@ -86,6 +86,7 @@ retry:
     }
 
     for(uint8_t n=0; n<64; n++) {
+        if (!randomMapData[n]) continue;
         if (randomMapData[n] & (ROOM_START | ROOM_FINAL)) continue;
         if (rand8() < 64) {
             randomMapData[n] |= ROOM_TREASURE;

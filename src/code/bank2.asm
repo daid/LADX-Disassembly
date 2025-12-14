@@ -237,6 +237,9 @@ LinkMotionDefault::
     ; sword animation state = SWORD_ANIMATION_STATE_NONE
     xor  a                                        ;; 02:42FE $AF
     ld   [wSwordAnimationState], a                ;; 02:42FF $EA $37 $C1
+    ld   a, [wCanSwordCharge]
+    and  a
+    ret  z
     ld   a, [wSwordCharge]                        ;; 02:4302 $FA $22 $C1
     cp   MAX_SWORD_CHARGE                         ;; 02:4305 $FE $28
     jr   z, .return                               ;; 02:4307 $28 $0C

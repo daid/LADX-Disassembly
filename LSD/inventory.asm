@@ -164,6 +164,7 @@ getAmountPtrForInventory:
     ret  z
     ld   hl, wColorDungeonItemFlags ; per default use some dummy location
     ld   de, wColorDungeonItemFlags
+    cp   $11 ; INVENTORY_MAP, merge multiple into one.
     ret
 }
 

@@ -3135,8 +3135,10 @@ wGoldenLeavesCount::
 ;LSD: Removed dungeon item flags (yay, free space! that gets erased when a new run is started!)
 wDungeonDepth:
   ds 1
+wCanSwordCharge:
+  ds 1
 
-  ds $2C
+  ds $2B
 
 ; TODO comment
 wPowerBraceletLevel::
