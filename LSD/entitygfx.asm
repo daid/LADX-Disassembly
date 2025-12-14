@@ -109,7 +109,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 08 MAGIC_POWDER_SPRINKLE
     db $FF ; 09 OCTOROCK
     db $FF ; 0a OCTOROCK_ROCK
-    db $FF ; 0b MOBLIN
+    db $7C ; 0b MOBLIN
     db $FF ; 0c MOBLIN_ARROW
     db $87 ; 0d TEKTITE
     db $FF ; 0e LEEVER
@@ -118,12 +118,12 @@ EntitySpriteRequirementsTable:
     db $8A ; 11 GIANT_GHINI
     db $FF ; 12 GHINI
     db $FF ; 13 BROKEN_HEART_CONTAINER
-    db $FF ; 14 MOBLIN_SWORD
+    db $7C ; 14 MOBLIN_SWORD
     db $FF ; 15 ANTI_FAIRY
     db $FF ; 16 SPARK_COUNTER_CLOCKWISE
     db $FF ; 17 SPARK_CLOCKWISE
     db $FF ; 18 POLS_VOICE
-    db $FF ; 19 KEESE
+    db $90 ; 19 KEESE
     db $77 ; 1a STALFOS_AGGRESSIVE
     db $91 ; 1b GEL
     db $91 ; 1c MINI_GEL
@@ -139,7 +139,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 26 SMALL_EXPLOSION_ENEMY_2
     db $FF ; 27 SPIKE_TRAP
     db $FF ; 28 MIMIC
-    db $FF ; 29 MINI_MOLDORM
+    db $98 ; 29 MINI_MOLDORM
     db $FF ; 2a LASER
     db $FF ; 2b LASER_BEAM
     db $FF ; 2c SPIKED_BEETLE
@@ -259,7 +259,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 9e FIREBALL_SHOOTER
     db $FF ; 9f GOOMBA
     db $FF ; a0 PEAHAT
-    db $FF ; a1 SNAKE
+    db $5F ; a1 SNAKE
     db $FF ; a2 PIRANHA_PLANT
     db $FF ; a3 SIDE_VIEW_PLATFORM_HORIZONTAL
     db $FF ; a4 SIDE_VIEW_PLATFORM_VERTICAL

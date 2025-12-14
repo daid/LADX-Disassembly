@@ -183,32 +183,32 @@ SetEntityVariantForDirection_03::
 MoblinSpriteVariants::
 ; Down
 .variant0
-    db $60, OAM_GBC_PAL_3
-    db $62, OAM_GBC_PAL_3
+    db $40, OAM_GBC_PAL_3
+    db $42, OAM_GBC_PAL_3
 .variant1
-    db $62, OAM_GBC_PAL_3 | OAMF_XFLIP
-    db $60, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_3 | OAMF_XFLIP
 ; Up
 .variant2
-    db $64, OAM_GBC_PAL_3
-    db $66, OAM_GBC_PAL_3
+    db $44, OAM_GBC_PAL_3
+    db $46, OAM_GBC_PAL_3
 .variant3
-    db $66, OAM_GBC_PAL_3 | OAMF_XFLIP
-    db $64, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_3 | OAMF_XFLIP
 ; Left
 .variant4
-    db $68, OAM_GBC_PAL_3
-    db $6A, OAM_GBC_PAL_3
+    db $48, OAM_GBC_PAL_3
+    db $4A, OAM_GBC_PAL_3
 .variant5
-    db $6C, OAM_GBC_PAL_3
-    db $6E, OAM_GBC_PAL_3
+    db $4C, OAM_GBC_PAL_3
+    db $4E, OAM_GBC_PAL_3
 ; Right
 .variant6
-    db $6A, OAM_GBC_PAL_3 | OAMF_XFLIP
-    db $68, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $4A, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_3 | OAMF_XFLIP
 .variant7
-    db $6E, OAM_GBC_PAL_3 | OAMF_XFLIP
-    db $6C, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $4E, OAM_GBC_PAL_3 | OAMF_XFLIP
+    db $4C, OAM_GBC_PAL_3 | OAMF_XFLIP
 
 MoblinArrowOffsetXPerDirection::
     db   $08, $F8, $04, $FC

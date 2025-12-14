@@ -40,44 +40,44 @@ EntityInitMiniMoldorm::
 MiniMoldormSpriteVariants::
 ; Down
 .variant0
-    db $70, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $70, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 ; Up
 .variant1
-    db $70, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP
-    db $70, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
 ; Left
 .variant2
-    db $72, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $74, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0
 ; Right
 .variant3
-    db $74, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
-    db $72, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 ; Down-left
 .variant4
-    db $76, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $78, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $48, OAM_GBC_PAL_0 | OAMF_PAL0
 ; Down-right
 .variant5
-    db $78, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
-    db $76, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 ; Up-left
 .variant6
-    db $76, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP
-    db $78, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP
+    db $48, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP
 ; Up-right
 .variant7
-    db $78, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
-    db $76, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
 ; 2nd segment
 .variant8
-    db $7A, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $7A, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $4A, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $4A, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 ; 3rd segment
 .variant9
-    db $7C, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $7C, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $4C, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $4C, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 
 ; Indexed by movement angle
 MoldormHeadSpriteVariantIndexes::

@@ -10,11 +10,11 @@ KeeseSpriteVariants:: ;; 06:6708
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 KeeseCaveBSpriteVariants::
 .variant0
-    db $62, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $62, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $60, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $60, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 
 ; Approximately 0x0E * sin(pi/8 * index)
 KeeseYSpeeds::

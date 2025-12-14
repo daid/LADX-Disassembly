@@ -222,29 +222,29 @@ Data_007_7A8D::
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 Unknown042SpriteVariants::
 .variant0
-    db $60, $03
-    db $62, $03
+    db $40, $03
+    db $42, $03
 .variant1
-    db $62, $23
-    db $60, $23
+    db $42, $23
+    db $40, $23
 .variant2
-    db $64, $03
-    db $66, $03
+    db $44, $03
+    db $46, $03
 .variant3
-    db $66, $23
-    db $64, $23
+    db $46, $23
+    db $44, $23
 .variant4
-    db $68, $03
-    db $6A, $03
+    db $48, $03
+    db $4A, $03
 .variant5
-    db $6C, $03
-    db $6E, $03
+    db $4C, $03
+    db $4E, $03
 .variant6
-    db $6A, $23
-    db $68, $23
+    db $4A, $23
+    db $48, $23
 .variant7
-    db $6E, $23
-    db $6C, $23
+    db $4E, $23
+    db $4C, $23
 
 func_007_7AB5::
     call SkipDisabledEntityDuringRoomTransition   ;; 07:7AB5 $CD $57 $3D
