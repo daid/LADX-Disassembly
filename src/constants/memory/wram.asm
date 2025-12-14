@@ -3133,7 +3133,10 @@ wGoldenLeavesCount::
   ds 1 ; DB15
 
 ;LSD: Removed dungeon item flags (yay, free space! that gets erased when a new run is started!)
-  ds $2D
+wDungeonDepth:
+  ds 1
+
+  ds $2C
 
 ; TODO comment
 wPowerBraceletLevel::

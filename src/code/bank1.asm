@@ -735,8 +735,8 @@ CreateMinimapTilemap::
     ldh  [hMultiPurpose1], a                      ;; 01:5602 $E0 $D8
     ld   a, $01                                   ;; 01:5604 $3E $01
     ldh  [hMultiPurpose2], a                      ;; 01:5606 $E0 $D9
-    ldh  a, [hMapId]                              ;; 01:5608 $F0 $F7
-    add  a, $B1                                   ;; 01:560A $C6 $B1
+    ld   a, [wDungeonDepth]
+    add  a, $B0                                   ;; 01:560A $C6 $B1
     ldh  [hMultiPurpose3], a                      ;; 01:560C $E0 $DA
     pop  hl                                       ;; 01:560E $E1
     call func_001_5619 ;show dungeon map no       ;; 01:560F $CD $19 $56

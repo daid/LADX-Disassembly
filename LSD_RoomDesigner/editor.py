@@ -67,6 +67,8 @@ class Editor:
             raw_data = bytearray([room['animation'], re.floor_object])
             for obj in re.objects:
                 raw_data += obj.export()
+            if room['filter_mask'] & 0x40 and room['filter_value'] & 0x40:
+                raw_data += bytearray([0xE1, 0x00, 0xff, 0x58, 0x52]) # Add warp data
             assert len(raw_data) > 0
             f.write(f"  db ${room['filter_mask']:02X}, ${room['filter_value']:02X} ; allowed filter\n")
             f.write("  ; Primary data\n")
@@ -118,8 +120,8 @@ class Editor:
             'tiles': [n if n is not None else 0x0D for n in RoomTemplate(0x0F).tiles],
             'variations': [],
             'map_id': 0,
-            'filter_mask': 0,
-            'filter_value': 0,
+            'filter_mask': 0xC0,
+            'filter_value': 0x00,
             'sidescroll': False,
             'tileset': 0xFF,
             'animation': 4,

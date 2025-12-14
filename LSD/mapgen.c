@@ -6,8 +6,8 @@
 #define DIR_DOWN 2
 #define DIR_UP 3
 
-#define ROOM_FINAL 0x80
-#define ROOM_START 0x40
+#define ROOM_START 0x80
+#define ROOM_FINAL 0x40
 #define ROOM_SIDE_PATH 0x20
 
 uint8_t generateRandomMove(uint8_t from);
@@ -56,7 +56,7 @@ retry:
         if (++safety == 0) goto retry;
         current_room = rand8() & 0x3F;
         if (!randomMapData[current_room]) continue;
-        if (randomMapData[current_room] & 0x80) continue; // no side paths from final room.
+        if (randomMapData[current_room] & ROOM_FINAL) continue; // no side paths from final room.
         uint8_t move_dir = generateRandomMove(current_room);
         if (move_dir == 0xFF) continue;
         uint8_t target_room = doMove(current_room, move_dir);
@@ -73,12 +73,12 @@ retry:
         if (++safety == 0) goto retry;
         current_room = rand8() & 0x3F;
         if (!randomMapData[current_room]) continue;
-        if (randomMapData[current_room] & 0x80) continue; // no cycles from final room.
+        if (randomMapData[current_room] & ROOM_FINAL) continue; // no cycles from final room.
         uint8_t move_dir = generateRandomMove(current_room);
         if (move_dir == 0xFF) continue;
         uint8_t target_room = doMove(current_room, move_dir);
         if (!randomMapData[target_room]) continue;
-        if (randomMapData[target_room] & 0x80) continue; // no cycles from final room.
+        if (randomMapData[target_room] & ROOM_FINAL) continue; // no cycles from final room.
         randomMapData[current_room] |= 1 << move_dir;
         randomMapData[target_room] |= 1 << (move_dir ^ 1);
         count++;
@@ -139,14 +139,12 @@ getDifferentRoomData:
 
         SET_SRAM_BANK_CONTAINING(sDynamicEntityData);
         uint8_t* dynamic_entity_data_ptr = &sDynamicEntityData[((uint16_t)n) * 0x80];
-        if (!(randomMapData[n] & ROOM_START)) {
-            uint8_t entity_set_count = *static_room_data_ptr++;
-            uint8_t entity_set_nr = rand8range(entity_set_count);
-            const uint8_t* entity_data_ptr = *(const uint8_t**)&static_room_data_ptr[entity_set_nr * 4 + 2];
-            copy_size = *entity_data_ptr++;
-            do {
-                *dynamic_entity_data_ptr++ = *entity_data_ptr++;
-            } while(--copy_size); 
+        uint8_t entity_set_count = *static_room_data_ptr++;
+        uint8_t entity_set_nr = rand8range(entity_set_count);
+        const uint8_t* entity_data_ptr = *(const uint8_t**)&static_room_data_ptr[entity_set_nr * 4 + 2];
+        copy_size = *entity_data_ptr++;
+        while(copy_size--) {
+            *dynamic_entity_data_ptr++ = *entity_data_ptr++;
         }
         *dynamic_entity_data_ptr++ = 0xFF;
     }

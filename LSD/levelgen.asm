@@ -22,6 +22,8 @@ LSD_GenerateMap:
     ldh  a, [hMapRoom]
     inc  a
     ret  nz
+    ld   hl, wDungeonDepth
+    inc  [hl]
 .restartGen:
     call EnableSRAM
     ld   a, BANK(sDungeonMinimap)
