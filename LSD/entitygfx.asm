@@ -122,7 +122,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 15 ANTI_FAIRY
     db $FF ; 16 SPARK_COUNTER_CLOCKWISE
     db $FF ; 17 SPARK_CLOCKWISE
-    db $FF ; 18 POLS_VOICE
+    db $93 ; 18 POLS_VOICE
     db $90 ; 19 KEESE
     db $77 ; 1a STALFOS_AGGRESSIVE
     db $91 ; 1b GEL
@@ -130,7 +130,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 1d DISABLED
     db $77 ; 1e STALFOS_EVASIVE
     db $77 ; 1f GIBDO
-    db $FF ; 20 HARDHAT_BEETLE
+    db $90 ; 20 HARDHAT_BEETLE
     db $95 ; 21 WIZROBE
     db $95 ; 22 WIZROBE_PROJECTILE
     db $93 ; 23 LIKE_LIKE
@@ -243,7 +243,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 8e CUE_BALL
     db $FF ; 8f MASKED_MIMIC_GORIYA
     db $FF ; 90 THREE_OF_A_KIND
-    db $FF ; 91 ANTI_KIRBY
+    db $55 ; 91 ANTI_KIRBY
     db $FF ; 92 SMASHER
     db $FF ; 93 MAD_BOMBER
     db $FF ; 94 KANALET_BOMBABLE_WALL
@@ -258,7 +258,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 9d LIFTABLE_STATUE
     db $FF ; 9e FIREBALL_SHOOTER
     db $FF ; 9f GOOMBA
-    db $FF ; a0 PEAHAT
+    db $5F ; a0 PEAHAT
     db $5F ; a1 SNAKE
     db $FF ; a2 PIRANHA_PLANT
     db $FF ; a3 SIDE_VIEW_PLATFORM_HORIZONTAL
@@ -276,7 +276,7 @@ EntitySpriteRequirementsTable:
     db $FF ; af TRADING_ITEM
     db $FF ; b0 PINCER
     db $FF ; b1 HOLE_FILLER
-    db $FF ; b2 BEETLE_SPAWNER
+    db $8C ; b2 BEETLE_SPAWNER
     db $FF ; b3 HONEYCOMB
     db $FF ; b4 TARIN
     db $FF ; b5 BEAR
@@ -334,9 +334,9 @@ EntitySpriteRequirementsTable:
     db $FF ; e9 COLOR_SHELL_RED
     db $FF ; ea COLOR_SHELL_GREEN
     db $FF ; eb COLOR_SHELL_BLUE
-    db $FF ; ec COLOR_GHOUL_RED
-    db $FF ; ed COLOR_GHOUL_GREEN
-    db $FF ; ee COLOR_GHOUL_BLUE
+    db $06 ; ec COLOR_GHOUL_RED
+    db $06 ; ed COLOR_GHOUL_GREEN
+    db $06 ; ee COLOR_GHOUL_BLUE
     db $FF ; ef ROTOSWITCH_RED
     db $FF ; f0 ROTOSWITCH_YELLOW
     db $FF ; f1 ROTOSWITCH_BLUE

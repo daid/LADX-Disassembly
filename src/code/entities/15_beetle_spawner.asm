@@ -68,11 +68,11 @@ BeetleYSpeeds::
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 BeetleSpriteVariants::
 .variant0
-    db $70, $00
-    db $72, $00
+    db $40, $00
+    db $42, $00
 .variant1
-    db $72, $20
-    db $70, $20
+    db $42, $20
+    db $40, $20
 
 BeetleSpawnerBeetleHandler:
     ld   de, BeetleSpriteVariants                 ;; 15:757F $11 $77 $75

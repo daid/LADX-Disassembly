@@ -4975,7 +4975,7 @@ LoadSaveMenuTiles::
 
 ; NPC tiles banks
 NpcTilesBankTable::
-    db   $00, BANK(Npc2Tiles), BANK(Npc1Tiles), BANK(Npc3Tiles) ;; 00:2E6F
+    db   $15, BANK(Npc2Tiles), BANK(Npc1Tiles), BANK(Npc3Tiles) ;; 00:2E6F
 
 ; For overworld or indoor rooms, load room-specific tiles.
 ;

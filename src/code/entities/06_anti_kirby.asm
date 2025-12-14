@@ -329,34 +329,34 @@ AntiKirbyState4Handler::
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 AntiKirbySpriteVariants::
 .variant0
-    db $62, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
-    db $60, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $68, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
-    db $66, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
 .variant2
-    db $60, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $62, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_1 | OAMF_PAL0
 .variant3
-    db $66, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $68, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $48, OAM_GBC_PAL_1 | OAMF_PAL0
 .variant4
-    db $62, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
-    db $60, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
 .variant5
-    db $68, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
-    db $66, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
 .variant6
-    db $60, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $62, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_1 | OAMF_PAL0
 .variant7
-    db $66, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $68, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $48, OAM_GBC_PAL_1 | OAMF_PAL0
 
 Data_006_4456::
-    db   $00, $FC, $62, $21, $00, $04, $6A, $21, $00, $0C, $64, $21, $00, $FC, $64, $01
-    db   $00, $04, $6A, $01, $00, $0C, $62, $01, $00, $FC, $62, $21, $00, $04, $6A, $21
-    db   $00, $0C, $64, $21, $00, $FC, $64, $01, $00, $04, $6A, $01, $00, $0C, $62, $01
+    db   $00, $FC, $42, $21, $00, $04, $4A, $21, $00, $0C, $44, $21, $00, $FC, $44, $01
+    db   $00, $04, $4A, $01, $00, $0C, $42, $01, $00, $FC, $42, $21, $00, $04, $4A, $21
+    db   $00, $0C, $44, $21, $00, $FC, $44, $01, $00, $04, $4A, $01, $00, $0C, $42, $01
 
 Data_006_4486::
     db   $00, $0E, $24, $01, $F8, $18, $24, $01, $08, $18, $24, $01, $FE, $13, $24, $01

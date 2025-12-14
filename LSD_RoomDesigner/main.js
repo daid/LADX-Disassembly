@@ -83,15 +83,9 @@ async function load_room_edit(room_id) {
     span.appendChild(document.createTextNode("Variation:"));
     var select = document.createElement("select");
     span.appendChild(select);
-    var opt = document.createElement('option');
-    opt.value = -1;
-    opt.innerText = "None";
-    select.appendChild(opt);
+    addSelectOption(select, -1, "None");
     for(var index in current_room.variations) {
-        var opt = document.createElement('option');
-        opt.value = index;
-        opt.innerText = index;
-        select.appendChild(opt);
+        addSelectOption(select, index, index);
     }
     select.selectedIndex = variation + 1;
     select.oninput = async function(e) {
@@ -132,10 +126,7 @@ async function load_room_edit(room_id) {
     var select = document.createElement("select");
     span.appendChild(select);
     for(var index in current_room.entity_sets) {
-        var opt = document.createElement('option');
-        opt.value = index;
-        opt.innerText = index;
-        select.appendChild(opt);
+        addSelectOption(select, index, index);
     }
     select.selectedIndex = entity_set_index;
     select.oninput = async function(e) {
@@ -175,6 +166,14 @@ async function load_room_edit(room_id) {
         await load_room_edit(current_room.id);
     };
     span.appendChild(add_entity_set);
+    document.getElementById("content").appendChild(span);
+
+    var span = document.createElement("div");
+    span.appendChild(document.createTextNode("Filter:"));
+    span.appendChild(filterOption("Right", 0x01));
+    span.appendChild(filterOption("Left", 0x02));
+    span.appendChild(filterOption("Down", 0x04));
+    span.appendChild(filterOption("Up", 0x08));
     document.getElementById("content").appendChild(span);
 
     if (current_room.num < 0x100) {
@@ -318,10 +317,7 @@ function roomDataSelector(label, key, table) {
     var select = document.createElement("select");
     span.appendChild(select);
     for(var option of table) {
-        var opt = document.createElement('option');
-        opt.value = option.value;
-        opt.innerText = option.label;
-        select.appendChild(opt);
+        addSelectOption(select, option.value, option.label);
     }
     for(var idx in select.options) {
         if (select.options[idx].value == current_room[key])
@@ -334,6 +330,52 @@ function roomDataSelector(label, key, table) {
         await update_tileset_image();
     };
     return span;
+}
+
+function filterOption(label, mask) {
+    var span = document.createElement("span");
+    span.appendChild(document.createTextNode(label));
+    var select = document.createElement("select");
+    addSelectOption(select, "-1", "Any");
+    addSelectOption(select, "0", "No");
+    addSelectOption(select, "1", "Yes");
+    if (current_room.filter_mask & mask) {
+        if (current_room.filter_value & mask) {
+            select.selectedIndex = 2;
+        } else {
+            select.selectedIndex = 1;
+        }
+    } else {
+        select.selectedIndex = 0;
+    }
+    select.oninput = async function(e) {
+        switch(select.selectedIndex) {
+        case 0:
+            current_room.filter_mask &=~mask;
+            current_room.filter_value &=~mask;
+            break;
+        case 1:
+            current_room.filter_mask |= mask;
+            current_room.filter_value &=~mask;
+            break;
+        case 2:
+            current_room.filter_mask |= mask;
+            current_room.filter_value |= mask;
+            break;
+        }
+        await fetch(`/update_room_data?room=${current_room.id}&entity_set=${entity_set_index}&variation=${variation}&key=filter_mask&value=${current_room.filter_mask}`);
+        await fetch(`/update_room_data?room=${current_room.id}&entity_set=${entity_set_index}&variation=${variation}&key=filter_value&value=${current_room.filter_value}`);
+    };
+    span.appendChild(select);
+    return span
+}
+
+function addSelectOption(select, value, label) {
+    var opt = document.createElement('option');
+    opt.value = value;
+    opt.innerText = label;
+    select.appendChild(opt);
+    return opt;
 }
 
 var palette_index_table = [
