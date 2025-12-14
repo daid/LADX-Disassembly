@@ -99,7 +99,11 @@ retry:
     SET_SRAM_BANK_CONTAINING(sDungeonMinimap);
     // Update the minimap
     for(uint8_t n=0; n<64; n++) {
-        if (randomMapData[n])
+        if (randomMapData[n] & ROOM_TREASURE) 
+            sDungeonMinimap[n] = 0xED;
+        else if (randomMapData[n] & ROOM_FINAL)
+            sDungeonMinimap[n] = 0xEE;
+        else if (randomMapData[n])
             sDungeonMinimap[n] = 0xEF;
         else
             sDungeonMinimap[n] = 0x7D;

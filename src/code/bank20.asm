@@ -2445,8 +2445,8 @@ Data_020_5989::
 
 data_020_5994::
 ; Location for overwriting each inventory sprite
-    db   $9C, $6A, $83, $94, $95, $C0, $C1
-    db   $9C, $6C, $83, $A0, $A1, $C2, $C3
+    db   $9C, $6A, $83, $94, $95, $7F, $7F ; LSD: Hide map/compass icons
+    db   $9C, $6C, $83, $A0, $A1, $7F, $7F
     db   $9C, $6E, $83, $9A, $9B, $C4, $C5
     db   $9C, $6F, $81, $9C, $9D
     db   $9C, $B0, $81, $C6, $C7
@@ -2978,6 +2978,8 @@ InventoryItemPaletteIndexes::
     db  $01, $01
     db  $03, $01 ; INVENTORY_MAP
     db  $03, $01
+    db  $01, $01 ; INVENTORY_COMPASS
+    db  $01, $01
 
 InventoryItemTiles::
     ; Tiles used for the inventory items.
@@ -3018,6 +3020,8 @@ InventoryItemTiles::
     db $A1, $7F, $7F ;
     db $C0, $7F, $7F ; INVENTORY_MAP
     db $C1, $7F, $7F ;
+    db $C2, $7F, $7F ; INVENTORY_COMPASS
+    db $C3, $7F, $7F ;
 
 
 InventoryTileMapPositions::

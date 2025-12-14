@@ -473,6 +473,12 @@ jr_001_531D::
     ld   [hl+], a
     ld   a, $11
     ld   [hl+], a
+    ld   a, $02
+    ld   [hl+], a
+    ld   a, $12
+    ld   [hl+], a
+    ld   a, $10
+    ld   [wBombCount], a
     jr   .finish                                  ;; 01:53D6 $18 $B6
 
 Data_001_53D8::

@@ -5,6 +5,7 @@ LoadMinimap::
     ; LSD: Update wHasDungeonMap based on if we have the map in our inventory
     xor  a
     ld   [wHasDungeonMap], a
+    ld   [wHasDungeonCompass], a
     ld   hl, wInventoryItems
     ld   e, $0C
 .checkMapLoop:   ld   a, [hl+]
@@ -13,6 +14,11 @@ LoadMinimap::
     ld   a, $01
     ld   [wHasDungeonMap], a
 .notMap:
+    cp   $12
+    jr   nz, .notCompass
+    ld   a, $01
+    ld   [wHasDungeonCompass], a
+.notCompass:
     dec e
     jr   nz, .checkMapLoop
 

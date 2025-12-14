@@ -165,6 +165,9 @@ getAmountPtrForInventory:
     ld   hl, wColorDungeonItemFlags ; per default use some dummy location
     ld   de, wColorDungeonItemFlags
     cp   $11 ; INVENTORY_MAP, merge multiple into one.
+    ret  z
+    cp   $12 ; INVENTORY_COMPASS, merge multiple into one.
+    ret  z
     ret
 }
 
@@ -196,6 +199,7 @@ EntityInventoryDropSprite:
     db  $A0, $04 ; INVENTORY_POTION
     db  $A0, $05 ; INVENTORY_POTION2
     db  $C0, $04 ; INVENTORY_MAP
+    db  $C0, $04 ; INVENTORY_COMPASS
 
 EntityInventoryDropSprite2:
     db  $80, $0C, $80, $2C
@@ -249,6 +253,8 @@ EntityInventoryDropHandler:
     ld   hl, wEntitiesPosYTable
     add  hl, bc
     ld   [hl], a
+    call IncrementEntityState
+    ld   [hl], $02
 
 .StateOldPickup:
     ; If we cannot act, ignore picking up the item.
