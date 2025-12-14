@@ -3132,7 +3132,7 @@ wHasBirdKey::
 wGoldenLeavesCount::
   ds 1 ; DB15
 
-;LSD: Removed dungeon item flags (yay, free space!)
+;LSD: Removed dungeon item flags (yay, free space! that gets erased when a new run is started!)
   ds $2D
 
 ; TODO comment
@@ -3645,7 +3645,7 @@ wSmallKeysCount::
 ; Unlabeled
 wDBD1::
   ds 1 ; DBD1
-  
+
   ;ds $2F ; DBD1 - DBFF
 
 SECTION "WRAMX_DC00", WRAMX[$DC00], BANK[1]

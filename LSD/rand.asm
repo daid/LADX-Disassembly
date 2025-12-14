@@ -74,6 +74,17 @@ _rand16: ; uint16_t rand16(void) __preserves_regs(d, e, h, l)
     pop hl
     ret
 
+_rand8range:  ; uint8_t rand8(uint8_t) __preserves_regs(d, e, h, l)
+    push af ; max is passed in a
+    call _rand8
+    pop  af
+    cp   b ; check if returned random value => a, then retry
+    jr   c, _rand8range
+    jr   z, _rand8range
+    ld   a, b
+    ret
+
+
 ; Run the seed forward and store it in SRAM. This causes the main map generation seed to constantly change
 ; Only call this outside the usual game.
 LSD_randSRAM:

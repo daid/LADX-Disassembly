@@ -73,9 +73,11 @@ NoEntities:
 
 #SECTION "DynamicRoomData", SRAM, BANK[1] {
 sDynamicRoomData:
+_sDynamicRoomData:
     ds $2000
 }
 #SECTION "DynamicEntityData", SRAM, BANK[2] {
 sDynamicEntityData:
+_sDynamicEntityData:
     ds $2000
 }

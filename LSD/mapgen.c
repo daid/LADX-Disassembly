@@ -10,13 +10,6 @@
 #define ROOM_START 0x40
 #define ROOM_SIDE_PATH 0x20
 
-extern uint8_t randomMapData[0x40];
-extern uint8_t sDungeonMinimap[0x40];
-extern uint8_t sDungenChestContents[0x40];
-extern __sfr hMapRoom;
-extern uint8_t rRAMB;
-extern uint8_t b_sDungeonMinimap;
-
 uint8_t generateRandomMove(uint8_t from);
 uint8_t doMove(uint8_t from, uint8_t dir);
 uint8_t flipDir(uint8_t dir);
@@ -91,6 +84,7 @@ retry:
         count++;
     }
 
+    SET_SRAM_BANK_CONTAINING(sDungeonMinimap);
     // Update the minimap
     for(uint8_t n=0; n<64; n++) {
         if (randomMapData[n])
@@ -98,6 +92,59 @@ retry:
         else
             sDungeonMinimap[n] = 0x7D;
         sDungenChestContents[n] = random_treasure_list[rand8() & 0x0F];
+    }
+
+    for(uint8_t n=0; n<64; n++) {
+        const uint8_t* static_room_data_ptr = RandomRoomDataTable[0];
+        SET_SRAM_BANK_CONTAINING(sDynamicRoomData);
+        uint8_t* dynamic_room_data_ptr = &sDynamicRoomData[((uint16_t)n) * 0x80];
+        uint8_t copy_size = *static_room_data_ptr++;
+        do {
+            *dynamic_room_data_ptr++ = *static_room_data_ptr++;
+        } while(--copy_size);
+
+        if (randomMapData[n] & (1 << DIR_RIGHT)) {
+            *dynamic_room_data_ptr++ = 0x39;
+            *dynamic_room_data_ptr++ = 0xF7;
+        }
+        if (randomMapData[n] & (1 << DIR_LEFT)) {
+            *dynamic_room_data_ptr++ = 0x30;
+            *dynamic_room_data_ptr++ = 0xF6;
+        }
+        if (randomMapData[n] & (1 << DIR_DOWN)) {
+            *dynamic_room_data_ptr++ = 0x74;
+            *dynamic_room_data_ptr++ = 0xF5;
+        }
+        if (randomMapData[n] & (1 << DIR_UP)) {
+            *dynamic_room_data_ptr++ = 0x04;
+            *dynamic_room_data_ptr++ = 0xF4;
+        }
+        uint8_t variation_count = *static_room_data_ptr++;
+        while(variation_count) {
+            if (rand8() <= *static_room_data_ptr++) {
+                const uint8_t* variation_ptr = *(const uint8_t**)static_room_data_ptr;
+                copy_size = *variation_ptr++;
+                do {
+                    *dynamic_room_data_ptr++ = *variation_ptr++;
+                } while(--copy_size);
+            }
+            static_room_data_ptr += 2;
+            variation_count -= 1;
+        }
+        *dynamic_room_data_ptr = 0xFE;
+
+        SET_SRAM_BANK_CONTAINING(sDynamicEntityData);
+        uint8_t* dynamic_entity_data_ptr = &sDynamicEntityData[((uint16_t)n) * 0x80];
+        if (!(randomMapData[n] & ROOM_START)) {
+            uint8_t entity_set_count = *static_room_data_ptr++;
+            uint8_t entity_set_nr = rand8range(entity_set_count);
+            const uint8_t* entity_data_ptr = *(const uint8_t**)&static_room_data_ptr[entity_set_nr * 4 + 2];
+            copy_size = *entity_data_ptr++;
+            do {
+                *dynamic_entity_data_ptr++ = *entity_data_ptr++;
+            } while(--copy_size); 
+        }
+        *dynamic_entity_data_ptr++ = 0xFF;
     }
 }
 

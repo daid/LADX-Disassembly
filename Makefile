@@ -69,7 +69,7 @@ src/main.%.o: src/main.asm $(asm_files) $(gfx_files:.png=.2bpp) $(bin_files)
 # The arguments used are both the global options (e.g. `LDFLAGS`) and the
 # locale-specific options (e.g. `azlg-r1_LDFLAGS`).
 %.gbc: src/main.%.o dreams.asm $(LSD_files) $(LSD_rel_files)
-	python3 ../GB.HLA/main.py dreams.asm --output $@ --symbols $*.sym --include-path .obj/
+	python3 ../GB.HLA/main.py dreams.asm --output $@ --symbols $*.sym --include-path .obj/ --pad 0xDD
 	python3 ../BadBoy/tools/ips.py ../LADX-Disassembly/$@ $@ $*.ips
 
 # Make may attempt to re-generate the Makefile; prevent this.
