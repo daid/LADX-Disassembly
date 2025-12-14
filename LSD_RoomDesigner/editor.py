@@ -53,12 +53,13 @@ class Editor:
 
     def export_game_data(self, filename: str):
         f = open(filename, "wt")
-        f.write(f'RANDOM_ROOM_COUNT = {len(self.room_data)}\n')
         f.write(f'#SECTION "RandomRoomData", ROMX, BANK[$0A] {{\n')
+        f.write(f'_RandomRoomDataTableSize:\n')
+        f.write(f'  db {len(self.room_data)}\n')
         f.write(f'RandomRoomDataTable:\n')
         f.write(f'_RandomRoomDataTable:\n')
         for idx, room in enumerate(self.room_data):
-            f.write(f' dw random_room_{idx} ; {room['name']}\n')
+            f.write(f'  dw random_room_{idx} ; {room['name']}\n')
         for idx, room in enumerate(self.room_data):
             f.write(f'random_room_{idx}: ; {room['name']}\n')
             re = RoomEditor(self.__rom, 0x100)
@@ -67,6 +68,7 @@ class Editor:
             for obj in re.objects:
                 raw_data += obj.export()
             assert len(raw_data) > 0
+            f.write(f"  db ${room['filter_mask']:02X}, ${room['filter_value']:02X} ; allowed filter\n")
             f.write("  ; Primary data\n")
             f.write(f"  db {len(raw_data)}, " + ", ".join(f"${n:02X}" for n in raw_data) + "\n")
             f.write(f"  ; Variations\n")
@@ -116,6 +118,8 @@ class Editor:
             'tiles': [n if n is not None else 0x0D for n in RoomTemplate(0x0F).tiles],
             'variations': [],
             'map_id': 0,
+            'filter_mask': 0,
+            'filter_value': 0,
             'sidescroll': False,
             'tileset': 0xFF,
             'animation': 4,

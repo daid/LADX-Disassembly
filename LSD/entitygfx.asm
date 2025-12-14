@@ -283,7 +283,7 @@ EntitySpriteRequirementsTable:
     db $FF ; b6 PAPAHL
     db $FF ; b7 MERMAID
     db $FF ; b8 FISHERMAN_UNDER_BRIDGE
-    db $FF ; b9 BUZZ_BLOB
+    db $79 ; b9 BUZZ_BLOB
     db $FF ; ba BOMBER
     db $FF ; bb BUSH_CRAWLER
     db $FF ; bc GRIM_CREEPER

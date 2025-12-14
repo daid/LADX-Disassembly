@@ -95,7 +95,11 @@ retry:
     }
 
     for(uint8_t n=0; n<64; n++) {
-        const uint8_t* static_room_data_ptr = RandomRoomDataTable[0];
+getDifferentRoomData:
+        const uint8_t* static_room_data_ptr = RandomRoomDataTable[rand8range(RandomRoomDataTableSize)];
+        uint8_t mask_data = randomMapData[n] & (*static_room_data_ptr++);
+        if (mask_data != *static_room_data_ptr++)
+            goto getDifferentRoomData;
         SET_SRAM_BANK_CONTAINING(sDynamicRoomData);
         uint8_t* dynamic_room_data_ptr = &sDynamicRoomData[((uint16_t)n) * 0x80];
         uint8_t copy_size = *static_room_data_ptr++;

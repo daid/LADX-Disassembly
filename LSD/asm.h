@@ -13,6 +13,7 @@ extern uint8_t sDungenChestContents[0x40];
 extern __sfr hMapRoom;
 extern uint8_t sDynamicRoomData[0x2000];
 extern uint8_t sDynamicEntityData[0x2000];
+extern const uint8_t RandomRoomDataTableSize;
 extern const uint8_t* RandomRoomDataTable[];
 
 #define SET_SRAM_BANK(n) *((uint8_t*)0x4000) = (n)
