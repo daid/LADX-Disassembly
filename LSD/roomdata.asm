@@ -1,18 +1,27 @@
 #SECTION "RandomRoomData", ROMX, BANK[$0A] {
-_RandomRoomDataTableSize:
-  db 8
-RandomRoomDataTable:
 _RandomRoomDataTable:
+  db 4
+  dw RandomRoomDataTable0
+  db 1
+  dw RandomRoomDataTable1
+  db 1
+  dw RandomRoomDataTable2
+  db 2
+  dw RandomRoomDataTable3
+RandomRoomDataTable0:
   dw random_room_0 ; Room0
   dw random_room_1 ; Room1
   dw random_room_2 ; Room2
   dw random_room_3 ; Room3
-  dw random_room_4 ; Room4
+RandomRoomDataTable1:
   dw random_room_5 ; Room5
+RandomRoomDataTable2:
+  dw random_room_4 ; Room4
+RandomRoomDataTable3:
   dw random_room_6 ; Room6
   dw random_room_7 ; Room7
 random_room_0: ; Room0
-  db $D0, $00 ; allowed filter
+  db $00, $00 ; allowed filter
   ; Primary data
   db 18, $04, $0D, $03, $C7, $06, $C7, $20, $C9, $29, $CA, $50, $C9, $59, $CA, $73, $C8, $76, $C8
   ; Variations
@@ -105,7 +114,7 @@ random_room_0_entity_set_8:
   db $34, $14
   db $45, $0B
 random_room_1: ; Room1
-  db $D3, $00 ; allowed filter
+  db $03, $00 ; allowed filter
   ; Primary data
   db 34, $04, $93, $02, $25, $84, $03, $21, $07, $26, $C6, $12, $23, $C6, $13, $0D, $C6, $14, $0D, $C6, $15, $0D, $C6, $16, $0D, $C6, $17, $24, $72, $27, $84, $73, $22, $77, $28
   ; Variations
@@ -153,7 +162,7 @@ random_room_1_entity_set_4:
   db 2
   db $45, $29
 random_room_2: ; Room2
-  db $DC, $00 ; allowed filter
+  db $0C, $00 ; allowed filter
   ; Primary data
   db 77, $04, $93, $11, $25, $86, $12, $21, $13, $C7, $16, $C7, $18, $26, $20, $25, $21, $29, $86, $22, $B0, $C4, $23, $0D, $C4, $24, $0D, $C4, $25, $0D, $C4, $26, $0D, $28, $2A, $29, $26, $C2, $30, $23, $C2, $31, $0D, $C2, $32, $0D, $C2, $37, $0D, $C2, $38, $0D, $C2, $39, $24, $50, $27, $51, $2B, $52, $AF, $57, $AF, $58, $2C, $59, $28, $61, $27, $86, $62, $22, $63, $C8, $66, $C8, $68, $28
   ; Variations
@@ -194,7 +203,7 @@ random_room_2_entity_set_2:
   db $27, $B2
   db $52, $B2
 random_room_3: ; Room3
-  db $D0, $00 ; allowed filter
+  db $00, $00 ; allowed filter
   ; Primary data
   db 14, $04, $0D, $82, $12, $DF, $82, $16, $DF, $83, $61, $DF, $83, $66, $DF
   ; Variations
@@ -258,9 +267,9 @@ random_room_3_entity_set_5:
   db $43, $0D
   db $36, $0D
 random_room_4: ; Room4
-  db $D0, $40 ; allowed filter
+  db $00, $00 ; allowed filter
   ; Primary data
-  db 41, $04, $0D, $11, $01, $82, $12, $B0, $82, $16, $B0, $18, $01, $21, $B0, $28, $B0, $82, $34, $1E, $82, $44, $1F, $51, $AF, $58, $AF, $61, $01, $82, $62, $AF, $82, $66, $AF, $68, $01, $E1, $00, $FF, $58, $52
+  db 36, $04, $0D, $11, $01, $82, $12, $B0, $82, $16, $B0, $18, $01, $21, $B0, $28, $B0, $82, $34, $1E, $82, $44, $1F, $51, $AF, $58, $AF, $61, $01, $82, $62, $AF, $82, $66, $AF, $68, $01
   ; Variations
   db 0
   ; Entity sets
@@ -270,7 +279,7 @@ random_room_4: ; Room4
 random_room_4_entity_set_0:
   db 0
 random_room_5: ; Room5
-  db $D0, $80 ; allowed filter
+  db $00, $00 ; allowed filter
   ; Primary data
   db 10, $04, $0D, $22, $AC, $27, $AC, $52, $AC, $57, $AC
   ; Variations
@@ -306,7 +315,7 @@ random_room_5_variation_5:
 random_room_5_entity_set_0:
   db 0
 random_room_6: ; Room6
-  db $D0, $10 ; allowed filter
+  db $00, $00 ; allowed filter
   ; Primary data
   db 6, $04, $0D, $34, $A0, $44, $0F
   ; Variations
@@ -333,7 +342,7 @@ random_room_6_entity_set_2:
   db $45, $0B
   db $43, $0B
 random_room_7: ; Room7
-  db $D8, $10 ; allowed filter
+  db $08, $00 ; allowed filter
   ; Primary data
   db 53, $04, $0D, $02, $26, $03, $2A, $06, $29, $07, $25, $C2, $12, $24, $84, $13, $0F, $14, $A0, $C2, $17, $23, $84, $23, $0F, $32, $2A, $84, $33, $21, $82, $34, $97, $37, $29, $82, $44, $0F, $60, $27, $61, $2B, $68, $2C, $69, $28, $70, $03, $71, $27, $78, $28, $79, $03
   ; Variations

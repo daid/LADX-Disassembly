@@ -174,11 +174,9 @@ async function load_room_edit(room_id) {
     span.appendChild(filterOption("Left", 0x02));
     span.appendChild(filterOption("Down", 0x04));
     span.appendChild(filterOption("Up", 0x08));
-    span.appendChild(filterOption("Treasure", 0x10));
-    span.appendChild(filterOption("Final", 0x40));
-    span.appendChild(filterOption("Start", 0x80));
     document.getElementById("content").appendChild(span);
 
+    document.getElementById("content").appendChild(roomDataSelector("Type", "type", room_type_table));
     if (current_room.num < 0x100) {
         document.getElementById("content").appendChild(roomDataSelector("Tileset", "tileset", overworld_tileset_table));
         document.getElementById("content").appendChild(roomDataSelector("Attrib", "attribute_table", overworld_attr_table));
@@ -584,4 +582,10 @@ var event_table = [
     {"value": 0xA7, "label": "A7: PUSH 2 BLOCKS: REVEAL STAIRS"},
     {"value": 0xA9, "label": "A9: PUZZLE TILES: REVEAL STAIRS"},
     {"value": 0xC1, "label": "C1: MINIBOSS"},
+]
+var room_type_table = [
+    {"value": 0x00, "label": "Normal"},
+    {"value": 0x01, "label": "Entrance"},
+    {"value": 0x02, "label": "Exit"},
+    {"value": 0x03, "label": "Treasure"},
 ]

@@ -2379,6 +2379,16 @@ SpawnEnemyDrop::
     jp   nz, .dropEntity                          ;; 03:55EB $C2 $70 $56
     
     ;LSD: Do not drop PoP or Acorn
+    ld   hl, wEntitiesHealthGroup                 ;; 03:560F $21 $D0 $C4
+    add  hl, bc                                   ;; 03:5612 $09
+    ld   d, b                                     ;; 03:5613 $50
+    ld   e, [hl]                                  ;; 03:5614 $5E
+    ld   hl, DestroyedEntityHealthGroupOffsetTable ;; 03:5615 $21 $26 $48
+    add  hl, de                                   ;; 03:5618 $19
+    ld   a, [hl]                                  ;; 03:5619 $7E
+    and  a                                        ;; 03:561A $A7
+    ret  z                                        ;; 03:561B $C8
+    ;LSD:end
 
     ld   d, b                                     ;; 03:5648 $50
     ld   hl, (RandomDropChanceTable -1)           ;; 03:5649 $21 $AA $55

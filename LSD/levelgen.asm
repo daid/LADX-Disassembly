@@ -24,7 +24,7 @@ LSD_GenerateMap:
     ret  nz
     ld   hl, wDungeonDepth
     inc  [hl]
-.restartGen:
+
     call EnableSRAM
     ld   a, BANK(sDungeonMinimap)
     ld   [$4000], a

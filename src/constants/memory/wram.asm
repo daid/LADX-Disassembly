@@ -3054,14 +3054,15 @@ wBGMapToLoad::
 ; - wRoomObjectsArea must be $10-bytes aligned (otherwise various copy loops break)
 ;
 ; First section is FF values padding…
-_randomMapData: ; LSD: Temporary storage for random map data during map generation
-wRandomMapData:
+_randomMapDataFlags: ; LSD: Temporary storage for random map data during map generation ($40 bytes)
 wRoomObjectsArea::
   ds $11 ; D700 - D710
 
 ; Start of the actual map objects for the active room (ignoring the surrounding FF values)
 wRoomObjects::
-  ds $EF ; D711 - D7FF
+  ds $2F
+_randomMapDataID:  ; LSD: Temporary storage for random map data during map generation ($40 bytes)
+  ds $C0 ; D711 - D7FF
 
 ; World rooms status
 ; Each room is a byte combining ROOM_STATUS_* constants.
@@ -3133,6 +3134,7 @@ wGoldenLeavesCount::
   ds 1 ; DB15
 
 ;LSD: Removed dungeon item flags (yay, free space! that gets erased when a new run is started!)
+_dungeonDepth:
 wDungeonDepth:
   ds 1
 wCanSwordCharge:
