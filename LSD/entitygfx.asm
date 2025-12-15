@@ -235,12 +235,12 @@ EntitySpriteRequirementsTable:
     db $FF ; 86 FLOATING_ITEM
     db $FF ; 87 DESERT_LANMOLA
     db $FF ; 88 ARMOS_KNIGHT
-    db $FF ; 89 HINOX
+    db $54 ; 89 HINOX
     db $FF ; 8a TILE_GLINT_SHOWN
     db $FF ; 8b TILE_GLINT_HIDDEN
     db $FF ; 8c 8C
     db $FF ; 8d 8D
-    db $FF ; 8e CUE_BALL
+    db $56 ; 8e CUE_BALL
     db $58 ; 8f MASKED_MIMIC_GORIYA
     db $FF ; 90 THREE_OF_A_KIND
     db $55 ; 91 ANTI_KIRBY

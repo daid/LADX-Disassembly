@@ -225,7 +225,7 @@ ApplyRoomTransition::
 
     ; Request compass sound effect to be played with a 12 frames delay
     ld   a, 12                                    ;; 02:79C6 $3E $0C
-    ld   [wCompassSfxCountdown], a                ;; 02:79C8 $EA $62 $D4
+    ;LSD: Ignore compass sound for now ld   [wCompassSfxCountdown], a                ;; 02:79C8 $EA $62 $D4
     ret                                           ;; 02:79CB $C9
 
 .dispatchTransition

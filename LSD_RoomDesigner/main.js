@@ -176,6 +176,16 @@ async function load_room_edit(room_id) {
     span.appendChild(filterOption("Up", 0x08));
     document.getElementById("content").appendChild(span);
 
+    var span = document.createElement("div");
+    span.appendChild(document.createTextNode("Name:"));
+    var name_input = document.createElement("input");
+    name_input.value = current_room.name;
+    name_input.oninput = async function() {
+        await fetch(`/update_room_data?room=${current_room.id}&entity_set=${entity_set_index}&variation=${variation}&key=name&value=${name_input.value}`);
+    };
+    span.appendChild(name_input);
+    document.getElementById("content").appendChild(span);
+
     document.getElementById("content").appendChild(roomDataSelector("Type", "type", room_type_table));
     if (current_room.num < 0x100) {
         document.getElementById("content").appendChild(roomDataSelector("Tileset", "tileset", overworld_tileset_table));

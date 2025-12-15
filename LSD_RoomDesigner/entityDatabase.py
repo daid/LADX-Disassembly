@@ -56,25 +56,25 @@ entities_list = [
     # {'id': 0x4D, 'tiles': [0, 1], 'attr': [3, 3]},  # SHOP_OWNER
     # {'id': 0x4F, 'tiles': [0, 1], 'attr': [3, 3]},  # TRENDY_GAME_OWNER
     # {'id': 0x50, 'tiles': [0, 1], 'attr': [3, 3]},  # BOO_BUDDY
-    # {'id': 0x51, 'tiles': [0, 1], 'attr': [2, 2]},  # KNIGHT
-    # {'id': 0x52, 'tiles': [6, 6], 'attr': [3, 35]},  # TRACTOR_DEVICE
-    # {'id': 0x53, 'tiles': [6, 6], 'attr': [0, 32]},  # TRACTOR_DEVICE_REVERSE
+    {'id': 0x51, 'tiles': [0, 1], 'attr': [2, 2]},  # KNIGHT
+    {'id': 0x52, 'tiles': [6, 6], 'attr': [3, 35]},  # TRACTOR_DEVICE
+    {'id': 0x53, 'tiles': [6, 6], 'attr': [0, 32]},  # TRACTOR_DEVICE_REVERSE
     # {'id': 0x54, 'tiles': [0, 1], 'attr': [3, 3]},  # FISHERMAN_FISHING_GAME
-    # {'id': 0x55, 'tiles': [7, 7], 'attr': [0, 32]},  # BOUNCING_BOMBITE
-    # {'id': 0x56, 'tiles': [0, 1], 'attr': [0, 0]},  # TIMER_BOMBITE
-    # {'id': 0x57, 'tiles': [0, 1], 'attr': [0, 0]},  # PAIRODD
-    # {'id': 0x59, 'tiles': [6, 7], 'attr': [3, 3]},  # MOLDORM
-    # {'id': 0x5A, 'tiles': [20, 21], 'attr': [3, 3]},  # FACADE
-    # {'id': 0x5B, 'tiles': [2, 3], 'attr': [3, 3]},  # SLIME_EYE
-    # {'id': 0x5C, 'tiles': [4, 5], 'attr': [2, 2]},  # GENIE
-    # {'id': 0x5D, 'tiles': [6, 7], 'attr': [3, 3]},  # SLIME_EEL
-    # {'id': 0x5E, 'tiles': [0, 0], 'attr': [0, 32]},  # GHOMA
-    # {'id': 0x5F, 'tiles': [1, 2], 'attr': [3, 3]},  # MASTER_STALFOS
-    # {'id': 0x60, 'tiles': [0, 0], 'attr': [0, 32]},  # DODONGO_SNAKE
+    {'id': 0x55, 'tiles': [7, 7], 'attr': [0, 32]},  # BOUNCING_BOMBITE
+    {'id': 0x56, 'tiles': [0, 1], 'attr': [0, 0]},  # TIMER_BOMBITE
+    {'id': 0x57, 'tiles': [0, 1], 'attr': [0, 0]},  # PAIRODD
+    {'id': 0x59, 'tiles': [6, 7], 'attr': [3, 3]},  # MOLDORM
+    {'id': 0x5A, 'tiles': [20, 21], 'attr': [3, 3]},  # FACADE
+    {'id': 0x5B, 'tiles': [2, 3], 'attr': [3, 3]},  # SLIME_EYE
+    {'id': 0x5C, 'tiles': [4, 5], 'attr': [2, 2]},  # GENIE
+    {'id': 0x5D, 'tiles': [6, 7], 'attr': [3, 3]},  # SLIME_EEL
+    {'id': 0x5E, 'tiles': [0, 0], 'attr': [0, 32]},  # GHOMA
+    {'id': 0x5F, 'tiles': [1, 2], 'attr': [3, 3]},  # MASTER_STALFOS
+    {'id': 0x60, 'tiles': [0, 0], 'attr': [0, 32]},  # DODONGO_SNAKE
     # {'id': 0x61},  # WARP
-    # {'id': 0x62, 'tiles': [4, 5], 'attr': [2, 2]},  # HOT_HEAD
-    # {'id': 0x63, 'tiles': [3, 4], 'attr': [2, 2]},  # EVIL_EAGLE
-    # {'id': 0x65, 'tiles': [6, 7], 'attr': [3, 3]},  # ANGLER_FISH
+    {'id': 0x62, 'tiles': [4, 5], 'attr': [2, 2]},  # HOT_HEAD
+    {'id': 0x63, 'tiles': [3, 4], 'attr': [2, 2]},  # EVIL_EAGLE
+    {'id': 0x65, 'tiles': [6, 7], 'attr': [3, 3]},  # ANGLER_FISH
     # {'id': 0x66, 'tiles': [4, 4], 'attr': [1, 33]},  # CRYSTAL_SWITCH
     # {'id': 0x69},  # MOVING_BLOCK_MOVER
     # {'id': 0x6A, 'tiles': [6, 6], 'attr': [1, 33]},  # RAFT_RAFT_OWNER

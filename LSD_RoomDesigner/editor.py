@@ -497,7 +497,7 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
             entities_set = int(query["entity_set"][0])
             variation = int(query["variation"][0])
             key = query['key'][0]
-            value = query['value'][0]
+            value = query['value'][0] if 'value' in query else ''
             try:
                 value = int(value)
             except ValueError:
