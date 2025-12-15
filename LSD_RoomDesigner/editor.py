@@ -59,9 +59,9 @@ class Editor:
         f.write(f'RandomRoomDataTable:\n')
         f.write(f'_RandomRoomDataTable:\n')
         for idx, room in enumerate(self.room_data):
-            f.write(f'  dw random_room_{idx} ; {room['name']}\n')
+            f.write(f'  dw random_room_{idx} ; {room["name"]}\n')
         for idx, room in enumerate(self.room_data):
-            f.write(f'random_room_{idx}: ; {room['name']}\n')
+            f.write(f'random_room_{idx}: ; {room["name"]}\n')
             re = RoomEditor(self.__rom, 0x100)
             re.buildObjectList(room['tiles'])
             raw_data = bytearray([room['animation'], re.floor_object])
