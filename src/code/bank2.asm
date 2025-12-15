@@ -4843,6 +4843,7 @@ label_002_61E7:
 
 .dialogClosed
     call UpdateRupeesCount                        ;; 02:6203 $CD $09 $62
+    call LSD_UpdatePowerupTime
     jp   UpdateHealth                             ;; 02:6206 $C3 $17 $63
 
 ; Decrement the rupees count and play the associated sound effect

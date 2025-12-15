@@ -15,4 +15,5 @@ GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 #INCLUDE "LSD/rand.asm"
 #INCLUDE "LSD/roomtables.asm"
 #INCLUDE "LSD/inventory.asm"
+#INCLUDE "LSD/pop.asm"
 #INCLUDE "LSD/init.asm"
