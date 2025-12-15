@@ -244,7 +244,7 @@ EntityHandlersTable::
 ._E4 far_pointer MoblinKingEntityHandler ; $E4
 ._E5 far_pointer FloatingItem2EntityHandler
 ._E6 far_pointer FinalNightmareEntityHandler
-._E7 far_pointer KanaletCastleGateSwitchEntityHandler
+._E7 far_pointer LSD_ExitRoomEntityHandler
 ._E8 far_pointer EndingOwlStairClimbingEntityHandler ; $E8
 ._E9 far_pointer ColorShellRedEntityHandler
 ._EA far_pointer ColorShellGreenEntityHandler

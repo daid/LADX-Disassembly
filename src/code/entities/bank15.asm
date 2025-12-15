@@ -3,7 +3,7 @@
 ; https://github.com/mattcurrie/mgbdis
 
 include "code/entities/reset_entity.asm"
-include "code/entities/15_kanalet_castle_gate_switch.asm"
+;LSD include "code/entities/15_kanalet_castle_gate_switch.asm"
 include "code/entities/15_moving_block.asm"
 include "code/entities/15_crystal_switch.asm"
 include "code/entities/15_boulders.asm"

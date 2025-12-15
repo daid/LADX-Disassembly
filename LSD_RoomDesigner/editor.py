@@ -70,8 +70,8 @@ class Editor:
             raw_data = bytearray([room['animation'], re.floor_object])
             for obj in re.objects:
                 raw_data += obj.export()
-            if room['filter_mask'] & 0x40 and room['filter_value'] & 0x40:
-                raw_data += bytearray([0xE1, 0x00, 0xff, 0x58, 0x52]) # Add warp data
+            if room['type'] == 0x02:  # Exit
+                raw_data += bytearray([0xE1, 0x00, 0xFF, 0x58, 0x52]) # Add warp data
             assert len(raw_data) > 0
             f.write(f"  db ${room['filter_mask']:02X}, ${room['filter_value']:02X} ; allowed filter\n")
             f.write("  ; Primary data\n")
@@ -100,8 +100,11 @@ class Editor:
 
             for entity_set_idx, entity_set in enumerate(room['entity_sets']):
                 f.write(f"random_room_{idx}_entity_set_{entity_set_idx}:\n")
-                f.write(f"  db {len(entity_set['entities']) * 2}\n")
-                for entity in entity_set['entities']:
+                entities = entity_set['entities'].copy()
+                if room['type'] == 0x02: # Exit
+                    entities.append({"x": 0, "y": 0, "id": 0xE7})  # Add entity that handles the hole to the next room spawning
+                f.write(f"  db {len(entities) * 2}\n")
+                for entity in entities:
                     xy = entity['x'] | (entity['y'] << 4)
                     f.write(f"  db ${xy:02X}, ${entity['id']:02X}\n")
 

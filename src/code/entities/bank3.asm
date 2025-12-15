@@ -2378,7 +2378,31 @@ SpawnEnemyDrop::
     and  a                                        ;; 03:55EA $A7
     jp   nz, .dropEntity                          ;; 03:55EB $C2 $70 $56
     
-    ;LSD: Do not drop PoP or Acorn
+    ; check if wGuardianAcornCounter reached limit
+    ld   a, [wGuardianAcornCounter]               ;; 03:55EE $FA $71 $D4
+    ;LSD inc  a                                        ;; 03:55F1 $3C
+    ld   [wGuardianAcornCounter], a               ;; 03:55F2 $EA $71 $D4
+    cp   GUARDIAN_ACORN_COUNTER_MAX               ;; 03:55F5 $FE $0C
+    jr   c, .noGuardianAcornDrop                  ;; 03:55F7 $38 $16
+    ; reset counter if max value reached, even if not droped
+    xor  a                                        ;; 03:55F9 $AF
+    ld   [wGuardianAcornCounter], a               ;; 03:55FA $EA $71 $D4
+    ; do not drop after boss battle
+    ld   a, [wInBossBattle]                       ;; 03:55FD $FA $BE $C1
+    ; do not drop if allready power up active
+    ld   hl, wActivePowerUp                       ;; 03:5600 $21 $7C $D4
+    or   [hl]                                     ;; 03:5603 $B6
+    ; do not drop during side scrolling
+    ld   hl, hIsSideScrolling                     ;; 03:5604 $21 $F9 $FF
+    or   [hl]                                     ;; 03:5607 $B6
+    jr   nz, .noGuardianAcornDrop                 ;; 03:5608 $20 $05
+    ; drop the guardian acorn
+    ld   a, ENTITY_GUARDIAN_ACORN                 ;; 03:560A $3E $34
+    jp   .dropEntity                              ;; 03:560C $C3 $70 $56
+
+.noGuardianAcornDrop:
+    ; get an offset from the DestroyedEntityHealthGroupOffsetTable
+    ; the value is used in combination with the destroyed entity type in further code as as offset by add HL, DE
     ld   hl, wEntitiesHealthGroup                 ;; 03:560F $21 $D0 $C4
     add  hl, bc                                   ;; 03:5612 $09
     ld   d, b                                     ;; 03:5613 $50
@@ -2388,8 +2412,45 @@ SpawnEnemyDrop::
     ld   a, [hl]                                  ;; 03:5619 $7E
     and  a                                        ;; 03:561A $A7
     ret  z                                        ;; 03:561B $C8
-    ;LSD:end
+    ; look up the needed kill value for a piece of power
+    ; in general the needed value is lower, if the max health is lower
+    ; so you get the piece of power more often in the early game
+    ld   e, a                                     ; How many enemies to kill before a Piece of Power drops?
+    ; early game
+    ld   d, PIECE_OF_POWER_COUNTER_MAX_LOW_MAX_HEALTH ; Max HP 0~6: 30
+    ld   a, [wMaxHearts]                          ;
+    cp   LOW_MAX_HEALTH                           ; If max HP <= 6, skip
+    jr   c, .pieceOfPowerDrop                     ;
+    ; mid game
+    ld   d, PIECE_OF_POWER_COUNTER_MAX_MEDIUM_MAX_HEALTH ; Max HP 7~10: 35
+    cp   MEDIUM_MAX_HEALTH                        ;
+    jr   c, .pieceOfPowerDrop                     ; If max HP <= 11, skip
+    ; late game
+    ld   d, PIECE_OF_POWER_COUNTER_MAX_HIGH_MAX_HEALTH ; Max HP 11~14: 40
 
+.pieceOfPowerDrop:
+    ; increment kill counter
+    ld   hl, wPieceOfPowerKillCount               ;; 03:562E $21 $15 $D4
+    ;LSD inc  [hl]                                     ;; 03:5631 $34
+    ; no drop, if counter may not reached
+    ld   a, [hl]                                  ;; 03:5632 $7E
+    cp   d                                        ;; 03:5633 $BA
+    jr   c, .noPieceOfPowerDrop                   ;; 03:5634 $38 $12
+    ; no drop, if in boss battle
+    ld   [hl], b                                  ;; 03:5636 $70
+    ld   a, [wInBossBattle]                       ;; 03:5637 $FA $BE $C1
+    ; no drop, if in side scrolling
+    ld   hl, hIsSideScrolling                     ;; 03:563A $21 $F9 $FF
+    or   [hl]                                     ;; 03:563D $B6
+    ; no drop, if power up is active
+    ld   hl, wActivePowerUp                       ;; 03:563E $21 $7C $D4
+    or   [hl]                                     ;; 03:5641 $B6
+    jr   nz, .noPieceOfPowerDrop                  ;; 03:5642 $20 $04
+    ; drop piece of power
+    ld   a, ENTITY_PIECE_OF_POWER                 ;; 03:5644 $3E $33
+    jr   .dropEntity                              ;; 03:5646 $18 $28
+
+.noPieceOfPowerDrop:
     ld   d, b                                     ;; 03:5648 $50
     ld   hl, (RandomDropChanceTable -1)           ;; 03:5649 $21 $AA $55
     ld   a, [wIsOnLowHeath]                       ;; 03:564C $FA $63 $C1

@@ -269,7 +269,7 @@ random_room_3_entity_set_5:
 random_room_4: ; Exit 1
   db $00, $00 ; allowed filter
   ; Primary data
-  db 2, $04, $0D
+  db 7, $04, $0D, $E1, $00, $FF, $58, $52
   ; Variations
   db 5
   db $80
@@ -283,11 +283,9 @@ random_room_4: ; Exit 1
   db $80
   dw random_room_4_variation_4
   ; Entity sets
-  db 2
+  db 1
   db $00, $FF
   dw random_room_4_entity_set_0
-  db $00, $FF
-  dw random_room_4_entity_set_1
 random_room_4_variation_0:
   db 7, $58, $AF, $82, $66, $AF, $68, $01
 random_room_4_variation_1:
@@ -299,11 +297,9 @@ random_room_4_variation_3:
 random_room_4_variation_4:
   db 6, $C4, $34, $0F, $C4, $35, $0F
 random_room_4_entity_set_0:
-  db 2
+  db 4
   db $24, $89
-random_room_4_entity_set_1:
-  db 2
-  db $14, $8E
+  db $00, $E7
 random_room_5: ; Entrance 1
   db $00, $00 ; allowed filter
   ; Primary data
