@@ -7083,7 +7083,7 @@ LoadRoomEntities::
     ; If in Eagle's Tower…
     ldh  a, [hMapId]                              ;; 00:3820 $F0 $F7
     cp   MAP_EAGLES_TOWER                         ;; 00:3822 $FE $06
-    jr   nz, .eaglesTowerEnd                      ;; 00:3824 $20 $2A
+    jr   .eaglesTowerEnd ; LSD never spawn wrecking ball ;; 00:3824 $20 $2A
     ; … and [hMapRoom] == [wWreckingBallRoom]…
     ld   a, [wWreckingBallRoom]                   ;; 00:3826 $FA $6F $DB
     ld   hl, hMapRoom                             ;; 00:3829 $21 $F6 $FF

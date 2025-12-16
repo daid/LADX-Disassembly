@@ -38,6 +38,9 @@ const uint8_t random_treasure_list[16] = {
 
 void generateRandomMap(void)
 {
+    uint8_t main_path_length = 7 + dungeonDepth;
+    uint8_t main_path_split = (main_path_length >> 1) + (rand8() & 3);
+    uint8_t side_path_count = 3 + (dungeonDepth << 1);
 retry:
     for(uint8_t n=0; n<0x40; n++) {
         randomMapDataFlags[n] = 0;
@@ -52,12 +55,12 @@ retry:
     //Mark the final room, and make a door downwards
     randomMapDataFlags[start_room] = ROOM_DOOR_DOWN;
     randomMapDataID[start_room] = ROOM_TYPE_EXIT;
-    randomMapDataTmp[start_room] = 2;
+    randomMapDataTmp[start_room] = ROOM_MAIN_PATH | ROOM_SECOND_HALF;
     //Move one room down.
     uint8_t current_room = start_room + 8;
     randomMapDataFlags[current_room] = ROOM_DOOR_UP;
-    randomMapDataTmp[current_room] = 2;
-    for(uint8_t count=0; count<10;) {
+    randomMapDataTmp[current_room] = ROOM_MAIN_PATH | ROOM_SECOND_HALF;
+    for(uint8_t count=0; count<main_path_length;) {
         if (++safety == 0) goto retry;
         uint8_t move_dir = generateRandomMove(current_room);
         if (move_dir == 0xFF) continue;
@@ -65,7 +68,7 @@ retry:
         if (randomMapDataFlags[target_room]) continue;
         randomMapDataFlags[current_room] |= 1 << move_dir;
         randomMapDataFlags[target_room] |= 1 << (move_dir ^ 1);
-        if (count < 5)
+        if (count < main_path_split)
             randomMapDataTmp[target_room] = ROOM_MAIN_PATH | ROOM_SECOND_HALF;
         else
             randomMapDataTmp[target_room] = ROOM_MAIN_PATH;
@@ -78,7 +81,7 @@ retry:
 
     //Build side paths
     safety = 0;
-    for(uint8_t count=0; count<5; ) {
+    for(uint8_t count=0; count<side_path_count; ) {
         if (++safety == 0) goto retry;
         current_room = rand8() & 0x3F;
         if (!randomMapDataFlags[current_room]) continue;
@@ -153,6 +156,7 @@ retry:
     while(1) {
         current_room = rand8() & 0x3F;
         if ((randomMapDataTmp[current_room] & ROOM_SECOND_HALF)) continue;
+        if (!randomMapDataFlags[current_room]) continue;
         if (randomMapDataID[current_room] != ROOM_TYPE_NORMAL) continue;
         randomMapDataID[current_room] = ROOM_TYPE_TREASURE;
         sDungenChestContents[current_room] = 0x1A; // Small key
