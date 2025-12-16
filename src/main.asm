@@ -520,13 +520,19 @@ incbin "gfx/items/inventory_overworld_items.cgb.2bpp"
 incbin "gfx/items/instruments.cgb.2bpp"
 incbin "gfx/world/overworld_1.cgb.2bpp"
 incbin "gfx/world/overworld_landscape.cgb.2bpp"
+LinkCharacter2TilesGBC::
 incbin "gfx/characters/oam_link_2.cgb.2bpp"
+SwitchBlockTilesGBC::
 incbin "gfx/items/switch_block.cgb.2bpp"
 incbin "gfx/items/mushroom.cgb.2bpp"
 incbin "gfx/items/slime_key.cgb.2bpp"
+PieceOfHeartMeterTilesGBC::
 incbin "gfx/items/piece_of_heart_meter.cgb.2bpp"
+OcarinaSymbolsTilesGBC::
 incbin "gfx/items/ocarina_symbols.cgb.2bpp"
+AnimatedTilesGBC::
 incbin "gfx/world/animated_tiles.w32.cgb.2bpp"
+WorldMapTilesGBC::
 incbin "gfx/world/minimap.cgb.2bpp"
 
 section "bank2D",romx[$4000],bank[$2D]

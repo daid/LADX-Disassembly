@@ -46,12 +46,12 @@ section "Hardcoded CopyData variants", rom0[$0062]
 ;
 ; The tiles are loaded at the place of the exchanged item and seashell tiles.
 LoadPieceOfHeartMeterTiles1::
-    ld   hl, PieceOfHeartMeterTiles
+    ld   hl, PieceOfHeartMeterTilesGBC
     ld   de, vTiles1 + $1A0
     jr   CopyTilesToPieceOfHeartMeter
 
 LoadPieceOfHeartMeterTiles2::
-    ld   hl, PieceOfHeartMeterTiles + $30
+    ld   hl, PieceOfHeartMeterTilesGBC + $30
     ld   de, vTiles1 + $1D0
     jr   CopyTilesToPieceOfHeartMeter
 

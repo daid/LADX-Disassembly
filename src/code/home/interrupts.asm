@@ -752,9 +752,9 @@ LoadInventorySirenInstruments::
 ; Data origin table (in bank $0C)
 TilesGfxSource::
 ; Inventory icons for ocarina songs
-._08 dw OcarinaSymbolsTiles                       ;; 00:07BB
-._09 dw OcarinaSymbolsTiles + $40                 ;; 00:07BD
-._0A dw OcarinaSymbolsTiles + $60                 ;; 00:07BF
+._08 dw OcarinaSymbolsTilesGBC                       ;; 00:07BB
+._09 dw OcarinaSymbolsTilesGBC + $40                 ;; 00:07BD
+._0A dw OcarinaSymbolsTilesGBC + $60                 ;; 00:07BF
 ; Shared GFX: shadows, explosions, etc.
 ._0B dw CharacterVfxTiles                         ;; 00:07C1
 ._0C dw CharacterVfxTiles + $40                   ;; 00:07C3

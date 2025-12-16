@@ -463,22 +463,22 @@ jr_001_531D::
     ld   hl, wInventoryItems
     ld   [hl+], a
     ld   [wSwordLevel], a
-    ld   a, $0E
-    ld   [hl+], a
+    ;ld   a, $0E
+    ;ld   [hl+], a
     ld   a, $0F
     ld   [hl+], a
-    ld   a, $10
-    ld   [hl+], a
-    ld   a, $0A
-    ld   [hl+], a
-    ld   a, $11
-    ld   [hl+], a
-    ld   a, $02
-    ld   [hl+], a
-    ld   a, $12
-    ld   [hl+], a
-    ld   a, $10
-    ld   [wBombCount], a
+    ;ld   a, $10
+    ;ld   [hl+], a
+    ;ld   a, $0A
+    ;ld   [hl+], a
+    ;ld   a, $11
+    ;ld   [hl+], a
+    ;ld   a, $02
+    ;ld   [hl+], a
+    ;ld   a, $12
+    ;ld   [hl+], a
+    ;ld   a, $10
+    ;ld   [wBombCount], a
     jr   .finish                                  ;; 01:53D6 $18 $B6
 
 Data_001_53D8::

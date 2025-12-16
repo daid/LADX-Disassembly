@@ -517,7 +517,7 @@ random_room_9_variation_0:
 random_room_9_variation_1:
   db 4, $73, $C8, $76, $C8
 random_room_9_variation_2:
-  db 4, $03, $C8, $06, $C8
+  db 4, $03, $C7, $06, $C7
 random_room_9_variation_3:
   db 4, $20, $C9, $50, $C9
 random_room_9_variation_4:

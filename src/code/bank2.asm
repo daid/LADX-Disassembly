@@ -3228,8 +3228,8 @@ DebugWarpMaps::
 
 label_002_5487:
     xor  a                                        ;; 02:5487 $AF
-    ld   [wIndoorARoomStatus], a                  ;; 02:5488 $EA $00 $D9
-    ld   [wIndoorBRoomStatus], a                  ;; 02:548B $EA $00 $DA
+    ;LSD: No idea why this was here... ld   [wIndoorARoomStatus], a                  ;; 02:5488 $EA $00 $D9
+    ;LSD: No idea why this was here... ld   [wIndoorBRoomStatus], a                  ;; 02:548B $EA $00 $DA
     ld   a, [wDialogCooldown]                     ;; 02:548E $FA $34 $C1
     and  a                                        ;; 02:5491 $A7
     jr   z, .decrementPhotoAlbumCooldown          ;; 02:5492 $28 $04

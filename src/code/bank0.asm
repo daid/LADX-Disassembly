@@ -2967,7 +2967,7 @@ UpdateLinkWalkingAnimation::
 include "code/home/animated_tiles.asm"
 
 ReplaceMagicPowderTilesByToadstool::
-    ld   hl, LinkCharacter2Tiles + $10C0 ; toadstool tiles ;; 00:1E2B $21 $C0 $68
+    ld   hl, LinkCharacter2TilesGBC + $10C0 ; toadstool tiles ;; 00:1E2B $21 $C0 $68
     ld   de, $88E0                                ;; 00:1E2E $11 $E0 $88
     jr   ReplaceTilesPairAndDrawLinkSprite        ;; 00:1E31 $18 $74
 
@@ -3043,7 +3043,7 @@ ReplaceToadstoolTilesByMagicPowder::
     jp   CopyDataAndDrawLinkSprite                ;; 00:1E9E $C3 $3B $1F
 
 ReplaceSlimeKeyTilesByGoldenLeaf::
-    ld   hl, LinkCharacter2Tiles + $10E0          ;; 00:1EA1 $21 $E0 $68
+    ld   hl, LinkCharacter2TilesGBC + $10E0          ;; 00:1EA1 $21 $E0 $68
     ld   de, vTiles1 + $4A0                       ;; 00:1EA4 $11 $A0 $8C
     ; fallthrough to ReplaceTilesPairAndDrawLinkSprite
 
@@ -3054,7 +3054,7 @@ ReplaceSlimeKeyTilesByGoldenLeaf::
 ;   hl   tiles source address
 ;   de   tiles destination in VRAM
 ReplaceTilesPairAndDrawLinkSprite::
-    ld   a, BANK(LinkCharacter2Tiles)             ;; 00:1EA7 $3E $0C
+    ld   a, BANK(LinkCharacter2TilesGBC) - $20    ;; 00:1EA7 $3E $0C
     call AdjustBankNumberForGBC                   ;; 00:1EA9 $CD $0B $0B
     ld   [rSelectROMBank], a                      ;; 00:1EAC $EA $00 $21
     ld   bc, TILE_SIZE * $2                       ;; 00:1EAF $01 $20 $00
@@ -3082,15 +3082,15 @@ ReplaceTiles_04::
 ; Tiles for switch blocks during a transition
 ; Indexed by block kind.
 SwitchBlockTransitionTilesTable:: ;; 00:1ECD
-.kindA dw SwitchBlockTiles + $40 ; half-raised
-.kindB dw SwitchBlockTiles + $40 ; half-raised
+.kindA dw SwitchBlockTilesGBC + $40 ; half-raised
+.kindB dw SwitchBlockTilesGBC + $40 ; half-raised
 
 ; Tiles for switch blocks in state 0
 ; (blocks of kind A lowered, blocks of kind B raised).
 ;
 ; Indexed by block kind.
 SwitchBlockState0TilesTable:: ;; 00:1ED1
-.kindA dw SwitchBlockTiles ; lowered
+.kindA dw SwitchBlockTilesGBC ; lowered
 .kindB ; uses the first item below
 
 ; Tiles for switch blocks in state 1
@@ -3098,8 +3098,8 @@ SwitchBlockState0TilesTable:: ;; 00:1ED1
 ;
 ; Indexed by block kind.
 SwitchBlockState1TilesTable:: ;; 00:1ED3
-.kindA dw SwitchBlockTiles + $80 ; raised
-.kindB dw SwitchBlockTiles + $00 ; lowered
+.kindA dw SwitchBlockTilesGBC + $80 ; raised
+.kindB dw SwitchBlockTilesGBC + $00 ; lowered
 
 ; Modify switch block tiles during V-blank, depending on the blocks state
 ; and animation frame.
@@ -3117,7 +3117,7 @@ SwitchBlockState1TilesTable:: ;; 00:1ED3
 UpdateSwitchBlockTiles::
     ; Select graphics bank
     push af                                       ;; 00:1ED7 $F5
-    ld   a, BANK(SwitchBlockTiles)                ;; 00:1ED8 $3E $0C
+    ld   a, BANK(SwitchBlockTilesGBC) - $20       ;; 00:1ED8 $3E $0C
     call AdjustBankNumberForGBC                   ;; 00:1EDA $CD $0B $0B
     ld   [rSelectROMBank], a                      ;; 00:1EDD $EA $00 $21
     pop  af                                       ;; 00:1EE0 $F1
@@ -4896,9 +4896,9 @@ LoadTitleScreenTiles::
 ; Copy tiles for the World Map to tiles memory
 LoadWorldMapTiles::
     ; Load world map tiles
-    ld   a, BANK(WorldMapTiles)                   ;; 00:2DE9 $3E $0C
+    ld   a, BANK(WorldMapTilesGBC) - $20          ;; 00:2DE9 $3E $0C
     call SwitchAdjustedBank                       ;; 00:2DEB $CD $13 $08
-    ld   hl, WorldMapTiles                        ;; 00:2DEE $21 $00 $78
+    ld   hl, WorldMapTilesGBC                     ;; 00:2DEE $21 $00 $78
     ld   de, vTiles1 + $700                       ;; 00:2DF1 $11 $00 $8F
     ld   bc, TILE_SIZE * $80                      ;; 00:2DF4 $01 $00 $08
     call CopyData                                 ;; 00:2DF7 $CD $14 $29

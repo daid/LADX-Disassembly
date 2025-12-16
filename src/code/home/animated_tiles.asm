@@ -241,19 +241,19 @@ LoadAnimatedTilesFrameAtOffset::
     jr   LoadAnimatedTilesFrame                   ;; 00:1C14 $18 $3B
 
 AnimateTideTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $1              ;; 00:1C16 $26 $6B
+    ld   h, HIGH(AnimatedTilesGBC) + $1              ;; 00:1C16 $26 $6B
     jr   AnimateTilesSlowSpeed                    ;; 00:1C18 $18 $0A
 
 AnimateVillageTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $2              ;; 00:1C1A $26 $6C
+    ld   h, HIGH(AnimatedTilesGBC) + $2              ;; 00:1C1A $26 $6C
     jr   AnimateTilesSlowSpeed                    ;; 00:1C1C $18 $06
 
 AnimateWaterDungeonTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $9              ;; 00:1C1E $26 $73
+    ld   h, HIGH(AnimatedTilesGBC) + $9              ;; 00:1C1E $26 $73
     jr   AnimateTilesSlowSpeed                    ;; 00:1C20 $18 $02
 
 AnimateSlowWaterfallTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $0              ;; 00:1C22 $26 $6A
+    ld   h, HIGH(AnimatedTilesGBC) + $0              ;; 00:1C22 $26 $6A
 
 AnimateTilesSlowSpeed::
     ; If (FrameCount mod $0F) = 0, animate
@@ -280,7 +280,7 @@ AnimateDungeon1TilesGroup::
     ld   hl, AnimatedTilesDataOffsets             ;; 00:1C4A $21 $31 $1C
     add  hl, de                                   ;; 00:1C4D $19
     ld   l, [hl]                                  ;; 00:1C4E $6E
-    ld   h, HIGH(AnimatedTiles) + $3              ;; 00:1C4F $26 $6D
+    ld   h, HIGH(AnimatedTilesGBC) + $3           ;; 00:1C4F $26 $6D
 
 ; Load the given frame for the animated tiles group
 ; Inputs:
@@ -320,7 +320,7 @@ LoadAnimatedTilesFrame::
     jp   DrawLinkSpriteAndReturn                  ;; 00:1C87 $C3 $2E $1D
 
 AnimateUndergroundTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $4              ;; 00:1C8A $26 $6E
+    ld   h, HIGH(AnimatedTilesGBC) + $4           ;; 00:1C8A $26 $6E
     jr   AnimateTilesSlowSpeed                    ;; 00:1C8C $18 $96
 
 AnimateLavaTilesGroup::
@@ -337,7 +337,7 @@ AnimateLavaTilesGroup::
     ld   hl, AnimatedTilesDataOffsets             ;; 00:1C9F $21 $31 $1C
     add  hl, de                                   ;; 00:1CA2 $19
     ld   l, [hl]                                  ;; 00:1CA3 $6E
-    ld   h, HIGH(AnimatedTiles) + $5              ;; 00:1CA4 $26 $6F
+    ld   h, HIGH(AnimatedTilesGBC) + $5           ;; 00:1CA4 $26 $6F
     jp   LoadAnimatedTilesFrame                   ;; 00:1CA6 $C3 $51 $1C
 
 AnimateDungeon2TilesGroup::
@@ -358,11 +358,11 @@ label_1CB8::
 
 AnimateWarpTilesGroup::
 IF __PATCH_3__
-    ld   a, BANK(AnimatedTiles)
+    ld   a, BANK(AnimatedTilesGBC) - $20
     call AdjustBankNumberForGBC
     ld   [rSelectROMBank], a
 ENDC
-    ld   h, HIGH(AnimatedTiles) + $6              ;; 00:1CC6 $26 $70
+    ld   h, HIGH(AnimatedTilesGBC) + $6           ;; 00:1CC6 $26 $70
 
 AnimateTilesMediumSpeed::
     ldh  a, [hAnimatedTilesFrameCount]            ;; 00:1CC8 $F0 $A6
@@ -372,7 +372,7 @@ AnimateTilesMediumSpeed::
     jp   LoadAnimatedTilesFrameAtOffset           ;; 00:1CD2 $C3 $13 $1C
 
 AnimateWaterCurrentsTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $7              ;; 00:1CD5 $26 $71
+    ld   h, HIGH(AnimatedTilesGBC) + $7           ;; 00:1CD5 $26 $71
 
 AnimateTilesFastSpeed::
     ldh  a, [hAnimatedTilesFrameCount]            ;; 00:1CD7 $F0 $A6
@@ -382,7 +382,7 @@ AnimateTilesFastSpeed::
     jp   LoadAnimatedTilesFrameAtOffset           ;; 00:1CE1 $C3 $13 $1C
 
 AnimateWaterfallTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $8              ;; 00:1CE4 $26 $72
+    ld   h, HIGH(AnimatedTilesGBC) + $8           ;; 00:1CE4 $26 $72
     jr   AnimateTilesFastSpeed                    ;; 00:1CE6 $18 $EF
 
 ; Increment the current data offset by one frame.
@@ -395,19 +395,19 @@ IncrementAnimatedTilesDataOffset::
     ret                                           ;; 00:1CEE $C9
 
 AnimateLightBeamTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $B              ;; 00:1CEF $26 $75
+    ld   h, HIGH(AnimatedTilesGBC) + $B           ;; 00:1CEF $26 $75
     jr   AnimateTilesFastSpeed                    ;; 00:1CF1 $18 $E4
 
 AnimateBubblesTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $A              ;; 00:1CF3 $26 $74
+    ld   h, HIGH(AnimatedTilesGBC) + $A           ;; 00:1CF3 $26 $74
     jr   AnimateTilesMediumSpeed                  ;; 00:1CF5 $18 $D1
 
 AnimateWeatherVaneTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $D              ;; 00:1CF7 $26 $77
+    ld   h, HIGH(AnimatedTilesGBC) + $D           ;; 00:1CF7 $26 $77
     jr   AnimateTilesMediumSpeed                  ;; 00:1CF9 $18 $CD
 
 AnimateCrystalBlockTilesGroup::
-    ld   h, HIGH(AnimatedTiles) + $C              ;; 00:1CFB $26 $76
+    ld   h, HIGH(AnimatedTilesGBC) + $C           ;; 00:1CFB $26 $76
     jr   AnimateTilesMediumSpeed                  ;; 00:1CFD $18 $C9
 
 AnimatePhotoTilesGroup::
