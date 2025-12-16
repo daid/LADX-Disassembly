@@ -285,9 +285,11 @@ random_room_4: ; Exit 1
   db $80
   dw random_room_4_variation_4
   ; Entity sets
-  db 1
+  db 2
   db $00, $FF
   dw random_room_4_entity_set_0
+  db $02, $FF
+  dw random_room_4_entity_set_1
 random_room_4_variation_0:
   db 7, $58, $AF, $82, $66, $AF, $68, $01
 random_room_4_variation_1:
@@ -301,6 +303,10 @@ random_room_4_variation_4:
 random_room_4_entity_set_0:
   db 4
   db $24, $89
+  db $00, $E7
+random_room_4_entity_set_1:
+  db 4
+  db $34, $59
   db $00, $E7
 random_room_5: ; Entrance 1
   db $00, $00 ; allowed filter

@@ -23,6 +23,8 @@ LSD_ResetEntity:
     ld   a, [hl]
     cp   $FF
     ret  z
+    cp   $FE
+    jp   z, .table2
     ld   b, a
 
     ; Check if the sheet is already loaded
@@ -96,6 +98,31 @@ LSD_ResetEntity:
         dec hl
     }
     db $dd ; should never be reached
+.table2:
+    ld   hl, EntitySpriteRequirementsTableBig
+.loop:
+    ld   a, [hl+]
+    and  a, a
+    ret  z ; end of table
+    cp   e
+    jr   z, .found
+    inc  hl
+    inc  hl
+    jr   .loop
+.found:
+    ld   de, wLoadedEntitySpritesheets
+    ld   a, [hl+]
+    ld   [de], a
+    inc  de
+    ld   a, [hl+]
+    ld   [de], a
+    xor  a
+    ld   [wEntityTilesSpriteslotIndexA], a
+    ld   a, 1
+    ld   [wEntityTilesSpriteslotIndexB], a
+    ldh  [hNeedsUpdatingEntityTilesA], a
+    ld   [wNeedsUpdatingEntityTilesB], a
+    ret
 
 EntitySpriteRequirementsTable:
     db $FF ; 00 ARROW
@@ -187,7 +214,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 56 TIMER_BOMBITE
     db $FF ; 57 PAIRODD
     db $FF ; 58 PAIRODD_PROJECTILE
-    db $FF ; 59 MOLDORM
+    db $FE ; 59 MOLDORM
     db $FF ; 5a FACADE
     db $FF ; 5b SLIME_EYE
     db $FF ; 5c GENIE
@@ -349,6 +376,10 @@ EntitySpriteRequirementsTable:
     db $FF ; f8 GIANT_BUZZ_BLOB
     db $FF ; f9 HARDHIT_BEETLE
     db $FF ; fa PHOTOGRAPHER
+
+EntitySpriteRequirementsTableBig:
+    db $59, $B0, $B1
+    db $00
 }
 
 ; wLoadedEntitySpritesheets
