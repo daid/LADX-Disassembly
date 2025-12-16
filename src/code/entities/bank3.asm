@@ -4507,9 +4507,7 @@ HoldPickupInTheAir::
 PickHeartContainer::
     xor  a                                        ;; 03:63B0 $AF
     ld   [wActivePowerUp], a                      ;; 03:63B1 $EA $7C $D4
-    ld   a, MUSIC_HEART_CONTAINER                 ;; 03:63B4 $3E $25
-    ld   [wMusicTrackToPlay], a                   ;; 03:63B6 $EA $68 $D3
-    ld   [wBossDefeated], a                       ;; 03:63B9 $EA $6C $D4
+    ;LSD: Remove music replacement which stays like this until an instrument is collected
     call GetEntityTransitionCountdown             ;; 03:63BC $CD $05 $0C
     ld   a, $70                                   ;; 03:63BF $3E $70
     ld   [hl], a                                  ;; 03:63C1 $77

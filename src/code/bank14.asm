@@ -2080,24 +2080,16 @@ jr_014_58D1:
     ldh  a, [hMapRoom]                            ;; 14:58D1 $F0 $F6
     ld   c, a                                     ;; 14:58D3 $4F
     ld   b, $00                                   ;; 14:58D4 $06 $00
-    ldh  a, [hMapId]                              ;; 14:58D6 $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 14:58D8 $FE $FF
-    jr   nz, .jr_58E1                             ;; 14:58DA $20 $05
-
-    ld   hl, ColorDungeonEventsTable              ;; 14:58DC $21 $00 $42
-    jr   jr_014_58ED                              ;; 14:58DF $18 $0C
-
-.jr_58E1
-    cp   $1A                                      ;; 14:58E1 $FE $1A
-    jr   nc, .jr_58EA                             ;; 14:58E3 $30 $05
-
-    cp   $06                                      ;; 14:58E5 $FE $06
-    jr   c, .jr_58EA                              ;; 14:58E7 $38 $01
-
-    inc  b                                        ;; 14:58E9 $04
-
-.jr_58EA
+    
     ld   hl, DungeonEventsTable                   ;; 14:58EA $21 $00 $40
+
+    ; LSD: Use sDungeonEventTable for rooms below $40
+    cp   $40
+    jr   nc, jr_014_58ED
+    call EnableSRAM
+    ld   a, BANK(sDungeonEventTable)
+    ld   [rRAMB], a
+    ld   hl, sDungeonEventTable
 
 jr_014_58ED:
     add  hl, bc                                   ;; 14:58ED $09

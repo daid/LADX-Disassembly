@@ -15,6 +15,7 @@ extern uint8_t dungeonDepth;
 
 extern uint8_t sDungeonMinimap[0x40];
 extern uint8_t sDungenChestContents[0x40];
+extern uint8_t sDungeonEventTable[0x40];
 extern uint8_t sDynamicRoomData[0x2000];
 extern uint8_t sDynamicEntityData[0x2000];
 

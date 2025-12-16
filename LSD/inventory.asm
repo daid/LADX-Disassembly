@@ -162,6 +162,10 @@ getAmountPtrForInventory:
     ld   de, wMaxArrows
     cp   $05 ; INVENTORY_BOW
     ret  z
+    ld   hl, wMagicPowderCount
+    ld   de, wMaxMagicPowder
+    cp   $0C ; INVENTORY_MAGIC_POWDER
+    ret  z
     ld   hl, wColorDungeonItemFlags ; per default use some dummy location
     ld   de, wColorDungeonItemFlags
     cp   $11 ; INVENTORY_MAP, merge multiple into one.

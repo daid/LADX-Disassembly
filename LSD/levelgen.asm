@@ -5,6 +5,9 @@ _sDungeonMinimap:
 sDungenChestContents:
 _sDungenChestContents:
   ds 8 * 8
+sDungeonEventTable:
+_sDungeonEventTable:
+  ds 8 * 8
 }
 
 #SECTION "MapBuildCode", ROMX, BANK[$0A] {

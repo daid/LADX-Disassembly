@@ -33,7 +33,7 @@ const uint8_t random_treasure_list[16] = {
     0x1B, 0x1C, 0x1D, 0x82,
     0x1B, 0x1C, 0x1D, 0x85,
     0x1B, 0x1C, 0x90, 0x8E,
-    0x1B, 0x1C, 0x91, 0x8F,
+    0x1B, 0x8C, 0x91, 0x8F,
 };
 
 void generateRandomMap(void)
@@ -169,7 +169,7 @@ retry:
         if (!(randomMapDataTmp[n] & ROOM_SIDE_PATH)) continue;
         uint8_t flags = randomMapDataFlags[n];
         if (flags == ROOM_DOOR_RIGHT || flags == ROOM_DOOR_LEFT || flags == ROOM_DOOR_DOWN || flags == ROOM_DOOR_UP) {
-            if (1 || rand8() < 64) {
+            if (rand8() < 64) {
                 randomMapDataFlags[n] = flags << 4;
                 if (flags == ROOM_DOOR_RIGHT) {
                     randomMapDataFlags[n + 1] &=~ROOM_DOOR_LEFT;
@@ -216,13 +216,15 @@ retry:
             sDungeonMinimap[n] = 0xEF;
         else
             sDungeonMinimap[n] = 0x7D;
+        sDungeonEventTable[n] = 0;
     }
 
     for(uint8_t n=0; n<64; n++) {
 getDifferentRoomData:
         const const RandomRoomDataTable_T* table = &RandomRoomDataTable[randomMapDataID[n]];
         const uint8_t* static_room_data_ptr = table->table_data[rand8range(table->table_size)];
-        uint8_t mask_data = randomMapDataFlags[n] & (*static_room_data_ptr++);
+        uint8_t mask_input = randomMapDataFlags[n] | (randomMapDataFlags[n] >> 4); 
+        uint8_t mask_data = mask_input & (*static_room_data_ptr++);
         if (mask_data != *static_room_data_ptr++)
             goto getDifferentRoomData;
         SET_SRAM_BANK_CONTAINING(sDynamicRoomData);
