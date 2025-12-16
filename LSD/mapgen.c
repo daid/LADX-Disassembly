@@ -163,6 +163,34 @@ retry:
         break;
     }
 
+    // Check for rooms with a single entrance that are a sidepath
+    // And potentially turn those into bombable walls
+    for(uint8_t n=0; n<64; n++) {
+        if (!(randomMapDataTmp[n] & ROOM_SIDE_PATH)) continue;
+        uint8_t flags = randomMapDataFlags[n];
+        if (flags == ROOM_DOOR_RIGHT || flags == ROOM_DOOR_LEFT || flags == ROOM_DOOR_DOWN || flags == ROOM_DOOR_UP) {
+            if (1 || rand8() < 64) {
+                randomMapDataFlags[n] = flags << 4;
+                if (flags == ROOM_DOOR_RIGHT) {
+                    randomMapDataFlags[n + 1] &=~ROOM_DOOR_LEFT;
+                    randomMapDataFlags[n + 1] |= ROOM_LOCK_LEFT;
+                }
+                if (flags == ROOM_DOOR_LEFT) {
+                    randomMapDataFlags[n - 1] &=~ROOM_DOOR_RIGHT;
+                    randomMapDataFlags[n - 1] |= ROOM_LOCK_RIGHT;
+                }
+                if (flags == ROOM_DOOR_DOWN) {
+                    randomMapDataFlags[n + 8] &=~ROOM_DOOR_UP;
+                    randomMapDataFlags[n + 8] |= ROOM_LOCK_UP;
+                }
+                if (flags == ROOM_DOOR_UP) {
+                    randomMapDataFlags[n - 8] &=~ROOM_DOOR_DOWN;
+                    randomMapDataFlags[n - 8] |= ROOM_LOCK_DOWN;
+                }
+            }
+        }
+    }
+
     // Add random treasures
     for(uint8_t n=0; n<64; n++) {
         if (!randomMapDataFlags[n]) continue;
@@ -211,6 +239,9 @@ getDifferentRoomData:
             } else {
                 *dynamic_room_data_ptr++ = 0xF7;
             }
+        } else if (randomMapDataFlags[n] & ROOM_LOCK_RIGHT) {
+            *dynamic_room_data_ptr++ = 0x39;
+            *dynamic_room_data_ptr++ = 0x42;
         }
         if (randomMapDataFlags[n] & ROOM_DOOR_LEFT) {
             *dynamic_room_data_ptr++ = 0x30;
@@ -219,6 +250,9 @@ getDifferentRoomData:
             } else {
                 *dynamic_room_data_ptr++ = 0xF6;
             }
+        } else if (randomMapDataFlags[n] & ROOM_LOCK_LEFT) {
+            *dynamic_room_data_ptr++ = 0x30;
+            *dynamic_room_data_ptr++ = 0x41;
         }
         if (randomMapDataFlags[n] & ROOM_DOOR_DOWN) {
             *dynamic_room_data_ptr++ = 0x74;
@@ -227,6 +261,9 @@ getDifferentRoomData:
             } else {
                 *dynamic_room_data_ptr++ = 0xF5;
             }
+        } else if (randomMapDataFlags[n] & ROOM_LOCK_DOWN) {
+            *dynamic_room_data_ptr++ = 0x74;
+            *dynamic_room_data_ptr++ = 0x40;
         }
         if (randomMapDataFlags[n] & ROOM_DOOR_UP) {
             *dynamic_room_data_ptr++ = 0x04;
@@ -235,6 +272,9 @@ getDifferentRoomData:
             } else {
                 *dynamic_room_data_ptr++ = 0xF4;
             }
+        } else if (randomMapDataFlags[n] & ROOM_LOCK_UP) {
+            *dynamic_room_data_ptr++ = 0x04;
+            *dynamic_room_data_ptr++ = 0x3F;
         }
         uint8_t variation_count = *static_room_data_ptr++;
         while(variation_count) {
