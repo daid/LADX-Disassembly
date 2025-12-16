@@ -78,7 +78,7 @@ _rand16: ; uint16_t rand16(void) __preserves_regs(d, e, h, l)
 _rand8range:  ; uint8_t rand8(uint8_t max) __preserves_regs(d, e, h, l)
     ; max rand is passed in a, back it up in c, and calculate a mask in b
     ld   c, a
-    #FOR n, 0, 7 {
+    loop b, 7 {
         srl  a
         or   c
     }

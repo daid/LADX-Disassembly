@@ -39,7 +39,7 @@ const uint8_t random_treasure_list[16] = {
 void generateRandomMap(void)
 {
     uint8_t main_path_length = 7 + dungeonDepth;
-    uint8_t main_path_split = (main_path_length >> 1) + (rand8() & 3);
+    uint8_t main_path_split = (main_path_length >> 1) - 3 + (rand8() & 3);
     uint8_t side_path_count = 3 + (dungeonDepth << 1);
 retry:
     for(uint8_t n=0; n<0x40; n++) {
