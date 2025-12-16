@@ -1,18 +1,19 @@
 #SECTION "RandomRoomData", ROMX, BANK[$0A] {
 _RandomRoomDataTable:
-  db 4
+  db 5
   dw RandomRoomDataTable0
   db 1
   dw RandomRoomDataTable1
   db 1
   dw RandomRoomDataTable2
-  db 2
+  db 3
   dw RandomRoomDataTable3
 RandomRoomDataTable0:
   dw random_room_0 ; Basic Room
   dw random_room_1 ; Vertical Hallway
   dw random_room_2 ; Horizontal Hallway
   dw random_room_3 ; Random Corners
+  dw random_room_8 ; H-Split
 RandomRoomDataTable1:
   dw random_room_5 ; Entrance 1
 RandomRoomDataTable2:
@@ -20,6 +21,7 @@ RandomRoomDataTable2:
 RandomRoomDataTable3:
   dw random_room_6 ; Treasure 1
   dw random_room_7 ; Treasure Ledge
+  dw random_room_9 ; Treasure 2
 random_room_0: ; Basic Room
   db $00, $00 ; allowed filter
   ; Primary data
@@ -341,19 +343,35 @@ random_room_6: ; Treasure 1
   ; Primary data
   db 6, $04, $0D, $34, $A0, $44, $0F
   ; Variations
-  db 1
+  db 4
   db $80
   dw random_room_6_variation_0
+  db $80
+  dw random_room_6_variation_1
+  db $80
+  dw random_room_6_variation_2
+  db $80
+  dw random_room_6_variation_3
   ; Entity sets
-  db 3
+  db 5
   db $00, $FF
   dw random_room_6_entity_set_0
   db $00, $FF
   dw random_room_6_entity_set_1
   db $00, $FF
   dw random_room_6_entity_set_2
+  db $00, $FF
+  dw random_room_6_entity_set_3
+  db $00, $FF
+  dw random_room_6_entity_set_4
 random_room_6_variation_0:
   db 4, $33, $AE, $35, $AE
+random_room_6_variation_1:
+  db 9, $C3, $23, $0F, $82, $24, $0F, $C2, $35, $0F
+random_room_6_variation_2:
+  db 16, $60, $27, $61, $2B, $68, $2C, $69, $28, $70, $03, $71, $27, $78, $28, $79, $03
+random_room_6_variation_3:
+  db 16, $00, $03, $01, $25, $08, $26, $09, $03, $10, $25, $11, $29, $18, $2A, $19, $26
 random_room_6_entity_set_0:
   db 0
 random_room_6_entity_set_1:
@@ -363,6 +381,14 @@ random_room_6_entity_set_2:
   db 4
   db $45, $0B
   db $43, $0B
+random_room_6_entity_set_3:
+  db 4
+  db $53, $1E
+  db $36, $1A
+random_room_6_entity_set_4:
+  db 4
+  db $43, $0E
+  db $46, $0E
 random_room_7: ; Treasure Ledge
   db $08, $00 ; allowed filter
   ; Primary data
@@ -394,4 +420,126 @@ random_room_7_entity_set_2:
   db 4
   db $44, $9B
   db $45, $9B
+random_room_8: ; H-Split
+  db $D0, $00 ; allowed filter
+  ; Primary data
+  db 24, $04, $0D, $11, $20, $18, $20, $32, $2C, $84, $33, $22, $37, $2B, $42, $2A, $84, $43, $21, $47, $29, $61, $20, $68, $20
+  ; Variations
+  db 4
+  db $80
+  dw random_room_8_variation_0
+  db $80
+  dw random_room_8_variation_1
+  db $80
+  dw random_room_8_variation_2
+  db $80
+  dw random_room_8_variation_3
+  ; Entity sets
+  db 5
+  db $00, $FF
+  dw random_room_8_entity_set_0
+  db $00, $FF
+  dw random_room_8_entity_set_1
+  db $00, $FF
+  dw random_room_8_entity_set_2
+  db $00, $FF
+  dw random_room_8_entity_set_3
+  db $00, $FF
+  dw random_room_8_entity_set_4
+random_room_8_variation_0:
+  db 3, $82, $53, $DF
+random_room_8_variation_1:
+  db 3, $82, $25, $DF
+random_room_8_variation_2:
+  db 8, $11, $AC, $18, $AC, $61, $AC, $68, $AC
+random_room_8_variation_3:
+  db 14, $33, $2B, $C2, $34, $0F, $C2, $35, $0F, $36, $2C, $43, $29, $46, $2A
+random_room_8_entity_set_0:
+  db 4
+  db $55, $0B
+  db $24, $0B
+random_room_8_entity_set_1:
+  db 4
+  db $53, $14
+  db $26, $14
+random_room_8_entity_set_2:
+  db 4
+  db $57, $A1
+  db $22, $A1
+random_room_8_entity_set_3:
+  db 8
+  db $57, $9B
+  db $27, $9B
+  db $22, $9B
+  db $52, $9B
+random_room_8_entity_set_4:
+  db 4
+  db $56, $9C
+  db $23, $9C
+random_room_9: ; Treasure 2
+  db $D0, $00 ; allowed filter
+  ; Primary data
+  db 18, $04, $0D, $11, $A0, $12, $C0, $17, $C0, $18, $0F, $61, $0F, $62, $C0, $67, $C0, $68, $0F
+  ; Variations
+  db 6
+  db $80
+  dw random_room_9_variation_0
+  db $80
+  dw random_room_9_variation_1
+  db $80
+  dw random_room_9_variation_2
+  db $80
+  dw random_room_9_variation_3
+  db $80
+  dw random_room_9_variation_4
+  db $80
+  dw random_room_9_variation_5
+  ; Entity sets
+  db 5
+  db $00, $03
+  dw random_room_9_entity_set_0
+  db $00, $FF
+  dw random_room_9_entity_set_1
+  db $00, $03
+  dw random_room_9_entity_set_2
+  db $03, $FF
+  dw random_room_9_entity_set_3
+  db $03, $FF
+  dw random_room_9_entity_set_4
+random_room_9_variation_0:
+  db 6, $C2, $34, $A6, $C2, $35, $A6
+random_room_9_variation_1:
+  db 4, $73, $C8, $76, $C8
+random_room_9_variation_2:
+  db 4, $03, $C8, $06, $C8
+random_room_9_variation_3:
+  db 4, $20, $C9, $50, $C9
+random_room_9_variation_4:
+  db 4, $29, $CA, $59, $CA
+random_room_9_variation_5:
+  db 6, $84, $33, $12, $84, $43, $13
+random_room_9_entity_set_0:
+  db 0
+random_room_9_entity_set_1:
+  db 4
+  db $32, $23
+  db $47, $23
+random_room_9_entity_set_2:
+  db 4
+  db $53, $0B
+  db $26, $14
+random_room_9_entity_set_3:
+  db 8
+  db $56, $0B
+  db $23, $0B
+  db $26, $14
+  db $53, $14
+random_room_9_entity_set_4:
+  db 12
+  db $22, $9B
+  db $57, $9B
+  db $27, $9B
+  db $52, $9B
+  db $55, $1B
+  db $24, $1B
 }

@@ -1,20 +1,20 @@
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 StarSpriteVariants::
 .variant0
-    db $74, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $74, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $76, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $78, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $48, OAM_GBC_PAL_1 | OAMF_PAL0
 .variant2
-    db $7A, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $7A, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $4A, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $4A, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
 .variant3
-    db $78, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
-    db $76, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_1 | OAMF_PAL0 | OAMF_XFLIP
 .variant4
-    db $7C, OAM_GBC_PAL_1 | OAMF_PAL0
-    db $7C, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $4C, OAM_GBC_PAL_1 | OAMF_PAL0
+    db $4C, OAM_GBC_PAL_1 | OAMF_PAL0
 
 StarEntityHandler::
     ld   de, StarSpriteVariants                   ;; 07:725B $11 $47 $72

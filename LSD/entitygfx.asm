@@ -112,7 +112,7 @@ EntitySpriteRequirementsTable:
     db $7C ; 0b MOBLIN
     db $FF ; 0c MOBLIN_ARROW
     db $87 ; 0d TEKTITE
-    db $FF ; 0e LEEVER
+    db $81 ; 0e LEEVER
     db $FF ; 0f ARMOS_STATUE
     db $FF ; 10 HIDING_GHINI
     db $8A ; 11 GIANT_GHINI
@@ -254,10 +254,10 @@ EntitySpriteRequirementsTable:
     db $FF ; 99 WATER_TEKTITE
     db $FF ; 9a FLYING_TILES
     db $91 ; 9b HIDING_GEL
-    db $FF ; 9c STAR
+    db $60 ; 9c STAR
     db $FF ; 9d LIFTABLE_STATUE
     db $FF ; 9e FIREBALL_SHOOTER
-    db $FF ; 9f GOOMBA
+    db $5F ; 9f GOOMBA
     db $5F ; a0 PEAHAT
     db $5F ; a1 SNAKE
     db $FF ; a2 PIRANHA_PLANT

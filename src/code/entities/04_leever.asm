@@ -1,17 +1,17 @@
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 LeeverSpriteVariants::
 .variant0
-    db $56, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $56, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant2
-    db $52, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $52, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant3
-    db $50, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $50, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 
 LeeverEntityHandler::
     ld   de, LeeverSpriteVariants                 ;; 04:7EF5 $11 $E5 $7E
