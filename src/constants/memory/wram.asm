@@ -3062,7 +3062,9 @@ wRoomObjectsArea::
 wRoomObjects::
   ds $2F
 _randomMapDataID:  ; LSD: Temporary storage for random map data during map generation ($40 bytes)
-  ds $C0 ; D711 - D7FF
+  ds $40
+_randomMapDataTmp:
+  ds $80
 
 ; World rooms status
 ; Each room is a byte combining ROOM_STATUS_* constants.

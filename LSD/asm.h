@@ -10,6 +10,7 @@ extern __sfr hMapRoom;
 
 extern uint8_t randomMapDataFlags[0x40];
 extern uint8_t randomMapDataID[0x40];
+extern uint8_t randomMapDataTmp[0x40];
 extern uint8_t dungeonDepth;
 
 extern uint8_t sDungeonMinimap[0x40];
@@ -27,3 +28,5 @@ extern const RandomRoomDataTable_T RandomRoomDataTable[];
 
 #define SET_SRAM_BANK(n) *((uint8_t*)0x4000) = (n)
 #define SET_SRAM_BANK_CONTAINING(n) extern void __bank_ ## n; SET_SRAM_BANK((uint8_t)&__bank_ ## n)
+
+#define BREAK() __asm__(".db #0x40")
