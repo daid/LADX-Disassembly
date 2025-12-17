@@ -8,6 +8,10 @@ _RandomRoomDataTable:
   dw RandomRoomDataTable2
   db 3
   dw RandomRoomDataTable3
+  db 0
+  dw RandomRoomDataTable4
+  db 1
+  dw RandomRoomDataTable5
 RandomRoomDataTable0:
   dw random_room_0 ; Basic Room
   dw random_room_1 ; Vertical Hallway
@@ -22,6 +26,9 @@ RandomRoomDataTable3:
   dw random_room_6 ; Treasure 1
   dw random_room_7 ; Treasure Ledge
   dw random_room_9 ; Treasure 2
+RandomRoomDataTable4:
+RandomRoomDataTable5:
+  dw random_room_10 ; Final Nightmare
 random_room_0: ; Basic Room
   db $00, $00 ; allowed filter
   ; Primary data
@@ -548,4 +555,25 @@ random_room_9_entity_set_4:
   db $52, $9B
   db $55, $1B
   db $24, $1B
+random_room_10: ; Final Nightmare
+  db $D0, $00 ; allowed filter
+  ; Primary data
+  db 10, $04, $0D, $34, $E7, $35, $E8, $44, $E9, $45, $EA
+  ; Variations
+  db 2
+  db $80
+  dw random_room_10_variation_0
+  db $80
+  dw random_room_10_variation_1
+  ; Entity sets
+  db 1
+  db $00, $FF
+  dw random_room_10_entity_set_0
+random_room_10_variation_0:
+  db 32, $00, $03, $01, $25, $08, $26, $09, $03, $10, $25, $11, $29, $18, $2A, $19, $26, $60, $27, $61, $2B, $68, $2C, $69, $28, $70, $03, $71, $27, $78, $28, $79, $03
+random_room_10_variation_1:
+  db 4, $12, $AC, $17, $AC
+random_room_10_entity_set_0:
+  db 2
+  db $34, $E6
 }

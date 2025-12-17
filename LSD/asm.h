@@ -7,6 +7,7 @@ uint8_t rand8range(uint8_t) __preserves_regs(d, e, h, l);
 uint16_t rand16(void) __preserves_regs(d, e, h, l);
 
 extern __sfr hMapRoom;
+extern __sfr hMapId;
 
 extern uint8_t randomMapDataFlags[0x40];
 extern uint8_t randomMapDataID[0x40];

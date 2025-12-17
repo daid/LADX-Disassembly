@@ -32,9 +32,7 @@ LSD_GenerateMap:
     ld   a, BANK(sDungeonMinimap)
     ld   [$4000], a
     call _generateRandomMap ; call our C function to randomly generate the map layout
-    call _rand8
-    and  a, 7
-    ldh  [hMapId], a
+    call _buildRandomRoomData ; then call into our function to generate the actual room layouts.
 
     ; Clear wGlobalInventoryTable
     ld   a, BANK(wGlobalInventoryTable)
@@ -57,16 +55,5 @@ LSD_GenerateMap:
       }
     }
 
-    ret
-
-CopyRoomPart:
-    ld   a, [de]
-    inc  de
-    ld   c, a
-    loop c {
-        ld  a, [de]
-        inc de
-        ld  [hl+], a
-    }
     ret
 }

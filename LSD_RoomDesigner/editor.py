@@ -55,10 +55,10 @@ class Editor:
         f = open(filename, "wt")
         f.write(f'#SECTION "RandomRoomData", ROMX, BANK[$0A] {{\n')
         f.write("_RandomRoomDataTable:\n")
-        for type_idx in range(4):
+        for type_idx in range(6):
             f.write(f'  db {len([room for room in self.room_data if room["type"] == type_idx])}\n')
             f.write(f'  dw RandomRoomDataTable{type_idx}\n')
-        for type_idx in range(4):
+        for type_idx in range(6):
             f.write(f'RandomRoomDataTable{type_idx}:\n')
             for idx, room in enumerate(self.room_data):
                 if room['type'] == type_idx:

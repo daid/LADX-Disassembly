@@ -515,6 +515,7 @@ hMapRoom:: ; FFF6
 
 ; Id of the current indoor world map
 ; See MAP_* constants for values
+_hMapId: ; LSD: Allow c access
 hMapId::
   ds 1 ; FFF7
 

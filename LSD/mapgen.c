@@ -20,6 +20,8 @@
 #define ROOM_TYPE_ENTRANCE 0x01
 #define ROOM_TYPE_EXIT     0x02
 #define ROOM_TYPE_TREASURE 0x03
+#define ROOM_TYPE_SPECIAL  0x04
+#define ROOM_TYPE_FINAL    0x05
 
 #define ROOM_SECOND_HALF   0x01
 #define ROOM_MAIN_PATH     0x02
@@ -41,11 +43,22 @@ void generateRandomMap(void)
     uint8_t main_path_length = 7 + dungeonDepth;
     uint8_t main_path_split = (main_path_length >> 1) - 3 + (rand8() & 3);
     uint8_t side_path_count = 3 + (dungeonDepth << 1);
+
+    hMapId = rand8() & 7;
+
 retry:
     for(uint8_t n=0; n<0x40; n++) {
         randomMapDataFlags[n] = 0;
         randomMapDataID[n] = 0;
         randomMapDataTmp[n] = 0;
+    }
+
+    if (dungeonDepth > 5) {
+        //Time to fight the final nightmare
+        hMapRoom = 0;
+        randomMapDataID[0] = ROOM_TYPE_FINAL;
+        hMapId = 8;
+        return;
     }
 
     //Build the main path
@@ -216,10 +229,14 @@ retry:
             sDungeonMinimap[n] = 0xEF;
         else
             sDungeonMinimap[n] = 0x7D;
-        sDungeonEventTable[n] = 0;
     }
+}
 
+void buildRandomRoomData(void)
+{
     for(uint8_t n=0; n<64; n++) {
+        SET_SRAM_BANK_CONTAINING(sDungeonEventTable);
+        sDungeonEventTable[n] = 0;
 getDifferentRoomData:
         const const RandomRoomDataTable_T* table = &RandomRoomDataTable[randomMapDataID[n]];
         const uint8_t* static_room_data_ptr = table->table_data[rand8range(table->table_size)];

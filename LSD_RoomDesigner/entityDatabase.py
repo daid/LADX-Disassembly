@@ -191,7 +191,7 @@ entities_list = [
     {'id': 0xE3, 'tiles': [2, 2], 'attr': [0, 32]},  # POKEY
     {'id': 0xE4, 'tiles': [13, 14], 'attr': [2, 2]},  # MOBLIN_KING
     # {'id': 0xE5},  # FLOATING_ITEM_2
-    # {'id': 0xE6},  # FINAL_NIGHTMARE
+    {'id': 0xE6},  # FINAL_NIGHTMARE
     # {'id': 0xE7},  # KANALET_CASTLE_GATE_SWITCH
     {'id': 0xEC, 'tiles': [0, 0], 'attr': [2, 34]},  # COLOR_GHOUL_RED
     {'id': 0xED, 'tiles': [0, 0], 'attr': [0, 32]},  # COLOR_GHOUL_GREEN

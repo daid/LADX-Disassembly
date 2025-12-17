@@ -198,6 +198,31 @@ async function load_room_edit(room_id) {
         //    document.getElementById("content").appendChild(roomDataSelector("Palette", "palette_index", underworld_palette_index_table));
     }
     document.getElementById("content").appendChild(roomDataSelector("Animation", "animation", animation_table));
+
+    var table_data = [
+        [document.createTextNode(`ID`), document.createTextNode(`Depth`), document.createTextNode(`Entities`)]
+    ];
+    for(var idx in current_room.entity_sets) {
+        var set = current_room.entity_sets[idx];
+        var row = [];
+        table_data.push(row);
+        row.push(document.createTextNode(`${idx}`));
+        row.push(document.createTextNode(`${set.depth_min}-${set.depth_max}`));
+        var data = {}
+        for(var entity of set.entities) {
+            for(var ei of entities_info) {
+                if (ei.id == entity.id) {
+                    data[ei.name] = (data[ei.name] || 0) + 1;
+                }
+            }
+        }
+        var entries = []
+        for(var [key, value] of Object.entries(data)) {
+            entries.push(`${value}x ${key}`);
+        }
+        row.push(document.createTextNode(entries.join(", ")));
+    }
+    document.getElementById("content").appendChild(createTable(table_data));
 }
 
 async function new_room() {
@@ -598,4 +623,6 @@ var room_type_table = [
     {"value": 0x01, "label": "Entrance"},
     {"value": 0x02, "label": "Exit"},
     {"value": 0x03, "label": "Treasure"},
+    {"value": 0x04, "label": "Special"},
+    {"value": 0x05, "label": "Final"},
 ]
