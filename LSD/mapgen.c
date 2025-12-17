@@ -1,4 +1,5 @@
 #include "asm.h"
+#include "treasure.h"
 #pragma bank 0x0A
 
 #define DIR_RIGHT 0
@@ -31,11 +32,11 @@ uint8_t generateRandomMove(uint8_t from);
 uint8_t doMove(uint8_t from, uint8_t dir);
 uint8_t flipDir(uint8_t dir);
 
-const uint8_t random_treasure_list[32] = {
-    0x1B, 0x1C, 0x1D, 0x82,
-    0x1B, 0x1C, 0x1D, 0x85,
-    0x1B, 0x92, 0x90, 0x8E,
-    0x1B, 0x8C, 0x91, 0x8F,
+const uint8_t random_treasure_list[16] = {
+    TREASURE_RUPEES_50, TREASURE_RUPEES_20, TREASURE_RUPEES_100, TREASURE_BOMBS,
+    TREASURE_RUPEES_50, TREASURE_RUPEES_20, TREASURE_RUPEES_100, TREASURE_BOW,
+    TREASURE_RUPEES_50, TREASURE_COMPASS, TREASURE_POTION_2, TREASURE_PIECE_OF_POWER,
+    TREASURE_RUPEES_50, TREASURE_POWDER, TREASURE_MAP, TREASURE_POTION_1,
 };
 
 void generateRandomMap(void)
@@ -162,7 +163,7 @@ retry:
         if ((randomMapDataTmp[current_room] & ROOM_SECOND_HALF)) continue;
         if (randomMapDataID[current_room] != ROOM_TYPE_NORMAL) continue;
         randomMapDataID[current_room] = ROOM_TYPE_TREASURE;
-        sDungenChestContents[current_room] = 0x1A; // Small key
+        sDungenChestContents[current_room] = TREASURE_SMALL_KEY; // Small key
         break;
     }
     // And another key in the first half anywhere
@@ -172,7 +173,7 @@ retry:
         if (!randomMapDataFlags[current_room]) continue;
         if (randomMapDataID[current_room] != ROOM_TYPE_NORMAL) continue;
         randomMapDataID[current_room] = ROOM_TYPE_TREASURE;
-        sDungenChestContents[current_room] = 0x1A; // Small key
+        sDungenChestContents[current_room] = TREASURE_SMALL_KEY; // Small key
         break;
     }
 
