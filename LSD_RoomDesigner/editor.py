@@ -74,6 +74,7 @@ class Editor:
                 raw_data += bytearray([0xE1, 0x00, 0xFF, 0x58, 0x52]) # Add warp data
             assert len(raw_data) > 0
             f.write(f"  db ${room['filter_mask']:02X}, ${room['filter_value']:02X} ; allowed filter\n")
+            f.write(f"  db ${room["event"]:02X} ; event\n")
             f.write("  ; Primary data\n")
             f.write(f"  db {len(raw_data)}, " + ", ".join(f"${n:02X}" for n in raw_data) + "\n")
             f.write(f"  ; Variations\n")
@@ -114,6 +115,9 @@ class Editor:
         self.storage_filename = filename
         if os.path.exists(filename):
             self.room_data = json.load(open(filename, "rt"))
+            for room in self.room_data:
+                if "event" not in room:
+                    room["event"] = 0
     
     def get_rooms(self):
         return [{"id": idx, "name": room['name']} for idx, room in enumerate(self.room_data)]

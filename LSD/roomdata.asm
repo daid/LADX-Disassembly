@@ -31,6 +31,7 @@ RandomRoomDataTable5:
   dw random_room_10 ; Final Nightmare
 random_room_0: ; Basic Room
   db $00, $00 ; allowed filter
+  db $21 ; event
   ; Primary data
   db 18, $04, $0D, $03, $C7, $06, $C7, $20, $C9, $29, $CA, $50, $C9, $59, $CA, $73, $C8, $76, $C8
   ; Variations
@@ -124,6 +125,7 @@ random_room_0_entity_set_8:
   db $45, $0B
 random_room_1: ; Vertical Hallway
   db $03, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 34, $04, $93, $02, $25, $84, $03, $21, $07, $26, $C6, $12, $23, $C6, $13, $0D, $C6, $14, $0D, $C6, $15, $0D, $C6, $16, $0D, $C6, $17, $24, $72, $27, $84, $73, $22, $77, $28
   ; Variations
@@ -172,6 +174,7 @@ random_room_1_entity_set_4:
   db $45, $29
 random_room_2: ; Horizontal Hallway
   db $0C, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 77, $04, $93, $11, $25, $86, $12, $21, $13, $C7, $16, $C7, $18, $26, $20, $25, $21, $29, $86, $22, $B0, $C4, $23, $0D, $C4, $24, $0D, $C4, $25, $0D, $C4, $26, $0D, $28, $2A, $29, $26, $C2, $30, $23, $C2, $31, $0D, $C2, $32, $0D, $C2, $37, $0D, $C2, $38, $0D, $C2, $39, $24, $50, $27, $51, $2B, $52, $AF, $57, $AF, $58, $2C, $59, $28, $61, $27, $86, $62, $22, $63, $C8, $66, $C8, $68, $28
   ; Variations
@@ -213,6 +216,7 @@ random_room_2_entity_set_2:
   db $52, $B2
 random_room_3: ; Random Corners
   db $00, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 14, $04, $0D, $82, $12, $DF, $82, $16, $DF, $83, $61, $DF, $83, $66, $DF
   ; Variations
@@ -277,6 +281,7 @@ random_room_3_entity_set_5:
   db $36, $0D
 random_room_4: ; Exit 1
   db $00, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 7, $04, $0D, $E1, $00, $FF, $58, $52
   ; Variations
@@ -317,6 +322,7 @@ random_room_4_entity_set_1:
   db $00, $E7
 random_room_5: ; Entrance 1
   db $00, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 10, $04, $0D, $22, $AC, $27, $AC, $52, $AC, $57, $AC
   ; Variations
@@ -353,8 +359,9 @@ random_room_5_entity_set_0:
   db 0
 random_room_6: ; Treasure 1
   db $00, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
-  db 6, $04, $0D, $34, $A0, $44, $0F
+  db 6, $04, $0D, $12, $A0, $22, $0F
   ; Variations
   db 4
   db $80
@@ -378,9 +385,9 @@ random_room_6: ; Treasure 1
   db $00, $FF
   dw random_room_6_entity_set_4
 random_room_6_variation_0:
-  db 4, $33, $AE, $35, $AE
+  db 2, $64, $DF
 random_room_6_variation_1:
-  db 9, $C3, $23, $0F, $82, $24, $0F, $C2, $35, $0F
+  db 4, $14, $DF, $36, $DF
 random_room_6_variation_2:
   db 16, $60, $27, $61, $2B, $68, $2C, $69, $28, $70, $03, $71, $27, $78, $28, $79, $03
 random_room_6_variation_3:
@@ -404,6 +411,7 @@ random_room_6_entity_set_4:
   db $46, $0E
 random_room_7: ; Treasure Ledge
   db $08, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 53, $04, $0D, $02, $26, $03, $2A, $06, $29, $07, $25, $C2, $12, $24, $84, $13, $0F, $14, $A0, $C2, $17, $23, $84, $23, $0F, $32, $2A, $84, $33, $21, $82, $34, $97, $37, $29, $82, $44, $0F, $60, $27, $61, $2B, $68, $2C, $69, $28, $70, $03, $71, $27, $78, $28, $79, $03
   ; Variations
@@ -435,6 +443,7 @@ random_room_7_entity_set_2:
   db $45, $9B
 random_room_8: ; H-Split
   db $D0, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 24, $04, $0D, $11, $20, $18, $20, $32, $2C, $84, $33, $22, $37, $2B, $42, $2A, $84, $43, $21, $47, $29, $61, $20, $68, $20
   ; Variations
@@ -491,6 +500,7 @@ random_room_8_entity_set_4:
   db $23, $9C
 random_room_9: ; Treasure 2
   db $D0, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 18, $04, $0D, $11, $A0, $12, $C0, $17, $C0, $18, $0F, $61, $0F, $62, $C0, $67, $C0, $68, $0F
   ; Variations
@@ -557,6 +567,7 @@ random_room_9_entity_set_4:
   db $24, $1B
 random_room_10: ; Final Nightmare
   db $D0, $00 ; allowed filter
+  db $00 ; event
   ; Primary data
   db 10, $04, $0D, $34, $E7, $35, $E8, $44, $E9, $45, $EA
   ; Variations

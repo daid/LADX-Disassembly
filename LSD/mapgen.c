@@ -236,8 +236,6 @@ retry:
 void buildRandomRoomData(void)
 {
     for(uint8_t n=0; n<64; n++) {
-        SET_SRAM_BANK_CONTAINING(sDungeonEventTable);
-        sDungeonEventTable[n] = 0;
 getDifferentRoomData:
         const const RandomRoomDataTable_T* table = &RandomRoomDataTable[randomMapDataID[n]];
         const uint8_t* static_room_data_ptr = table->table_data[rand8range(table->table_size)];
@@ -245,6 +243,8 @@ getDifferentRoomData:
         uint8_t mask_data = mask_input & (*static_room_data_ptr++);
         if (mask_data != *static_room_data_ptr++)
             goto getDifferentRoomData;
+        SET_SRAM_BANK_CONTAINING(sDungeonEventTable);
+        sDungeonEventTable[n] = *static_room_data_ptr++;
         SET_SRAM_BANK_CONTAINING(sDynamicRoomData);
         uint8_t* dynamic_room_data_ptr = &sDynamicRoomData[((uint16_t)n) * 0x80];
         uint8_t copy_size = *static_room_data_ptr++;
@@ -257,7 +257,7 @@ getDifferentRoomData:
             if (randomMapDataFlags[n] & ROOM_LOCK_RIGHT) {
                 *dynamic_room_data_ptr++ = 0xEF;
             } else {
-                *dynamic_room_data_ptr++ = 0xF7;
+                *dynamic_room_data_ptr++ = 0xF3;
             }
         } else if (randomMapDataFlags[n] & ROOM_LOCK_RIGHT) {
             *dynamic_room_data_ptr++ = 0x39;
@@ -268,7 +268,7 @@ getDifferentRoomData:
             if (randomMapDataFlags[n] & ROOM_LOCK_LEFT) {
                 *dynamic_room_data_ptr++ = 0xEE;
             } else {
-                *dynamic_room_data_ptr++ = 0xF6;
+                *dynamic_room_data_ptr++ = 0xF2;
             }
         } else if (randomMapDataFlags[n] & ROOM_LOCK_LEFT) {
             *dynamic_room_data_ptr++ = 0x30;
@@ -279,7 +279,7 @@ getDifferentRoomData:
             if (randomMapDataFlags[n] & ROOM_LOCK_DOWN) {
                 *dynamic_room_data_ptr++ = 0xED;
             } else {
-                *dynamic_room_data_ptr++ = 0xF5;
+                *dynamic_room_data_ptr++ = 0xF1;
             }
         } else if (randomMapDataFlags[n] & ROOM_LOCK_DOWN) {
             *dynamic_room_data_ptr++ = 0x74;
@@ -290,7 +290,7 @@ getDifferentRoomData:
             if (randomMapDataFlags[n] & ROOM_LOCK_UP) {
                 *dynamic_room_data_ptr++ = 0xEC;
             } else {
-                *dynamic_room_data_ptr++ = 0xF4;
+                *dynamic_room_data_ptr++ = 0xF0;
             }
         } else if (randomMapDataFlags[n] & ROOM_LOCK_UP) {
             *dynamic_room_data_ptr++ = 0x04;

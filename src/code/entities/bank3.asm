@@ -2464,7 +2464,7 @@ SpawnEnemyDrop::
     ; randomize, if something is dropped at all
     call GetRandomByte                            ;; 03:5656 $CD $0D $28
     and  [hl]                                     ;; 03:5659 $A6
-    ret  nz                                       ;; 03:565A $C0
+    ret  ;LSD disable random drops for now nz                                       ;; 03:565A $C0
 
     ld   hl, (DropTableByIndex - 1)               ;; 03:565B $21 $9C $55
     add  hl, de                                   ;; 03:565E $19
