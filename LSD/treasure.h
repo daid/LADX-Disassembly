@@ -1,0 +1,19 @@
+#define TREASURE_SMALL_KEY  0x1A
+#define TREASURE_RUPEES_20  0x1C
+#define TREASURE_RUPEES_50  0x1B
+#define TREASURE_RUPEES_100 0x1D
+#define TREASURE_RUPEES_200 0x1E
+#define TREASURE_ZOL        0x22
+
+#define TREASURE_BOMBS      0x82
+#define TREASURE_BOW        0x85
+#define TREASURE_MAGIC_ROD  0x87
+#define TREASURE_FEATHER    0x8A
+#define TREASURE_POWDER     0x8C
+#define TREASURE_BOOMERANG  0x8D
+
+#define TREASURE_PIECE_OF_POWER  0x8E
+#define TREASURE_POTION_1        0x8F
+#define TREASURE_POTION_2        0x90
+#define TREASURE_MAP             0x91
+#define TREASURE_COMPASS         0x92
