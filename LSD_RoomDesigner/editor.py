@@ -131,6 +131,7 @@ class Editor:
             'tiles': [n if n is not None else 0x0D for n in RoomTemplate(0x0F).tiles],
             'variations': [],
             'type': 0,
+            'event': 0,
             'map_id': 0,
             'filter_mask': 0xD0,
             'filter_value': 0x00,
