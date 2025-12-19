@@ -46,6 +46,7 @@ class Editor:
         self.storage_filename = None
         self.__rom = romTables.ROMWithTables(open("../../LADX-Disassembly/azle.gbc", "rb"))
         self.__tile_cache = {}
+        self.__text_cache = {}
         self.tile_db = TileDatabase()
 
     def export_full_json(self, filename: str):
@@ -74,7 +75,7 @@ class Editor:
                 raw_data += bytearray([0xE1, 0x00, 0xFF, 0x58, 0x52]) # Add warp data
             assert len(raw_data) > 0
             f.write(f"  db ${room['filter_mask']:02X}, ${room['filter_value']:02X} ; allowed filter\n")
-            f.write(f"  db ${room["event"]:02X} ; event\n")
+            f.write(f"  db ${room['event']:02X} ; event\n")
             f.write("  ; Primary data\n")
             f.write(f"  db {len(raw_data)}, " + ", ".join(f"${n:02X}" for n in raw_data) + "\n")
             f.write(f"  ; Variations\n")
@@ -189,7 +190,7 @@ class Editor:
             self.draw_tile(result, x * 16, y * 16 + 8, tileset[metatile[2]], attrtile[2], ri.palette_addr)
             self.draw_tile(result, x * 16 + 8, y * 16 + 8, tileset[metatile[3]], attrtile[3], ri.palette_addr)
             if tile_info.bombable:
-                draw_text(result, x * 16, y * 16, "B")
+                self.draw_text(result, x * 16, y * 16, "B")
             x += 1
             if x == 16:
                 x = 0
@@ -216,7 +217,7 @@ class Editor:
                 y += 1
         return result
 
-    def render_entity(self, eid, target, x, y, *, room_id=0x2B6):
+    def render_entity(self, eid, target, x, y, *, room_id=0x2B6, alpha=None):
         info = entityDatabase.entities_dict[eid]
         sd = entityData.SPRITE_DATA[info["id"]] if info["id"] in entityData.SPRITE_DATA else None
         if callable(sd):
@@ -246,13 +247,13 @@ class Editor:
                     if info["attr"][n] & 0x40:
                         a, b = b, a
                     if len(info["tiles"]) & 1:
-                        self.draw_tile(target, x + 4, y, a, info["attr"][n], 0x5518, sprite=True)
-                        self.draw_tile(target, x + 4, y + 8, b, info["attr"][n], 0x5518, sprite=True)
+                        self.draw_tile(target, x + 4, y, a, info["attr"][n], 0x5518, sprite=True, alpha=alpha)
+                        self.draw_tile(target, x + 4, y + 8, b, info["attr"][n], 0x5518, sprite=True, alpha=alpha)
                     else:
-                        self.draw_tile(target, x + (n % 2 * 8), y, a, info["attr"][n], 0x5518, sprite=True)
-                        self.draw_tile(target, x + (n % 2 * 8), y + 8, b, info["attr"][n], 0x5518, sprite=True)
+                        self.draw_tile(target, x + (n % 2 * 8), y, a, info["attr"][n], 0x5518, sprite=True, alpha=alpha)
+                        self.draw_tile(target, x + (n % 2 * 8), y + 8, b, info["attr"][n], 0x5518, sprite=True, alpha=alpha)
         else:
-            draw_text(target, x, y, f"{eid:02X}")
+            self.draw_text(target, x, y, f"{eid:02X}", alpha=alpha)
             # for n, tile in enumerate(tileset):
             #     x = idx * 16 + (n // 32) * 8
             #     y = (n % 32) * 8
@@ -282,7 +283,12 @@ class Editor:
                     self.draw_tile(result, x * 16 + 8, y * 16 + 8, tileset[metatile[3]], attrtile[3], ri.palette_addr, alpha=alpha)
                     tile_info = self.tile_db.get(tile_nr, room["num"], room["sidescroll"])
                     if tile_info and tile_info.bombable:
-                        draw_text(result, x * 16, y * 16, "B")
+                        self.draw_text(result, x * 16, y * 16, "B")
+        for set_idx, entity_set in enumerate(room["entity_sets"]):
+            if set_idx == entity_set_index:
+                continue
+            for e in entity_set["entities"]:
+                self.render_entity(e["id"], result, e["x"] * 16, e["y"] * 16, room_id=room_id, alpha=128)
         for e in room["entity_sets"][entity_set_index]["entities"]:
             self.render_entity(e["id"], result, e["x"] * 16, e["y"] * 16, room_id=room_id)
         return result
@@ -341,7 +347,7 @@ class Editor:
         return attributes
 
     def draw_tile(self, img, ox, oy, subtile_id, attr, palette_addr, *, sprite=False, alpha=None):
-        if (subtile_id, attr, palette_addr) not in self.__tile_cache:
+        if (subtile_id, attr, palette_addr, alpha) not in self.__tile_cache:
             result = PIL.Image.new("RGBA", (8, 8), (0, 0, 0, 0))
             palette = self.get_palette(palette_addr)[(attr&7)*4:(attr&7)*4+4]
             if subtile_id is not None:
@@ -364,12 +370,31 @@ class Editor:
                             v |= 0x02
                         if not sprite or v != 0:
                             result.putpixel((x,y), palette[v])
-            self.__tile_cache[(subtile_id, attr, palette_addr)] = result
-        tile = self.__tile_cache[(subtile_id, attr, palette_addr)]
-        if alpha:
-            tile = tile.copy()
-            tile.putalpha(alpha)
+            if alpha:
+                tmp = result.copy()
+                tmp.putalpha(alpha)
+                result.paste(tmp, result)
+            self.__tile_cache[(subtile_id, attr, palette_addr, alpha)] = result
+        tile = self.__tile_cache[(subtile_id, attr, palette_addr, alpha)]
         img.paste(tile, (ox, oy), tile)
+
+    def draw_text(self, image, x, y, s, alpha=None):
+        if alpha is None:
+            alpha = 255
+        if (s, alpha) not in self.__text_cache:
+            result = PIL.Image.new("RGBA", (16, 16), (0, 0, 0, 0))
+            draw = PIL.ImageDraw.Draw(result)
+            for xo in range(3):
+                for yo in range(3):
+                    draw.text((1 + xo, yo), s, (0, 0, 0, alpha))
+            draw.text((2, 1), s, (alpha, alpha, alpha, alpha))
+            if alpha:
+                tmp = result.copy()
+                tmp.putalpha(alpha)
+                result.paste(tmp, result)
+            self.__text_cache[(s, alpha)] = result
+        tile = self.__text_cache[(s, alpha)]
+        image.paste(tile, (x, y), tile)
 
     def get_palette(self, palette_addr: int) -> List[Tuple[int, int, int]]:
         palette_addr -= 0x4000
@@ -563,17 +588,10 @@ class RequestHandler(http.server.SimpleHTTPRequestHandler):
         pass
 
 
-def draw_text(image, x, y, s):
-    draw = PIL.ImageDraw.Draw(image)
-    for xo in range(3):
-        for yo in range(3):
-            draw.text((x + 1 + xo, y + yo), s, (0, 0, 0))
-    draw.text((x + 2, y + 1), s, (255, 255, 255))
-
-
 def main():
     editor.import_full_json("rooms.json")
     server = http.server.ThreadingHTTPServer(("127.0.0.1", 8000), RequestHandler)
+    print("Starting editor server on http://127.0.0.1:8000/")
     server.serve_forever()
 
 

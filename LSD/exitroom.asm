@@ -53,6 +53,15 @@ WaitForLinkToClearHole:
     inc  hl
     ld   [hl], 31
 
+    ; Clear entity status
+    ld   hl, wEntitiesStatusTable
+    add  hl, bc
+    ld   [hl], b
+
+    ld   a, [wRoomTransitionState]
+    and  a, a
+    ret  nz ; We entered the room while it is solved, the normal scrolling will draw the tiles so we do not have to.
+
     ld   a, $30
     ldh  [hIntersectedObjectTop], a
     ld   a, $40
@@ -169,7 +178,7 @@ WaitForLinkToClearHole:
     ld   [hl+], a
     ld   a, $83
     ld   [hl+], a
-    ld   a, $07
+    ld   a, $07 ; this palette selection should depend on the map
     ld   [hl+], a
     ld   [hl+], a
     ld   [hl+], a
@@ -182,7 +191,7 @@ WaitForLinkToClearHole:
     ld   [hl+], a
     ld   a, $83
     ld   [hl+], a
-    ld   a, $07
+    ld   a, $07 ; this palette selection should depend on the map
     ld   [hl+], a
     ld   [hl+], a
     ld   [hl+], a
@@ -191,8 +200,5 @@ WaitForLinkToClearHole:
     ld   a, $00
     ld   [hl+], a
 
-    ld   hl, wEntitiesStatusTable
-    add  hl, bc
-    ld   [hl], b
     ret
 }

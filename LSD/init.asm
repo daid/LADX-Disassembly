@@ -17,8 +17,9 @@ LSD_VRAM1_init:
     inc hl
     ld  [hl], HIGH($8000)
     inc hl
-    ld  [hl], LOW($8800)
+    ld  [hl], LOW($8000)
     inc hl
+    ld  [hl], $80 - 1
     ld  [hl], $80 - 1
     ld  [hl], $80 - 1
 
