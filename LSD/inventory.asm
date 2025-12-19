@@ -206,7 +206,7 @@ EntityInventoryDropSprite:
     db  $C0, $04 ; INVENTORY_COMPASS
 
 EntityInventoryDropSprite2:
-    db  $80, $0C, $80, $2C
+    db  $14, $01, $14, $21
 
 EntityInventoryDropHandler:
     ld   hl, wEntitiesPrivateState2Table
