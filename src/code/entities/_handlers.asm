@@ -90,7 +90,7 @@ EntityHandlersTable::
 ._4A far_pointer ColorDungeonBookEntityHandler
 ._4B far_pointer Entity4BHandler
 ._4C far_pointer_null
-._4D far_pointer ShopOwnerEntityHandler
+._4D far_pointer LSD_ShopOwnerEntityHandler
 ._4E far_pointer Disabled4EEntityHandler
 ._4F far_pointer TrendyGameOwnerEntityHandler
 ._50 far_pointer BooBuddyEntityHandler ; $50
@@ -369,7 +369,7 @@ EntityInitHandlersTable::
 ._4A dw   EntityInitColorDungeonBook
 ._4B dw   EntityInitWithRandomDirection
 ._4C dw   EntityInitWithRandomDirection
-._4D dw   EntityInitShopOwner
+._4D dw   EntityInitNoop ;LSD EntityInitShopOwner
 ._4E dw   EntityInitWithRandomDirection
 ._4F dw   EntityInitStoreOwner
 ._50 dw   EntityInitWithRandomDirection

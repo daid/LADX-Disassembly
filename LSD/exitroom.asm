@@ -53,10 +53,7 @@ WaitForLinkToClearHole:
     inc  hl
     ld   [hl], 31
 
-    ; Clear entity status
-    ld   hl, wEntitiesStatusTable
-    add  hl, bc
-    ld   [hl], b
+    call UnloadEntity
 
     ld   a, [wRoomTransitionState]
     and  a, a

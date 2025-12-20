@@ -53,7 +53,7 @@ entities_list = [
     # {'id': 0x48},  # MOVING_BLOCK_BOTTOM_LEFT
     # {'id': 0x49},  # MOVING_BLOCK_BOTTOM_RIGHT
     # {'id': 0x4A, 'tiles': [4], 'attr': [0, 0]},  # COLOR_DUNGEON_BOOK
-    # {'id': 0x4D, 'tiles': [0, 1], 'attr': [3, 3]},  # SHOP_OWNER
+    {'id': 0x4D, 'tiles': [0, 1], 'attr': [3, 3]},  # SHOP_OWNER
     # {'id': 0x4F, 'tiles': [0, 1], 'attr': [3, 3]},  # TRENDY_GAME_OWNER
     # {'id': 0x50, 'tiles': [0, 1], 'attr': [3, 3]},  # BOO_BUDDY
     {'id': 0x51, 'tiles': [0, 1], 'attr': [2, 2]},  # KNIGHT

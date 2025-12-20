@@ -217,6 +217,12 @@ retry:
             randomMapDataID[n] = ROOM_TYPE_TREASURE;
             sDungenChestContents[n] = random_treasure_list[rand8() & 0x0F];
         }
+        if (randomMapDataID[n]) continue;
+        if (rand8() < 128) {
+            // Mark room as a special room.
+            randomMapDataID[n] = ROOM_TYPE_SPECIAL;
+            sDungenChestContents[n] = rand8();
+        }
     }
 
     SET_SRAM_BANK_CONTAINING(sDungeonMinimap);

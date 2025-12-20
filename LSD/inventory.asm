@@ -203,27 +203,14 @@ EntityInventoryDropSprite:
     db  $A0, $04 ; INVENTORY_POTION
     db  $A0, $05 ; INVENTORY_POTION2
     db  $C0, $04 ; INVENTORY_MAP
-    db  $C0, $04 ; INVENTORY_COMPASS
+    db  $C2, $05 ; INVENTORY_COMPASS
 
 EntityInventoryDropSprite2:
     db  $14, $01, $14, $21
 
 EntityInventoryDropHandler:
-    ld   hl, wEntitiesPrivateState2Table
-    add  hl, bc
-    ld   a, [hl]
-    and  a
-    call z, InventoryAddToGlobalInventoryTable
+    call DrawInventoryDropSprite
 
-    ldh  a, [hActiveEntitySpriteVariant]
-    cp   $0E ; INVENTORY_PIECE_OF_POWER
-    if z {
-        ld   de, EntityInventoryDropSprite2 - $0E * 4
-        call RenderActiveEntitySpritesPair
-    } else {
-        ld   de, EntityInventoryDropSprite - 2
-        call RenderActiveEntitySprite
-    }
     ldh  a, [hActiveEntityState]
     rst  0
     dw   .StateFromChest
@@ -231,7 +218,16 @@ EntityInventoryDropHandler:
     dw   .StateOldPickup
     dw   .StateDoingPickup
 
+.checkGlobalInventoryTableStatus:
+    ld   hl, wEntitiesPrivateState2Table
+    add  hl, bc
+    ld   a, [hl]
+    and  a
+    call z, InventoryAddToGlobalInventoryTable
+    ret
+
 .StateWaitForLinkDistance:
+    call .checkGlobalInventoryTableStatus
     ldh  a, [hLinkPositionX]
     ld   hl, wEntitiesPosXTable
     add  hl, bc
@@ -259,8 +255,10 @@ EntityInventoryDropHandler:
     ld   [hl], a
     call IncrementEntityState
     ld   [hl], $02
+    jr   .doPickup
 
 .StateOldPickup:
+    call .checkGlobalInventoryTableStatus
     ; If we cannot act, ignore picking up the item.
     ldh  a, [hLinkInteractiveMotionBlocked]
     and  a, a
@@ -280,15 +278,12 @@ EntityInventoryDropHandler:
     add  $08
     cp   $10
     ret  nc
-    ldh  a, [hActiveEntityState]
-    and  a
-    if   nz {
-        ; If it isn't a new item, we need a A/B press to pick it up.
-        ldh  a, [hJoypadState]
-        and  $30 ; A/B
-        ret  z
-    }
+    ; we need a A/B press to pick it up.
+    ldh  a, [hJoypadState]
+    and  $30 ; A/B
+    ret  z
 
+.doPickup:
     ldh  a, [hActiveEntitySpriteVariant]
     call getAmountPtrForInventory
     if   z { ; this item has an amount, so try to stack it.
@@ -341,10 +336,17 @@ EntityInventoryDropHandler:
     ld   a, $02
     ldh  [hLinkInteractiveMotionBlocked], a
 
+    pushpop bc {
+        call DrawABButtonSlots
+    }
+
     ; Remove ourselfs from the wGlobalInventoryTable
     ld   hl, wEntitiesPrivateState2Table
     add  hl, bc
     ld   e, [hl]
+    xor  a
+    cp   e
+    ret  z ; not in wGlobalInventoryTable
     dec  e
     ld   d, b
     ld   hl, wGlobalInventoryTable
@@ -427,6 +429,18 @@ InventoryAddToGlobalInventoryTable:
     ld   [hl+], a
     xor  a
     ldh  [rSVBK], a
+    ret
+
+DrawInventoryDropSprite:
+    ldh  a, [hActiveEntitySpriteVariant]
+    cp   $0E ; INVENTORY_PIECE_OF_POWER
+    if z {
+        ld   de, EntityInventoryDropSprite2 - $0E * 4
+        call RenderActiveEntitySpritesPair
+    } else {
+        ld   de, EntityInventoryDropSprite - 2
+        call RenderActiveEntitySprite
+    }
     ret
 }
 

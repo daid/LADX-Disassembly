@@ -134,8 +134,8 @@ EntitySpriteRequirementsTable:
     db $FF ; 06 PUSHED_BLOCK
     db $FF ; 07 CHEST_WITH_ITEM
     db $FF ; 08 MAGIC_POWDER_SPRINKLE
-    db $FF ; 09 OCTOROCK
-    db $FF ; 0a OCTOROCK_ROCK
+    db $E3 ; 09 OCTOROCK
+    db $E3 ; 0a OCTOROCK_ROCK
     db $7C ; 0b MOBLIN
     db $FF ; 0c MOBLIN_ARROW
     db $87 ; 0d TEKTITE
@@ -202,7 +202,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 4a COLOR_DUNGEON_BOOK
     db $FF ; 4b POT
     db $FF ; 4c DISABLED
-    db $FF ; 4d SHOP_OWNER
+    db $88 ; 4d SHOP_OWNER
     db $FF ; 4e 4D
     db $FF ; 4f TRENDY_GAME_OWNER
     db $FF ; 50 BOO_BUDDY
@@ -257,7 +257,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 81 ROLLING_BONES
     db $FF ; 82 ROLLING_BONES_BAR
     db $FF ; 83 DREAM_SHRINE_BED
-    db $FF ; 84 BIG_FAIRY
+    db $4D ; 84 BIG_FAIRY
     db $FF ; 85 MR_WRITES_BIRD
     db $FF ; 86 FLOATING_ITEM
     db $FF ; 87 DESERT_LANMOLA
@@ -299,7 +299,7 @@ EntitySpriteRequirementsTable:
     db $FF ; ab CHEEP_CHEEP_VERTICAL
     db $FF ; ac CHEEP_CHEEP_JUMPING
     db $FF ; ad KIKI_THE_MONKEY
-    db $FF ; ae WINGED_OCTOROK
+    db $E3 ; ae WINGED_OCTOROK
     db $FF ; af TRADING_ITEM
     db $FF ; b0 PINCER
     db $FF ; b1 HOLE_FILLER

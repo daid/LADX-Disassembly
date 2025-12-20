@@ -4840,11 +4840,11 @@ include "code/entities/03_magic_rod_fireball.asm"
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 OctorokRockSpriteVariants::
 .variant0
-    db $6C, $01
-    db $6C, $21
+    db $4C, $01
+    db $4C, $21
 .variant1
-    db $5C, $01
-    db $5C, $21
+    db $4C, $01
+    db $4C, $21
 
 OctorokRockEntityHandler::
     call GetEntityTransitionCountdown             ;; 03:6A26 $CD $05 $0C

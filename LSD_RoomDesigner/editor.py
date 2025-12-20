@@ -119,6 +119,7 @@ class Editor:
             for room in self.room_data:
                 if "event" not in room:
                     room["event"] = 0
+                    
     
     def get_rooms(self):
         return [{"id": idx, "name": room['name']} for idx, room in enumerate(self.room_data)]
@@ -133,7 +134,7 @@ class Editor:
             'type': 0,
             'event': 0,
             'map_id': 0,
-            'filter_mask': 0xD0,
+            'filter_mask': 0x00,
             'filter_value': 0x00,
             'sidescroll': False,
             'tileset': 0xFF,

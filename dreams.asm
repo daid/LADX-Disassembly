@@ -9,6 +9,7 @@ BANKED_WRAM = 1
 
 GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 
+#INCLUDE "LSD/const.asm"
 #INCLUDE "LSD/roomdata.asm"
 #INCLUDE "LSD/levelgen.asm"
 #INCLUDE "LSD/entitygfx.asm"
@@ -19,3 +20,4 @@ GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 #INCLUDE "LSD/init.asm"
 
 #INCLUDE "LSD/exitroom.asm"
+#INCLUDE "LSD/shop.asm"

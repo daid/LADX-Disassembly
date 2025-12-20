@@ -8,7 +8,7 @@ _RandomRoomDataTable:
   dw RandomRoomDataTable2
   db 4
   dw RandomRoomDataTable3
-  db 1
+  db 2
   dw RandomRoomDataTable4
   db 1
   dw RandomRoomDataTable5
@@ -29,6 +29,7 @@ RandomRoomDataTable3:
   dw random_room_11 ; Treasure Kill Room
 RandomRoomDataTable4:
   dw random_room_12 ; Big Fairy
+  dw random_room_13 ; Shop 1
 RandomRoomDataTable5:
   dw random_room_10 ; Final Nightmare
 random_room_0: ; Basic Room
@@ -444,7 +445,7 @@ random_room_7_entity_set_2:
   db $44, $9B
   db $45, $9B
 random_room_8: ; H-Split
-  db $D0, $00 ; allowed filter
+  db $00, $00 ; allowed filter
   db $00 ; event
   ; Primary data
   db 24, $04, $0D, $11, $20, $18, $20, $32, $2C, $84, $33, $22, $37, $2B, $42, $2A, $84, $43, $21, $47, $29, $61, $20, $68, $20
@@ -501,7 +502,7 @@ random_room_8_entity_set_4:
   db $56, $9C
   db $23, $9C
 random_room_9: ; Treasure 2
-  db $D0, $00 ; allowed filter
+  db $00, $00 ; allowed filter
   db $00 ; event
   ; Primary data
   db 18, $04, $0D, $11, $A0, $12, $C0, $17, $C0, $18, $0F, $61, $0F, $62, $C0, $67, $C0, $68, $0F
@@ -568,7 +569,7 @@ random_room_9_entity_set_4:
   db $55, $1B
   db $24, $1B
 random_room_10: ; Final Nightmare
-  db $D0, $00 ; allowed filter
+  db $00, $00 ; allowed filter
   db $00 ; event
   ; Primary data
   db 10, $04, $0D, $34, $E7, $35, $E8, $44, $E9, $45, $EA
@@ -590,10 +591,10 @@ random_room_10_entity_set_0:
   db 2
   db $34, $E6
 random_room_11: ; Treasure Kill Room
-  db $D0, $00 ; allowed filter
+  db $00, $00 ; allowed filter
   db $61 ; event
   ; Primary data
-  db 20, $04, $0D, $02, $C7, $07, $C7, $20, $C9, $28, $0F, $29, $CA, $50, $C9, $59, $CA, $72, $C8, $77, $C8
+  db 20, $04, $0D, $02, $C7, $07, $C7, $20, $C9, $28, $A1, $29, $CA, $50, $C9, $59, $CA, $72, $C8, $77, $C8
   ; Variations
   db 5
   db $80
@@ -621,11 +622,11 @@ random_room_11_variation_0:
 random_room_11_variation_1:
   db 4, $62, $AB, $67, $AB
 random_room_11_variation_2:
-  db 6, $82, $12, $20, $82, $16, $20
+  db 4, $13, $20, $16, $20
 random_room_11_variation_3:
   db 4, $32, $DF, $56, $DF
 random_room_11_variation_4:
-  db 12, $82, $14, $DF, $C2, $31, $DF, $C2, $38, $DF, $82, $64, $DF
+  db 11, $82, $14, $DF, $C2, $31, $DF, $48, $DF, $82, $64, $DF
 random_room_11_entity_set_0:
   db 4
   db $52, $A1
@@ -648,7 +649,7 @@ random_room_11_entity_set_3:
   db $53, $0B
   db $25, $0B
 random_room_12: ; Big Fairy
-  db $D8, $00 ; allowed filter
+  db $08, $00 ; allowed filter
   db $00 ; event
   ; Primary data
   db 70, $0C, $0D, $00, $03, $01, $25, $08, $26, $09, $03, $84, $10, $25, $11, $29, $C3, $12, $10, $82, $14, $21, $84, $16, $26, $C3, $17, $11, $18, $2A, $23, $23, $82, $24, $1B, $26, $24, $33, $27, $82, $34, $22, $36, $28, $42, $94, $84, $43, $12, $47, $93, $52, $C0, $57, $C0, $60, $27, $61, $2B, $68, $2C, $69, $28, $70, $03, $71, $27, $78, $28, $79, $03
@@ -661,4 +662,26 @@ random_room_12: ; Big Fairy
 random_room_12_entity_set_0:
   db 2
   db $24, $84
+random_room_13: ; Shop 1
+  db $00, $00 ; allowed filter
+  db $00 ; event
+  ; Primary data
+  db 11, $04, $0D, $85, $22, $00, $85, $32, $00, $85, $42, $00
+  ; Variations
+  db 2
+  db $80
+  dw random_room_13_variation_0
+  db $80
+  dw random_room_13_variation_1
+  ; Entity sets
+  db 1
+  db $00, $FF
+  dw random_room_13_entity_set_0
+random_room_13_variation_0:
+  db 9, $85, $22, $07, $85, $32, $07, $85, $42, $07
+random_room_13_variation_1:
+  db 8, $11, $AC, $18, $AC, $61, $AC, $68, $AC
+random_room_13_entity_set_0:
+  db 2
+  db $24, $4D
 }
