@@ -479,6 +479,17 @@ jr_001_531D::
     ;ld   [hl+], a
     ;ld   a, $10
     ;ld   [wBombCount], a
+
+    ld   a, BANK(wGlobalInventoryTable)
+    ldh  [rSVBK], a
+    xor  a
+    ld   hl, wGlobalInventoryTable
+.clearwGlobalInventoryTableLoop:
+    ld   [hl+], a
+    bit  5, h
+    jr   z, .clearwGlobalInventoryTableLoop
+    ldh  [rSVBK], a
+    
     jr   .finish                                  ;; 01:53D6 $18 $B6
 
 Data_001_53D8::
