@@ -355,7 +355,7 @@ EntitySpriteRequirementsTable:
     db $FF ; e3 POKEY
     db $FF ; e4 MOBLIN_KING
     db $FF ; e5 FLOATING_ITEM_2
-    db $FF ; e6 FINAL_NIGHTMARE
+    db $FE ; e6 FINAL_NIGHTMARE
     db $FF ; e7 KANALET_CASTLE_GATE_SWITCH
     db $FF ; e8 ENDING_OWL_STAIR_CLIMBING
     db $FF ; e9 COLOR_SHELL_RED
@@ -378,7 +378,8 @@ EntitySpriteRequirementsTable:
     db $FF ; fa PHOTOGRAPHER
 
 EntitySpriteRequirementsTableBig:
-    db $59, $B0, $B1
+    db $59, $B0, $B1 ; MOLDORM
+    db $E6, $E8, $E9 ; FINAL_NIGHTMARE ; Also: $EA, $EB
     db $00
 }
 
