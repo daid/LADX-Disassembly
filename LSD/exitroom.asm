@@ -41,6 +41,10 @@ WaitForLinkToClearHole:
     ret  c
 .safe:
 
+    ld   a, [wRoomTransitionState]
+    and  a, a
+    ret  nz ; We entered the room while it is solved, the normal scrolling will draw the tiles so we do not have to.
+
     ld   a, $02 ; JINGLE_PUZZLE_SOLVED
     ldh  [hJingle], a
 
@@ -52,12 +56,6 @@ WaitForLinkToClearHole:
     ld   [hl], 31
     inc  hl
     ld   [hl], 31
-
-    call UnloadEntity
-
-    ld   a, [wRoomTransitionState]
-    and  a, a
-    ret  nz ; We entered the room while it is solved, the normal scrolling will draw the tiles so we do not have to.
 
     ld   a, $30
     ldh  [hIntersectedObjectTop], a
@@ -197,5 +195,6 @@ WaitForLinkToClearHole:
     ld   a, $00
     ld   [hl+], a
 
+    call UnloadEntity
     ret
 }
