@@ -177,6 +177,18 @@ retry:
         break;
     }
 
+    if (dungeonDepth == 5) {
+        //Quick hack to "guarantee" boots on depth 5
+        while(1) {
+            current_room = rand8() & 0x3F;
+            if (!randomMapDataFlags[current_room]) continue;
+            if (randomMapDataID[current_room] != ROOM_TYPE_NORMAL) continue;
+            randomMapDataID[current_room] = ROOM_TYPE_SPECIAL;
+            sDungenChestContents[current_room] = 4;
+            break;
+        }
+    }
+
     // Check for rooms with a single entrance that are a sidepath
     // And potentially turn those into bombable walls
     for(uint8_t n=0; n<64; n++) {
