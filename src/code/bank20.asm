@@ -2973,9 +2973,9 @@ InventoryItemPaletteIndexes::
     db  $0B, $2B ; INVENTORY_PIECE_OF_POWER
     db  $0B, $2B
     db  $01, $01 ; INVENTORY_POTION
-    db  $02, $01
-    db  $01, $01 ; INVENTORY_POTION2
     db  $01, $01
+    db  $01, $01 ; INVENTORY_POTION2
+    db  $02, $01
     db  $03, $01 ; INVENTORY_MAP
     db  $03, $01
     db  $01, $01 ; INVENTORY_COMPASS

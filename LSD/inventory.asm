@@ -200,8 +200,8 @@ EntityInventoryDropSprite:
     db  $8E, $04 ; INVENTORY_MAGIC_POWDER
     db  $A4, $04 ; INVENTORY_BOOMERANG
     db  $00, $00 ; INVENTORY_PIECE_OF_POWER
-    db  $A0, $04 ; INVENTORY_POTION
-    db  $A0, $05 ; INVENTORY_POTION2
+    db  $A0, $05 ; INVENTORY_POTION
+    db  $A0, $04 ; INVENTORY_POTION2
     db  $C0, $04 ; INVENTORY_MAP
     db  $C2, $05 ; INVENTORY_COMPASS
 
@@ -466,23 +466,23 @@ UsePieceOfPower:
     ld   a, $49 ; MUSIC_ACTIVE_POWER_UP
     ldh  [hDefaultMusicTrackAlt], a
     ldh  [hNextDefaultMusicTrack], a
-
     ret
+
 UsePotion1:
     call GetUsedItemSlot
     ld   [hl], 0
     ld   hl, wAddHealthBuffer
     ld   a, [hl]
-    add  a, 8 * 5 ; health 5 hearts
+    add  a, 8 * 4 ; health 4 hearts
     ld   [hl], a
     ret
 
 UsePotion2:
     call GetUsedItemSlot
-    ld   [hl], 0
+    ld   [hl], INVENTORY_POTION
     ld   hl, wAddHealthBuffer
     ld   a, [hl]
-    add  a, 8 * 10 ; health 10 hearts
+    add  a, 8 * 4 ; health 4 hearts
     ld   [hl], a
     ret
 
