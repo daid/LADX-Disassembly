@@ -507,6 +507,11 @@ EntityInitBigFairy::
     and  a                                        ;; 03:4A49 $A7
     jp   nz, UnloadEntityAndReturn                ;; 03:4A4A $C2 $8D $3F
 
+    ; LSD: Only allow the fairy to be used once
+    ld   a, [hRoomStatus]
+    and  a, ROOM_STATUS_EVENT_1
+    jp   nz, UnloadEntityAndReturn
+
 jr_003_4A4D:
     ld   a, $0C                                   ;; 03:4A4D $3E $0C
 

@@ -152,6 +152,12 @@ BigFairyWaitingHandler::
     cp   $10                                      ;; 06:7175 $FE $10
     ret  nc                                       ;; 06:7177 $D0
 
+    ld   a, [wIndoorRoom]
+    ld   d, $00
+    ld   e, a
+    call GetRoomStatusAddressForMapPosition_trampoline
+    set  4, [hl] ; mark fairy used
+
     call IncrementEntityState                     ;; 06:7178 $CD $12 $3B
     call GetEntitySlowTransitionCountdown         ;; 06:717B $CD $FB $0B
     ld   [hl], $48                                ;; 06:717E $36 $48
