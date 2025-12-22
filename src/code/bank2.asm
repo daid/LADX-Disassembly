@@ -7170,7 +7170,7 @@ jr_002_728E:
     ld   [wC5A6], a                               ;; 02:72F3 $EA $A6 $C5
 
     ld   a, e                                     ;; 02:72F6 $7B
-    call OpenDialogInTable0AndClearIncrement      ;; 02:72F7 $CD $FE $74
+    ; LSD: No nag message call OpenDialogInTable0AndClearIncrement      ;; 02:72F7 $CD $FE $74
 
 ; Check whether Link is currently dashing with
 ; the Pegasus Boots, in which case he should collide
