@@ -42,6 +42,7 @@ InitShopState:
     ld   hl, wEntitiesLoadOrderTable
     add  hl, bc
     ld   a, [hl]
+    ldh  [hLSDTemporary2], a
     and  a, 1 ; clear Z flag for 2nd shop owner in same room
 
     ld   a, BANK(sDungenChestContents)
@@ -78,6 +79,10 @@ InitShopState:
     ld   hl, wEntitiesPrivateState2Table
     add  hl, de
     ld   [hl], $10 ; roomstatus mask
+    ld   hl, wEntitiesLoadOrderTable
+    add  hl, de
+    ldh  a, [hLSDTemporary2]
+    ld   [hl], a
 
     pop  hl
     ld   a, [hl+] ; Get shop item type
@@ -118,6 +123,10 @@ InitShopState:
     ld   hl, wEntitiesPrivateState2Table
     add  hl, de
     ld   [hl], $20 ; roomstatus mask
+    ld   hl, wEntitiesLoadOrderTable
+    add  hl, de
+    ldh  a, [hLSDTemporary2]
+    ld   [hl], a
 
     pop  hl
     ld   a, [hl+] ; Get shop item type
@@ -156,9 +165,10 @@ ShopOwnerState:
     ret
 
 ShopItemState:
+    call ShopItemGetRoomStatusAddr
+    ld   a, [hl]
     ld   hl, wEntitiesPrivateState2Table
     add  hl, bc
-    ldh  a, [hRoomStatus]
     and  [hl]
     jp   nz, UnloadEntity
 
@@ -262,10 +272,7 @@ ShopItemState:
     ld   [wSubstractRupeeBufferHigh], a
 
     ; Mark the item as sold
-    ld   a, [wIndoorRoom]
-    ld   d, $00
-    ld   e, a
-    call GetRoomStatusAddressForMapPosition_trampoline
+    call ShopItemGetRoomStatusAddr
     push hl
     pop  de
     ld   hl, wEntitiesPrivateState2Table
@@ -273,7 +280,6 @@ ShopItemState:
     ld   a, [de]
     or   [hl]
     ld   [de], a
-    ld   [hRoomStatus], a
 
     ld   a, $13
     call SpawnNewEntity_trampoline
@@ -288,6 +294,20 @@ ShopItemState:
     ld   [hl], $10 ; Set the default item amount
 
     jp   UnloadEntity
+
+ShopItemGetRoomStatusAddr:
+    ld   hl, wEntitiesLoadOrderTable
+    add  hl, bc
+    ld   a, [hl]
+    and  a, a
+    ld   a, [wIndoorRoom]
+    ld   d, $00
+    if   nz {
+        or a, $40
+    }
+    ld   e, a
+    jp   GetRoomStatusAddressForMapPosition_trampoline
+
 
 bgmapPtrToRight:
     pushpop de {

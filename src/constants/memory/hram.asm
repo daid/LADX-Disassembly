@@ -17,7 +17,9 @@ section "HRAM", HRAM[$ff80]
 hLSDTemporary0:
  ds 1
 hLSDTemporary1:
- ds $0F
+ ds 1
+hLSDTemporary2:
+ ds $0E
 
 ; Beginning of the game-variables section of the HRAM
 hGameValuesSection::
