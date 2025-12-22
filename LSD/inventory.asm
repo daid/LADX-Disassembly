@@ -215,7 +215,7 @@ EntityNoneInventoryDropSprite:
 EntityNoneInventoryDropDualSprite:
     db  $AC, $02, $AC, $22 ; TREASURE_PIECE_OF_HEART
     db  $AA, $14, $AA, $34 ; TREASURE_HEART_CONTAINER
-    db  $04, $43, $04, $03 ; TREASURE_SPIN_POWERUP
+    db  $10, $0D, $12, $0D ; TREASURE_SPIN_POWERUP
 
 EntityInventoryDropSprite2:
     db  $14, $01, $14, $21
