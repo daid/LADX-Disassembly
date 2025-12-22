@@ -511,7 +511,7 @@ jr_003_4A4D:
     ld   a, $0C                                   ;; 03:4A4D $3E $0C
 
 jr_003_4A4F:
-    call SetMusicTrackIfHasSword                  ;; 03:4A4F $CD $95 $49
+    ; LSD: Disable fairy music call SetMusicTrackIfHasSword                  ;; 03:4A4F $CD $95 $49
     ld   de, wEntitiesPosXSignTable               ;; 03:4A52 $11 $20 $C2
     ld   hl, wEntitiesPosXTable                   ;; 03:4A55 $21 $00 $C2
     jp   EntityShiftPosition.shiftBy8             ;; 03:4A58 $C3 $92 $4F
