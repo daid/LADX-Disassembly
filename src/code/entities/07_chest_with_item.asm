@@ -96,8 +96,7 @@ LSD_ChestWithItemEntityHandler_turnIntoInventoryDrop:
 ; Also used when an object is spit out after a Like-like ate it
 ChestWithItemEntityHandler::
     ldh  a, [hActiveEntitySpriteVariant]
-    sub  a, $80
-    jr   nc, LSD_ChestWithItemEntityHandler_turnIntoInventoryDrop
+    jr   LSD_ChestWithItemEntityHandler_turnIntoInventoryDrop
 
     ld   a, $02                                   ;; 07:7BDD $3E $02
     ldh  [hLinkInteractiveMotionBlocked], a       ;; 07:7BDF $E0 $A1

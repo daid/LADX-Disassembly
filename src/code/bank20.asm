@@ -3012,8 +3012,8 @@ InventoryItemTiles::
     db $8F, $7F, $7F ;
     db $A4, $7F, $7F ; INVENTORY_BOOMERANG
     db $A5, $7F, $7F ;
-    db $80, $80, $7F ; INVENTORY_PIECE_OF_POWER
-    db $81, $81, $7F ;
+    db $00, $00, $7F ; INVENTORY_PIECE_OF_POWER
+    db $01, $01, $7F ;
     db $A0, $7F, $7F ; INVENTORY_POTION
     db $A1, $7F, $7F ;
     db $A0, $7F, $7F ; INVENTORY_POTION2

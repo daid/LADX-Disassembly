@@ -5790,6 +5790,14 @@ EnemyCollidedWithSword::
 .finalNightmareForm2Collisions
     call IncrementEntityState                     ;; 03:7001 $CD $12 $3B
     ld   [hl], $06                                ;; 03:7004 $36 $06
+
+    ; LSD TMP: Damage blob form with the sword
+    ld   hl, wEntitiesFlashCountdownTable
+    add  hl, bc
+    ld   [hl], $14
+    call IncrementEntityState
+    ld   [hl], $07
+
     ret                                           ;; 03:7006 $C9
 
 .finalNightmareForm3Collisions::
@@ -6178,7 +6186,7 @@ label_003_71C0:
     cp   $04                                      ;; 03:71FE $FE $04
     jr   nz, .jr_7215                             ;; 03:7200 $20 $13
 
-    ld   a, [wIsRunningWithPegasusBoots]          ;; 03:7202 $FA $4A $C1
+    ld   a, 1 ; LSD TMP: Hit ganon with normal sword attacks [wIsRunningWithPegasusBoots]          ;; 03:7202 $FA $4A $C1
     push af                                       ;; 03:7205 $F5
     call func_003_6DDF                            ;; 03:7206 $CD $DF $6D
     pop  af                                       ;; 03:7209 $F1

@@ -205,6 +205,18 @@ EntityInventoryDropSprite:
     db  $C0, $04 ; INVENTORY_MAP
     db  $C2, $05 ; INVENTORY_COMPASS
 
+EntityNoneInventoryDropSprite:
+    db  $A6, $15 ; INVENTORY_RUPEE_20
+    db  $A6, $15 ; INVENTORY_RUPEE_50
+    db  $A6, $15 ; INVENTORY_RUPEE_100
+    db  $A6, $15 ; INVENTORY_RUPEE_200
+    db  $CA, $17 ; INVENTORY_SMALL_KEY
+
+EntityNoneInventoryDropDualSprite:
+    db  $AC, $02, $AC, $22 ; TREASURE_PIECE_OF_HEART
+    db  $AA, $14, $AA, $34 ; TREASURE_HEART_CONTAINER
+    db  $00, $00, $00, $00 ; TREASURE_SPIN_POWERUP
+
 EntityInventoryDropSprite2:
     db  $14, $01, $14, $21
 
@@ -285,6 +297,10 @@ EntityInventoryDropHandler:
 
 .doPickup:
     ldh  a, [hActiveEntitySpriteVariant]
+    sub  a, $80 ; Check for non-inventory items
+    jp   nc, giveNoneInventoryItem
+
+    ldh  a, [hActiveEntitySpriteVariant]
     call getAmountPtrForInventory
     if   z { ; this item has an amount, so try to stack it.
         ld   hl, wInventoryItems
@@ -325,6 +341,7 @@ EntityInventoryDropHandler:
     }
     ld   [hl], a
 
+.wrapupPickup:
     ld   a, $01 ; JINGLE_TREASURE_FOUND
     ldh  [hJingle], a
 
@@ -360,7 +377,6 @@ EntityInventoryDropHandler:
     xor  a
     ld   [hl], a
     ldh  [rSVBK], a
-
     ret
 
 .StateDoingPickup:
@@ -433,15 +449,71 @@ InventoryAddToGlobalInventoryTable:
 
 DrawInventoryDropSprite:
     ldh  a, [hActiveEntitySpriteVariant]
-    cp   $0E ; INVENTORY_PIECE_OF_POWER
-    if z {
-        ld   de, EntityInventoryDropSprite2 - $0E * 4
-        call RenderActiveEntitySpritesPair
+    cp   $80
+    if nc {
+        cp   $C0
+        if c {
+            ld   de, EntityNoneInventoryDropSprite - $80 * 2
+            call RenderActiveEntitySprite
+        } else {
+            ld   de, EntityNoneInventoryDropDualSprite - $C0 * 4
+            call RenderActiveEntitySpritesPair
+        }
     } else {
-        ld   de, EntityInventoryDropSprite - 2
-        call RenderActiveEntitySprite
+        cp   $0E ; INVENTORY_PIECE_OF_POWER
+        if z {
+            ld   de, EntityInventoryDropSprite2 - $0E * 4
+            call RenderActiveEntitySpritesPair
+        } else {
+            ld   de, EntityInventoryDropSprite - 2
+            call RenderActiveEntitySprite
+        }
     }
     ret
+
+giveNoneInventoryItem:
+    cp   $40
+    jr   nc, .setTwo
+    rst  0
+    dw   .giveRupees20
+    dw   .giveRupees50
+    dw   .giveRupees100
+    dw   .giveRupees200
+    dw   .giveSmallKey
+.setTwo:
+    sub  $40
+    rst  0
+    dw   .pieceOfHeart
+    dw   .heartContainer
+    dw   .spinPowerup
+
+.giveRupees20:
+    ld   de, 20
+    jr   .giveRupees
+.giveRupees50:
+    ld   de, 50
+    jr   .giveRupees
+.giveRupees100:
+    ld   de, 100
+    jr   .giveRupees
+.giveRupees200:
+    ld   de, 200
+.giveRupees:
+    ld   a, [wAddRupeeBufferLow]
+    add  a, e
+    ld   [wAddRupeeBufferLow], a
+    ld   a, [wAddRupeeBufferHigh]
+    adc  a, d
+    ld   [wAddRupeeBufferHigh], a
+    jp   EntityInventoryDropHandler.wrapupPickup
+.giveSmallKey:
+    ld   hl, wSmallKeysCount
+    inc  [hl]
+    jp   EntityInventoryDropHandler.wrapupPickup
+.pieceOfHeart:
+.heartContainer:
+.spinPowerup:
+    jp   EntityInventoryDropHandler.wrapupPickup
 }
 
 #SECTION "UsePieceOfPower", ROMX, BANK[2] {

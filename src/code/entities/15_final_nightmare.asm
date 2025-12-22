@@ -3184,7 +3184,7 @@ func_015_68E7::
     ld   [hl], $00                                ;; 15:68FC $36 $00
     ld   hl, wEntitiesOptions1Table               ;; 15:68FE $21 $30 $C4
     add  hl, bc                                   ;; 15:6901 $09
-    ld   [hl], ENTITY_OPT1_IS_BOSS|ENTITY_OPT1_SWORD_CLINK_OFF ;; 15:6902 $36 $C0
+    ld   [hl], ENTITY_OPT1_IS_BOSS ; LSD TMP |ENTITY_OPT1_SWORD_CLINK_OFF ;; 15:6902 $36 $C0
     call GetEntitySlowTransitionCountdown         ;; 15:6904 $CD $FB $0B
     ld   [hl], $90                                ;; 15:6907 $36 $90
     xor  a                                        ;; 15:6909 $AF
