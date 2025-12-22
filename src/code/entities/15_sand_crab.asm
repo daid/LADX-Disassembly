@@ -1,9 +1,9 @@
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 SandCrabSpriteVariants::
-    db $58, $02
-    db $58, $22
-    db $5A, $02
-    db $5A, $22
+    db $48, $02
+    db $48, $22
+    db $4A, $02
+    db $4A, $22
 
 Data_015_7328::
     db   $10, $F0, $00, $00

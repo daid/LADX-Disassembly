@@ -278,7 +278,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 96 RICHARD_FROG
     db $FF ; 97 DIVE_SPOT
     db $FF ; 98 HORSE_PIECE
-    db $FF ; 99 WATER_TEKTITE
+    db $60 ; 99 WATER_TEKTITE
     db $FF ; 9a FLYING_TILES
     db $91 ; 9b HIDING_GEL
     db $60 ; 9c STAR
@@ -322,14 +322,14 @@ EntitySpriteRequirementsTable:
     db $FF ; c2 MARIN_AT_TAL_TAL_HEIGHTS
     db $FF ; c3 MAMU_AND_FROGS
     db $FF ; c4 WALRUS
-    db $FF ; c5 URCHIN
-    db $FF ; c6 SAND_CRAB
+    db $81 ; c5 URCHIN
+    db $81 ; c6 SAND_CRAB
     db $FF ; c7 MANBO_AND_FISHES
     db $FF ; c8 BUNNY_CALLING_MARIN
     db $FF ; c9 MUSICAL_NOTE
     db $FF ; ca MAD_BATTER
-    db $FF ; cb ZORA
-    db $FF ; cc FISH
+    db $61 ; cb ZORA
+    db $4A ; cc FISH
     db $FF ; cd BANANAS_SCHULE_SALE
     db $FF ; ce MERMAID_STATUE
     db $FF ; cf SEASHELL_MANSION

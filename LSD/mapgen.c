@@ -32,11 +32,15 @@ uint8_t generateRandomMove(uint8_t from);
 uint8_t doMove(uint8_t from, uint8_t dir);
 uint8_t flipDir(uint8_t dir);
 
-const uint8_t random_treasure_list[16] = {
+const uint8_t random_treasure_list[32] = {
     TREASURE_RUPEES_50, TREASURE_RUPEES_20, TREASURE_RUPEES_100, TREASURE_BOMBS,
     TREASURE_RUPEES_50, TREASURE_RUPEES_20, TREASURE_RUPEES_100, TREASURE_BOW,
     TREASURE_RUPEES_50, TREASURE_COMPASS, TREASURE_POTION_2, TREASURE_PIECE_OF_POWER,
     TREASURE_RUPEES_50, TREASURE_POWDER, TREASURE_MAP, TREASURE_POTION_1,
+    TREASURE_PIECE_OF_HEART, TREASURE_PIECE_OF_HEART, TREASURE_PIECE_OF_HEART, TREASURE_PIECE_OF_HEART,
+    TREASURE_RUPEES_50, TREASURE_RUPEES_20, TREASURE_RUPEES_100, TREASURE_SHIELD,
+    TREASURE_PIECE_OF_POWER, TREASURE_POTION_1, TREASURE_POWDER, TREASURE_BOMBS,
+    TREASURE_RUPEES_100, TREASURE_RUPEES_100, TREASURE_RUPEES_200, TREASURE_RUPEES_200
 };
 
 void generateRandomMap(void)
@@ -223,11 +227,11 @@ retry:
         if (randomMapDataID[n]) continue;
         if (rand8() < 64) {
             randomMapDataID[n] = ROOM_TYPE_TREASURE;
-            sDungenChestContents[n] = random_treasure_list[rand8() & 0x0F];
+            sDungenChestContents[n] = random_treasure_list[rand8range(sizeof(random_treasure_list))];
         }
         if ((randomMapDataTmp[n] & 4) && (rand8() < 128)) {
             randomMapDataID[n] = ROOM_TYPE_TREASURE;
-            sDungenChestContents[n] = random_treasure_list[rand8() & 0x0F];
+            sDungenChestContents[n] = random_treasure_list[rand8range(sizeof(random_treasure_list))];
         }
         if (randomMapDataID[n]) continue;
         if (rand8() < 128) {

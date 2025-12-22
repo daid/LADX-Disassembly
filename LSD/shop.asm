@@ -8,14 +8,25 @@ ShopOwnerSprites:
     db   $42, $23, $40, $23
 
 ShopContentsTable:
-    ShopEntry $150, INVENTORY_BOMBS, $300, INVENTORY_BOW
+    ShopEntry $100, INVENTORY_BOMBS, $300, INVENTORY_BOW
     ShopEntry $200, INVENTORY_MAP, $200, INVENTORY_COMPASS
     ShopEntry $120, INVENTORY_POTION, $250, INVENTORY_POTION2
-    ShopEntry $120, INVENTORY_POTION, $150, INVENTORY_BOMBS
+    ShopEntry $120, INVENTORY_POTION, $100, INVENTORY_BOMBS
+
     ShopEntry $250, INVENTORY_POTION2, $500, INVENTORY_PEGASUS_BOOTS
     ShopEntry $120, INVENTORY_POTION, $500, INVENTORY_ROCS_FEATHER
     ShopEntry $150, INVENTORY_BOMBS, $100, INVENTORY_PIECE_OF_POWER
     ShopEntry $150, INVENTORY_BOMBS, $980, INVENTORY_MAGIC_ROD
+
+    ShopEntry $100, INVENTORY_RUPEE_200, $100, INVENTORY_RUPEE_20
+    ShopEntry $100, INVENTORY_RUPEE_20, $100, INVENTORY_RUPEE_200
+    ShopEntry $50, INVENTORY_SMALL_KEY, $150, INVENTORY_PIECE_OF_HEART
+    ShopEntry $150, INVENTORY_PIECE_OF_HEART, $600, INVENTORY_HEART_CONTAINER
+
+    ShopEntry $900, INVENTORY_BOOMERANG, $900, INVENTORY_MAGIC_ROD
+    ShopEntry $50, INVENTORY_MAGIC_POWDER, $50, INVENTORY_BOMBS
+    ShopEntry $50, INVENTORY_PIECE_OF_POWER, $150, INVENTORY_PIECE_OF_HEART
+    ShopEntry $150, INVENTORY_PIECE_OF_HEART, $900, INVENTORY_SPIN_POWERUP
 .end:
 
 LSD_ShopOwnerEntityHandler:
@@ -28,6 +39,11 @@ LSD_ShopOwnerEntityHandler:
 InitShopState:
     call IncrementEntityState
 
+    ld   hl, wEntitiesLoadOrderTable
+    add  hl, bc
+    ld   a, [hl]
+    and  a, 1 ; clear Z flag for 2nd shop owner in same room
+
     ld   a, BANK(sDungenChestContents)
     ld   [$4000], a
     ldh  a, [hMapRoom]
@@ -36,6 +52,9 @@ InitShopState:
     ld   hl, sDungenChestContents
     add  hl, de
     ld   a, [hl]
+    jr   nz, .noSwap ; This depends on the lowest bit of wEntitiesLoadOrderTable entry
+    swap a
+.noSwap:
     and  a, ((ShopContentsTable.end - ShopContentsTable) / 4) - 1
     ld   e, a
     ld   hl, ShopContentsTable

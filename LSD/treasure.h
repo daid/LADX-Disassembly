@@ -1,5 +1,6 @@
 
 #define TREASURE_BOMBS      0x02
+#define TREASURE_SHIELD     0x04
 #define TREASURE_BOW        0x05
 #define TREASURE_MAGIC_ROD  0x07
 #define TREASURE_FEATHER    0x0A

@@ -215,7 +215,7 @@ EntityNoneInventoryDropSprite:
 EntityNoneInventoryDropDualSprite:
     db  $AC, $02, $AC, $22 ; TREASURE_PIECE_OF_HEART
     db  $AA, $14, $AA, $34 ; TREASURE_HEART_CONTAINER
-    db  $00, $00, $00, $00 ; TREASURE_SPIN_POWERUP
+    db  $04, $13, $04, $03 ; TREASURE_SPIN_POWERUP
 
 EntityInventoryDropSprite2:
     db  $14, $01, $14, $21
@@ -511,8 +511,25 @@ giveNoneInventoryItem:
     inc  [hl]
     jp   EntityInventoryDropHandler.wrapupPickup
 .pieceOfHeart:
+    ld   hl, wHeartPiecesCount
+    inc  [hl]
+    ld   a, [hl]
+    cp   4
+    jp   c, EntityInventoryDropHandler.wrapupPickup
+    ld   [hl], 0
 .heartContainer:
+    ld   hl, wMaxHearts
+    cp   $0E
+    jp   nc, EntityInventoryDropHandler.wrapupPickup
+    inc  [hl]
+    ld   hl, wAddHealthBuffer
+    ld   a, [hl]
+    add  a, 8
+    ld   [hl], a
+    jp   EntityInventoryDropHandler.wrapupPickup
 .spinPowerup:
+    ld   a, 1
+    ld   [wCanSwordCharge], a
     jp   EntityInventoryDropHandler.wrapupPickup
 }
 

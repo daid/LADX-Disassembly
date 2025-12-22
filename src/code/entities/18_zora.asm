@@ -4,17 +4,17 @@ ZoraSpriteVariants::
     db $FF, OAM_GBC_PAL_7 | OAMF_PAL1 | OAMF_BANK1 | OAMF_YFLIP | OAMF_XFLIP | OAMF_PRI
     db $FF, OAM_GBC_PAL_7 | OAMF_PAL1 | OAMF_BANK1 | OAMF_YFLIP | OAMF_XFLIP | OAMF_PRI
 .variant1
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_YFLIP | OAMF_XFLIP
 .variant2
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_YFLIP
-    db $54, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_YFLIP
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant3
-    db $56, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $56, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 .variant4
-    db $52, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $52, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 
 ZoraEntityHandler::
     ld   de, ZoraSpriteVariants                   ;; 18:49D4 $11 $C0 $49

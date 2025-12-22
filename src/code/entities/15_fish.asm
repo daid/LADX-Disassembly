@@ -4,20 +4,20 @@ FishSpriteVariants::
     db $FF, $00
     db $FF, $00
 .variant1
-    db $54, $00
-    db $56, $00
+    db $44, $00
+    db $46, $00
 .variant2
-    db $58, $00
-    db $5A, $00
+    db $48, $00
+    db $4A, $00
 .variant3
-    db $56, $20
-    db $54, $20
+    db $46, $20
+    db $44, $20
 .variant4
-    db $5A, $20
-    db $58, $20
+    db $4A, $20
+    db $48, $20
 
 Data_015_44B3::
-    db   $5C, $00, $5C, $20, $5E, $00, $5E, $00
+    db   $4C, $00, $4C, $20, $4E, $00, $4E, $00
 
 FishEntityHandler::
     ldh  a, [hActiveEntitySpriteVariant]          ;; 15:44BB $F0 $F1
