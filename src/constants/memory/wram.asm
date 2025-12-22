@@ -3141,8 +3141,12 @@ wDungeonDepth:
   ds 1
 wCanSwordCharge:
   ds 1
+wMagicRodAmount:
+  ds 1
+wMaxMagicRod:
+  ds 1
 
-  ds $2B
+  ds $29
 
 ; TODO comment
 wPowerBraceletLevel::

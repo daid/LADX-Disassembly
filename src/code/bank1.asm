@@ -62,7 +62,7 @@ InitSaveFiles::
     ; write a default save file with everything unlocked
     ld   a, [ROM_DebugTool1]                      ;; 01:46BC $FA $03 $00
     and  a                                        ;; 01:46BF $A7
-    jp   z, .return                               ;; 01:46C0 $CA $93 $47
+    jp   .return                               ;; 01:46C0 $CA $93 $47
 
     ld   e, $00                                   ;; 01:46C3 $1E $00
     ld   d, $00                                   ;; 01:46C5 $16 $00
@@ -436,6 +436,7 @@ jr_001_531D::
     ld   [wMaxBombs], a                           ;; 01:539B $EA $77 $DB
     ld   a, $20                                   ;; 01:539E $3E $20
     ld   [wMaxMagicPowder], a                     ;; 01:53A0 $EA $76 $DB
+    ld   [wMaxMagicRod], a
     ld   a, ROOM_INDOOR_B_MARIN_HOUSE             ;; 01:53A3 $3E $A3
     ld   [wMapEntranceRoom], a                    ;; 01:53A5 $EA $9C $DB
     ldh  [hMapRoom], a                            ;; 01:53A8 $E0 $F6

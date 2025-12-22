@@ -2771,6 +2771,9 @@ AdjustInventoryTilesForLevelsAndCounts::
     cp   INVENTORY_MAGIC_POWDER                   ;; 20:5B4F $FE $0C
     jr   z, jr_020_5B80                           ;; 20:5B51 $28 $2D
 
+    cp   INVENTORY_MAGIC_ROD
+    jr   z, drawMagicRodAmount
+
     dec  a                                        ;; 20:5B53 $3D
     jr   z, jr_020_5B73                           ;; 20:5B54 $28 $1D
 
@@ -2824,6 +2827,10 @@ jr_020_5B80:
 
     ld   a, [wMagicPowderCount]                   ;; 20:5B86 $FA $4C $DB
     jr   func_020_5BA8                            ;; 20:5B89 $18 $1D
+
+drawMagicRodAmount:
+    ld   a, [wMagicRodAmount]
+    jr   func_020_5BA8
 
 jr_020_5B8B:
     ld   a, [wOcarinaSongFlags]                   ;; 20:5B8B $FA $49 $DB

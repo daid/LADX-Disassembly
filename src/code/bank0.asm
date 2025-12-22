@@ -1648,6 +1648,13 @@ UseItem::
     cp   $02                                      ;; 00:12E4 $FE $02
     jr   nc, .return                              ;; 00:12E6 $30 $05
 
+    ld   a, [wMagicRodAmount]
+    and  a
+    jp   z, PlayWrongAnswerJingle
+    sub  a, $01
+    daa
+    ld   [wMagicRodAmount], a
+
     ld   a, $0E | ATTACK_STEP_ITEM_MAGIC_ROD      ;; 00:12E8 $3E $8E
     ld   [wLinkAttackStepAnimationCountdown], a   ;; 00:12EA $EA $9B $C1
 

@@ -156,21 +156,25 @@ LSD_LoadGlobalFloorItems:
 getAmountPtrForInventory:
     ld   hl, wBombCount
     ld   de, wMaxBombs
-    cp   $02 ; INVENTORY_BOMBS
+    cp   INVENTORY_BOMBS
     ret  z
     ld   hl, wArrowCount
     ld   de, wMaxArrows
-    cp   $05 ; INVENTORY_BOW
+    cp   INVENTORY_BOW
     ret  z
     ld   hl, wMagicPowderCount
     ld   de, wMaxMagicPowder
-    cp   $0C ; INVENTORY_MAGIC_POWDER
+    cp   INVENTORY_MAGIC_POWDER
+    ret  z
+    ld   hl, wMagicRodAmount
+    ld   de, wMaxMagicRod
+    cp   INVENTORY_MAGIC_ROD
     ret  z
     ld   hl, wColorDungeonItemFlags ; per default use some dummy location
     ld   de, wColorDungeonItemFlags
-    cp   $11 ; INVENTORY_MAP, merge multiple into one.
+    cp   INVENTORY_MAP ; merge multiple into one.
     ret  z
-    cp   $12 ; INVENTORY_COMPASS, merge multiple into one.
+    cp   INVENTORY_COMPASS ; merge multiple into one.
     ret  z
     ret
 }
