@@ -1637,6 +1637,7 @@ UseItem::
     dw   UsePotion2
     dw   .return
     dw   .return
+    dw   UseFairyBottle
 
 .useMagicRod
     ld   hl, wSwordAnimationState                 ;; 00:12D8 $21 $37 $C1

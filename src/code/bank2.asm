@@ -5137,64 +5137,30 @@ UpdateHealth:
     ret                                           ;; 02:63A2 $C9
 
 .noHealth:
-    ; return if player has no medicine
-    ld   a, [wHasMedicine]                        ;; 02:63A3 $FA $0D $DB
-    and  a                                        ;; 02:63A6 $A7
-    jr   z, .return                               ;; 02:63A7 $28 $55
-    ; consume one medicine
-    dec  a                                        ;; 02:63A9 $3D
-    ld   [wHasMedicine], a                        ;; 02:63AA $EA $0D $DB
+    ; LSD: Check if we have a fairy in a bottle
+    ld   hl, wInventoryItems
+    ld   e, $0C
+.searchFairyLoop:
+    ld   a, [hl]
+    cp   INVENTORY_FAIRY_BOTTLE
+    jr   z, .fairyFound
+    inc  hl
+    dec  e
+    jr   nz, .searchFairyLoop
+    ret
+.fairyFound:
+    ld   [hl], 0
+
     ; add one heart to the $wHealth
     ld   a, ONE_HEART                             ;; 02:63AD $3E $08
     ld   [wHealth], a                             ;; 02:63AF $EA $5A $DB
-    ; add 16 hearts to the wAddHealthBuffer
+    ; add 5 hearts to the wAddHealthBuffer
     ld   a, [wAddHealthBuffer]                    ;; 02:63B2 $FA $93 $DB
-    add  ONE_HEART*16                             ;; 02:63B5 $C6 $80
+    add  ONE_HEART*5                              ;; 02:63B5 $C6 $80
     ld   [wAddHealthBuffer], a                    ;; 02:63B7 $EA $93 $DB
     ; make player invincible so no damage can be taken some time
     ld   a, DAMAGE_COOLDOWN_TIME                  ;; 02:63BA $3E $A0
     ld   [wInvincibilityCounter], a               ;; 02:63BC $EA $C7 $DB
-    ; TODO: comment what is going one here
-    ld   a, [wDrawCommandsSize]                   ;; 02:63BF $FA $00 $D6
-    ld   e, a                                     ;; 02:63C2 $5F
-    ld   d, $00                                   ;; 02:63C3 $16 $00
-    add  $04                                      ;; 02:63C5 $C6 $04
-    ld   [wDrawCommandsSize], a                   ;; 02:63C7 $EA $00 $D6
-    ld   hl, wDrawCommand                             ; POI: Updates (old) medicine counter on the subscreen
-    add  hl, de                                   ;; 02:63CD $19
-    ld   a, $9C                                   ;; 02:63CE $3E $9C
-    ld   [hl+], a                                 ;; 02:63D0 $22
-    ld   a, $93                                   ;; 02:63D1 $3E $93
-    ld   [hl+], a                                 ;; 02:63D3 $22
-    ld   a, $00                                   ;; 02:63D4 $3E $00
-    ld   [hl+], a                                 ;; 02:63D6 $22
-    ld   a, [wHasMedicine]                        ;; 02:63D7 $FA $0D $DB
-    add  $B0                                      ;; 02:63DA $C6 $B0
-    cp   $B0                                      ;; 02:63DC $FE $B0
-    jr   z, .jr_002_63E4                          ;; 02:63DE $28 $04
-
-    ld   [hl+], a                                 ;; 02:63E0 $22
-    xor  a                                        ;; 02:63E1 $AF
-    ld   [hl], a                                  ;; 02:63E2 $77
-    ret                                           ;; 02:63E3 $C9
-
-.jr_002_63E4
-    ld   a, $7F                                   ;; 02:63E4 $3E $7F
-    ld   [hl+], a                                 ;; 02:63E6 $22
-    ld   a, $9C                                   ;; 02:63E7 $3E $9C
-    ld   [hl+], a                                 ;; 02:63E9 $22
-    ld   a, $72                                   ;; 02:63EA $3E $72
-    ld   [hl+], a                                 ;; 02:63EC $22
-    ld   a, $C1                                   ;; 02:63ED $3E $C1
-    ld   [hl+], a                                 ;; 02:63EF $22
-    ld   a, $7F                                   ;; 02:63F0 $3E $7F
-    ld   [hl+], a                                 ;; 02:63F2 $22
-    xor  a                                        ;; 02:63F3 $AF
-    ld   [hl], a                                  ;; 02:63F4 $77
-    ld   a, [wDrawCommandsSize]                   ;; 02:63F5 $FA $00 $D6
-    add  $04                                      ;; 02:63F8 $C6 $04
-    ld   [wDrawCommandsSize], a                   ;; 02:63FA $EA $00 $D6
-    ret                                           ;; 02:63FD $C9
 
 .return:
     ret                                           ;; 02:63FE $C9

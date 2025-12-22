@@ -12,6 +12,7 @@
 #define TREASURE_POTION_2        0x10
 #define TREASURE_MAP             0x11
 #define TREASURE_COMPASS         0x12
+#define TREASURE_FAIRY_BOTTLE    0x13
 
 #define TREASURE_RUPEES_20  0x80
 #define TREASURE_RUPEES_50  0x81

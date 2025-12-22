@@ -2987,6 +2987,8 @@ InventoryItemPaletteIndexes::
     db  $03, $01
     db  $01, $01 ; INVENTORY_COMPASS
     db  $01, $01
+    db  $0B, $0B ; INVENTORY_FAIRY_BOTTLE
+    db  $0B, $0B
 
 InventoryItemTiles::
     ; Tiles used for the inventory items.
@@ -3029,6 +3031,8 @@ InventoryItemTiles::
     db $C1, $7F, $7F ;
     db $C2, $7F, $7F ; INVENTORY_COMPASS
     db $C3, $7F, $7F ;
+    db $80, $82, $7F ; INVENTORY_FAIRY_BOTTLE
+    db $81, $83, $7F ;
 
 
 InventoryTileMapPositions::

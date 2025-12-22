@@ -208,6 +208,7 @@ EntityInventoryDropSprite:
     db  $A0, $04 ; INVENTORY_POTION2
     db  $C0, $04 ; INVENTORY_MAP
     db  $C2, $05 ; INVENTORY_COMPASS
+    db  $00, $00 ; INVENTORY_FAIRY_BOTTLE
 
 EntityNoneInventoryDropSprite:
     db  $A6, $15 ; INVENTORY_RUPEE_20
@@ -222,7 +223,8 @@ EntityNoneInventoryDropDualSprite:
     db  $10, $0D, $12, $0D ; TREASURE_SPIN_POWERUP
 
 EntityInventoryDropSprite2:
-    db  $14, $01, $14, $21
+    db  $14, $01, $14, $21 ; INVENTORY_PIECE_OF_POWER
+    db  $80, $0C, $82, $0C ; INVENTORY_FAIRY_BOTTLE
 
 EntityInventoryDropHandler:
     call DrawInventoryDropSprite
@@ -454,26 +456,30 @@ InventoryAddToGlobalInventoryTable:
 DrawInventoryDropSprite:
     ldh  a, [hActiveEntitySpriteVariant]
     cp   $80
-    if nc {
-        cp   $C0
-        if c {
-            ld   de, EntityNoneInventoryDropSprite - $80 * 2
-            call RenderActiveEntitySprite
-        } else {
-            ld   de, EntityNoneInventoryDropDualSprite - $C0 * 4
-            call RenderActiveEntitySpritesPair
-        }
-    } else {
-        cp   $0E ; INVENTORY_PIECE_OF_POWER
-        if z {
-            ld   de, EntityInventoryDropSprite2 - $0E * 4
-            call RenderActiveEntitySpritesPair
-        } else {
-            ld   de, EntityInventoryDropSprite - 2
-            call RenderActiveEntitySprite
-        }
-    }
-    ret
+    jr   nc, .noneInventory
+    cp   INVENTORY_PIECE_OF_POWER
+    jr   z, .pieceOfPower
+    cp   INVENTORY_FAIRY_BOTTLE
+    jr   z, .fairyBottle
+    ; default
+    ld   de, EntityInventoryDropSprite - 2
+    jp RenderActiveEntitySprite
+
+.pieceOfPower:
+    ld   de, EntityInventoryDropSprite2 - INVENTORY_PIECE_OF_POWER * 4
+    jp   RenderActiveEntitySpritesPair
+.fairyBottle:
+    ld   de, EntityInventoryDropSprite2 - INVENTORY_FAIRY_BOTTLE * 4 + 4
+    jp   RenderActiveEntitySpritesPair
+
+.noneInventory:
+    cp   $C0
+    jr   nc, .noneInventoryDual
+    ld   de, EntityNoneInventoryDropDualSprite - $C0 * 4
+    jp   RenderActiveEntitySpritesPair
+.noneInventoryDual:
+    ld   de, EntityNoneInventoryDropSprite - $80 * 2
+    jp   RenderActiveEntitySprite
 
 giveNoneInventoryItem:
     cp   $40
@@ -576,6 +582,15 @@ UsePotion2:
     ld   hl, wAddHealthBuffer
     ld   a, [hl]
     add  a, 8 * 4 ; health 4 hearts
+    ld   [hl], a
+    ret
+
+UseFairyBottle:
+    call GetUsedItemSlot
+    ld   [hl], 0
+    ld   hl, wAddHealthBuffer
+    ld   a, [hl]
+    add  a, 8 * 6 ; health 6 hearts
     ld   [hl], a
     ret
 
