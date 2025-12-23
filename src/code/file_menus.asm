@@ -690,6 +690,9 @@ ENDC
     ld   e, NAME_LENGTH                           ;; 01:4B03 $1E $05
 .loop
     call EnableSRAM                               ;; 01:4B05 $CD $D0 $27
+    ;LSD On a new save, disable seed locking
+    xor  a
+    ld   [sRandStateLocked], a
     ld   a, [hli]                                 ;; 01:4B08 $2A
     ld   [bc], a                                  ;; 01:4B09 $02
     inc  bc                                       ;; 01:4B0A $03

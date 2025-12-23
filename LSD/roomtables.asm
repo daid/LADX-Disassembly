@@ -61,13 +61,17 @@ IndoorsBEntitiesPointersTable:
         dw sDynamicEntityData + n * $80
     }
     #FOR n, 64, $100 {
-        dw NoEntities
+        dw StartRoomEntities
     }
 ColorDungeonEntitiesPointersTable:
     #FOR n, 0, $20 {
         dw NoEntities
     }
 NoEntities:
+    db   $FF
+
+StartRoomEntities:
+    db   $28, $95 ; SEED object
     db   $FF
 }
 

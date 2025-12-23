@@ -54,3 +54,5 @@ SaveGame3:
 
 sRandState:
     ds 4
+sRandStateLocked:
+    ds 1

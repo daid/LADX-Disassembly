@@ -478,8 +478,8 @@ include "data/object_attributes/overworld_c.asm"
 include "code/bank27.asm"
 
 section "bank28",romx[$4000],bank[$28]
-include "code/photo_album.asm"
-include "data/photo_album/background.asm"
+;include "code/photo_album.asm"
+;include "data/photo_album/background.asm"
 
 section "bank29",romx[$4000],bank[$29]
 PhotoNiceLinkTiles:
@@ -711,10 +711,11 @@ incbin "gfx/menus/print.2bpp"
 section "bank35",romx[$4000],bank[$35]
 ColorDungeonNpcTiles::
 incbin "gfx/characters/oam_color_dungeon.2bpp"
-PrintUI1Tiles::
-incbin "gfx/photos/print_ui_1.2bpp"
-PrintUI2Tiles::
-incbin "gfx/photos/print_ui_2.2bpp"
+; PrintUI1Tiles::
+; incbin "gfx/photos/print_ui_1.2bpp"
+; PrintUI2Tiles::
+; incbin "gfx/photos/print_ui_2.2bpp"
+section "bank35_6000",romx[$6000],bank[$35]
 ColorDungeonTiles::
 incbin "gfx/dungeons/color_dungeon.2bpp"
 CameraShopIndoorTiles::

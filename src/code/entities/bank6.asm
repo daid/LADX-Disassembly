@@ -2,7 +2,7 @@
 ; This file was created with mgbdis v1.3 - Game Boy ROM disassembler by Matt Currie.
 ; https://github.com/mattcurrie/mgbdis
 
-include "code/entities/06_richard.asm"
+; LSD include "code/entities/06_richard.asm"
 include "code/entities/06_mad_bomber.asm"
 include "code/entities/06_anti_kirby.asm"
 include "code/entities/06_smasher.asm"

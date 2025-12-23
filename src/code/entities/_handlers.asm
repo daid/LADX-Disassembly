@@ -162,7 +162,7 @@ EntityHandlersTable::
 ._92 far_pointer SmasherEntityHandler
 ._93 far_pointer MadBomberEntityHandler
 ._94 far_pointer KanaletBombableWallEntityHandler ; $94
-._95 far_pointer RichardEntityHandler
+._95 far_pointer LSD_SeedEntityHandler ;RichardEntityHandler
 ._96 far_pointer RichardFrogEntityHandler
 ._97 far_pointer DivableWaterEntityHandler
 ._98 far_pointer HorsePieceEntityHandler ; $98
@@ -441,7 +441,7 @@ EntityInitHandlersTable::
 ._92 dw   EntityInitNoop
 ._93 dw   EntityInitNoop
 ._94 dw   EntityInitNoop
-._95 dw   EntityInitRichard
+._95 dw   EntityInitNoop ;=SEED EntityInitRichard
 ._96 dw   EntityInitNoop
 ._97 dw   EntityInitNoop
 ._98 dw   EntityInitHorsePiece

@@ -475,11 +475,11 @@ DrawInventoryDropSprite:
 .noneInventory:
     cp   $C0
     jr   nc, .noneInventoryDual
-    ld   de, EntityNoneInventoryDropDualSprite - $C0 * 4
-    jp   RenderActiveEntitySpritesPair
-.noneInventoryDual:
     ld   de, EntityNoneInventoryDropSprite - $80 * 2
     jp   RenderActiveEntitySprite
+.noneInventoryDual:
+    ld   de, EntityNoneInventoryDropDualSprite - $C0 * 4
+    jp   RenderActiveEntitySpritesPair
 
 giveNoneInventoryItem:
     cp   $40

@@ -127,7 +127,7 @@ InterruptLCDStatus::
 
 InterruptSerial::
     push af                                       ;; 00:0408 $F5
-    callsb PrinterInterruptSerial                 ;; 00:0409 $3E $28 $EA $00 $21 $CD $01 $46
+    ; callsb PrinterInterruptSerial                 ;; 00:0409 $3E $28 $EA $00 $21 $CD $01 $46
     ld   a, [wCurrentBank]                        ;; 00:0411 $FA $AF $DB
     ld   [rSelectROMBank], a                      ;; 00:0414 $EA $00 $21
     pop  af                                       ;; 00:0417 $F1
@@ -462,7 +462,7 @@ PhotoAlbumVBlankHandler::
     ld   [wDrawCommandVRAM1], a                   ;; 00:05A8 $EA $91 $DC
 
 .clearBGTilesFlag
-    callsw PrinterInterruptVBlank                 ;; 00:05AB $3E $28 $CD $0C $08 $CD $16 $46
+    ; callsw PrinterInterruptVBlank                 ;; 00:05AB $3E $28 $CD $0C $08 $CD $16 $46
     pop  af                                       ;; 00:05B3 $F1
     ld   [wCurrentBank], a                        ;; 00:05B4 $EA $AF $DB
     ld   [rSelectROMBank], a                      ;; 00:05B7 $EA $00 $21

@@ -1,10 +1,6 @@
 Dialog000:: ; Tarin
-    db "Whoa, boy! Where"
-    db "ya off to in    "
-    db "such a hurry?   "
-    db "Set a spell, I  "
-    db "got somethin' ta"
-    db "tell ya!@"
+    db "Seed:           "
+    db "AABBCCDD@"
 
 Dialog001:: ; Marin
     db "What a relief! I"

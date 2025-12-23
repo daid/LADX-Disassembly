@@ -105,7 +105,12 @@ LSD_randSRAM:
         ld  [de], a
         inc de
     }
+    ld   a, [sRandStateLocked]
+    and  a, a
+    ret  nz ; If the rand state is locked, skip cycling it.
+
     call _rand8
+LSD_CopyRandStateToSRAM:
     ld   de, sRandState
     ld   hl, wRandState
     loop c, 4 {

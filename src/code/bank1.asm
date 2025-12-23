@@ -466,6 +466,7 @@ jr_001_531D::
     ld   [wSwordLevel], a
     ;ld   a, $0E
     ;ld   [hl+], a
+    inc  hl
     ld   a, $0F
     ld   [hl+], a
     ;ld   a, $10

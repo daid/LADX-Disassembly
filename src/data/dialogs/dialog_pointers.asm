@@ -1,6 +1,7 @@
 DialogPointerTable::
 ; dialog_1.asm starts here
-    dialog_pointer Dialog000
+Dialog000_IdxOffset:: ; dialog000 replaced with a pointer to WRAM
+    dw             wMessageBuffer
     dialog_pointer Dialog001
     dialog_pointer Dialog002
     dialog_pointer Dialog003

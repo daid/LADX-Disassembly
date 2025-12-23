@@ -1279,7 +1279,7 @@ InventoryHandler::
     jpsw InventoryEntryPoint                      ;; 00:0F2D $3E $20 $CD $0C $08 $C3 $04 $59
 
 PhotoAlbumHandler::
-    callsw PhotoAlbumEntryPoint                   ;; 00:0F35 $3E $28 $CD $0C $08 $CD $00 $40
+    ; callsw PhotoAlbumEntryPoint                   ;; 00:0F35 $3E $28 $CD $0C $08 $CD $00 $40
     jp   returnFromGameplayHandler                ;; 00:0F3D $C3 $1A $10
 
 PhotoPictureHandler::

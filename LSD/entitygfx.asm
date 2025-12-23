@@ -274,7 +274,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 92 SMASHER
     db $FF ; 93 MAD_BOMBER
     db $FF ; 94 KANALET_BOMBABLE_WALL
-    db $FF ; 95 RICHARD
+    db $12 ; 95 RICHARD = SEED
     db $FF ; 96 RICHARD_FROG
     db $FF ; 97 DIVE_SPOT
     db $FF ; 98 HORSE_PIECE
