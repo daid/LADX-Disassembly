@@ -146,9 +146,9 @@ EntitySpriteRequirementsTable:
     db $FF ; 12 GHINI
     db $FF ; 13 BROKEN_HEART_CONTAINER
     db $7C ; 14 MOBLIN_SWORD
-    db $FF ; 15 ANTI_FAIRY
-    db $FF ; 16 SPARK_COUNTER_CLOCKWISE
-    db $FF ; 17 SPARK_CLOCKWISE
+    db $91 ; 15 ANTI_FAIRY
+    db $91 ; 16 SPARK_COUNTER_CLOCKWISE
+    db $91 ; 17 SPARK_CLOCKWISE
     db $93 ; 18 POLS_VOICE
     db $90 ; 19 KEESE
     db $77 ; 1a STALFOS_AGGRESSIVE
@@ -164,12 +164,12 @@ EntitySpriteRequirementsTable:
     db $FF ; 24 IRON_MASK
     db $FF ; 25 SMALL_EXPLOSION_ENEMY
     db $FF ; 26 SMALL_EXPLOSION_ENEMY_2
-    db $FF ; 27 SPIKE_TRAP
+    db $91 ; 27 SPIKE_TRAP
     db $FF ; 28 MIMIC
     db $98 ; 29 MINI_MOLDORM
-    db $FF ; 2a LASER
+    db $99 ; 2a LASER
     db $FF ; 2b LASER_BEAM
-    db $FF ; 2c SPIKED_BEETLE
+    db $9B ; 2c SPIKED_BEETLE
     db $FF ; 2d DROPPABLE_HEART
     db $FF ; 2e DROPPABLE_RUPEE
     db $FF ; 2f DROPPABLE_FAIRY
@@ -302,7 +302,7 @@ EntitySpriteRequirementsTable:
     db $E3 ; ae WINGED_OCTOROK
     db $FF ; af TRADING_ITEM
     db $FF ; b0 PINCER
-    db $FF ; b1 HOLE_FILLER
+    db $7B ; b1 HOLE_FILLER
     db $8C ; b2 BEETLE_SPAWNER
     db $FF ; b3 HONEYCOMB
     db $FF ; b4 TARIN

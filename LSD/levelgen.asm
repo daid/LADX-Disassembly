@@ -33,6 +33,13 @@ LSD_GenerateMap:
     ld   [$4000], a
     call _generateRandomMap ; call our C function to randomly generate the map layout
     call _buildRandomRoomData ; then call into our function to generate the actual room layouts.
+    
+    ; Clear the wRoomObjects table, certain parts expect the out-of-bounds areas to be clear
+    ld   hl, wRoomObjects
+    xor  a
+    loop c, 0 {
+      ld   [hl+], a
+    }
 
     ; Clear wGlobalInventoryTable
     ld   a, BANK(wGlobalInventoryTable)

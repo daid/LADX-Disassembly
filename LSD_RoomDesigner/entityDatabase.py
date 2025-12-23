@@ -143,7 +143,7 @@ entities_list = [
     {'id': 0xAE, 'tiles': [0, 0, (0x2C, 0x220), (0x2C, 0x220)], 'attr': [2, 34, 0, 32]},  # WINGED_OCTOROK
     {'id': 0xAF},  # TRADING_ITEM
     {'id': 0xB0, 'tiles': [0, 0], 'attr': [2, 34]},  # PINCER
-    # {'id': 0xB1, 'tiles': [0, 0], 'attr': [2, 34]},  # HOLE_FILLER
+    {'id': 0xB1, 'tiles': [0, 0], 'attr': [2, 34]},  # HOLE_FILLER
     {'id': 0xB2, 'tiles': [0, 1], 'attr': [1, 1]},  # BEETLE_SPAWNER
     # {'id': 0xB3, 'tiles': [0, 0], 'attr': [1, 33]},  # HONEYCOMB
     # {'id': 0xB4, 'tiles': [0, 1], 'attr': [2, 2]},  # TARIN

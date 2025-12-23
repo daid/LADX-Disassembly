@@ -2,36 +2,36 @@
 LaserSpriteVariants::
 ; Down
 .variant0
-    db $70, OAM_GBC_PAL_3 | OAMF_PAL0
-    db $70, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
 ; Down-left
 .variant1
-    db $78, OAM_GBC_PAL_3 | OAMF_PAL0
-    db $7A, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $48, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $4A, OAM_GBC_PAL_3 | OAMF_PAL0
 ; Left
 .variant2
-    db $74, OAM_GBC_PAL_3 | OAMF_PAL0
-    db $76, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_3 | OAMF_PAL0
 ; Up-left
 .variant3
-    db $7C, OAM_GBC_PAL_3 | OAMF_PAL0
-    db $7E, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $4C, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $4E, OAM_GBC_PAL_3 | OAMF_PAL0
 ; Up
 .variant4
-    db $72, OAM_GBC_PAL_3 | OAMF_PAL0
-    db $72, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_3 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
 ; Up-right
 .variant5
-    db $7E, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
-    db $7C, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $4E, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $4C, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
 ; Right
 .variant6
-    db $76, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
-    db $74, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
 ; Down-right
 .variant7
-    db $7A, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
-    db $78, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $4A, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_3 | OAMF_PAL0 | OAMF_XFLIP
 
 ; Approximately 0x10 * cos(pi/8 * index)
 LaserLinkSensorYSpeeds::

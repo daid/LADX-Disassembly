@@ -1,32 +1,32 @@
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 SpikedBeetle1SpriteVariants:: ;; 07:7784
 .variant0
-    db $70, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $70, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $72, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $72, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant2
-    db $74, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $74, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant3
-    db $76, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $76, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 SpikedBeetle2SpriteVariants::
 .variant0
-    db $60, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $60, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant1
-    db $62, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $62, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant2
-    db $64, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $64, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 .variant3
-    db $66, OAM_GBC_PAL_0 | OAMF_PAL0
-    db $66, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_0 | OAMF_PAL0 | OAMF_XFLIP
 
 SpikedBeetleEntityHandler::
     ld   de, SpikedBeetle1SpriteVariants          ;; 07:77A4 $11 $84 $77

@@ -6,7 +6,7 @@ _RandomRoomDataTable:
   dw RandomRoomDataTable1
   db 1
   dw RandomRoomDataTable2
-  db 4
+  db 6
   dw RandomRoomDataTable3
   db 3
   dw RandomRoomDataTable4
@@ -28,6 +28,8 @@ RandomRoomDataTable3:
   dw random_room_7 ; Treasure Ledge
   dw random_room_9 ; Treasure 2
   dw random_room_11 ; Treasure Kill Room
+  dw random_room_16 ; Treasure Block Push
+  dw random_room_17 ; Hole Filler Treasure
 RandomRoomDataTable4:
   dw random_room_12 ; Big Fairy
   dw random_room_13 ; Shop 1
@@ -788,4 +790,88 @@ random_room_15_entity_set_4:
   db $26, $A0
   db $46, $CB
   db $33, $CB
+random_room_16: ; Treasure Block Push
+  db $00, $00 ; allowed filter
+  db $67 ; event
+  ; Primary data
+  db 10, $04, $0D, $28, $A1, $84, $33, $A7, $82, $34, $0F
+  ; Variations
+  db 4
+  db $80
+  dw random_room_16_variation_0
+  db $80
+  dw random_room_16_variation_1
+  db $80
+  dw random_room_16_variation_2
+  db $80
+  dw random_room_16_variation_3
+  ; Entity sets
+  db 3
+  db $00, $FF
+  dw random_room_16_entity_set_0
+  db $02, $FF
+  dw random_room_16_entity_set_1
+  db $04, $FF
+  dw random_room_16_entity_set_2
+random_room_16_variation_0:
+  db 6, $C2, $43, $A6, $C2, $46, $A6
+random_room_16_variation_1:
+  db 4, $18, $20, $61, $20
+random_room_16_variation_2:
+  db 6, $C2, $44, $DF, $C2, $45, $DF
+random_room_16_variation_3:
+  db 12, $C2, $11, $DF, $12, $DF, $17, $DF, $C2, $58, $DF, $67, $DF
+random_room_16_entity_set_0:
+  db 4
+  db $23, $17
+  db $26, $17
+random_room_16_entity_set_1:
+  db 6
+  db $23, $16
+  db $26, $17
+  db $68, $17
+random_room_16_entity_set_2:
+  db 8
+  db $44, $15
+  db $24, $9B
+  db $45, $9B
+  db $25, $15
+random_room_17: ; Hole Filler Treasure
+  db $00, $00 ; allowed filter
+  db $6E ; event
+  ; Primary data
+  db 26, $04, $0D, $82, $22, $AF, $82, $26, $AF, $28, $A1, $32, $B0, $C2, $33, $01, $C2, $36, $01, $37, $B0, $84, $53, $B0, $82, $54, $AE
+  ; Variations
+  db 6
+  db $80
+  dw random_room_17_variation_0
+  db $80
+  dw random_room_17_variation_1
+  db $80
+  dw random_room_17_variation_2
+  db $80
+  dw random_room_17_variation_3
+  db $80
+  dw random_room_17_variation_4
+  db $80
+  dw random_room_17_variation_5
+  ; Entity sets
+  db 1
+  db $00, $FF
+  dw random_room_17_entity_set_0
+random_room_17_variation_0:
+  db 4, $24, $AF, $34, $B0
+random_room_17_variation_1:
+  db 4, $25, $AF, $35, $B0
+random_room_17_variation_2:
+  db 6, $82, $44, $AF, $82, $54, $B0
+random_room_17_variation_3:
+  db 5, $C2, $37, $01, $57, $B0
+random_room_17_variation_4:
+  db 8, $03, $C7, $06, $C7, $73, $C8, $76, $C8
+random_room_17_variation_5:
+  db 8, $20, $C9, $29, $CA, $50, $C9, $59, $CA
+random_room_17_entity_set_0:
+  db 2
+  db $42, $B1
 }
