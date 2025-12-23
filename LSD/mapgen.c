@@ -218,6 +218,14 @@ retry:
                     randomMapDataFlags[n - 8] &=~ROOM_DOOR_DOWN;
                     randomMapDataFlags[n - 8] |= ROOM_LOCK_DOWN;
                 }
+
+                if (rand8() < 128) {
+                    randomMapDataID[n] = ROOM_TYPE_TREASURE;
+                    sDungenChestContents[n] = random_treasure_list[rand8range(sizeof(random_treasure_list))];
+                } else {
+                    randomMapDataID[n] = ROOM_TYPE_SPECIAL;
+                    sDungenChestContents[n] = rand8();
+                }
             }
         }
     }
@@ -235,7 +243,7 @@ retry:
             sDungenChestContents[n] = random_treasure_list[rand8range(sizeof(random_treasure_list))];
         }
         if (randomMapDataID[n]) continue;
-        if (rand8() < 128) {
+        if (rand8() < 64) {
             // Mark room as a special room.
             randomMapDataID[n] = ROOM_TYPE_SPECIAL;
             sDungenChestContents[n] = rand8();
