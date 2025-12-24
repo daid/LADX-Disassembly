@@ -57,12 +57,12 @@ LoadPieceOfHeartMeterTiles2::
 
 ; Restore the tiles that were overwritten by the Piece-of-Hearts meter.
 ClearPieceOfHeartMeterTiles1::
-    ld   hl, InventoryEquipmentItemsTiles + $1D0
+    ld   hl, InventoryEquipmentItemsTilesGBC + $1D0
     ld   de, vTiles1 + $1D0
     jr   CopyTilesToPieceOfHeartMeter
 
 ClearPieceOfHeartMeterTiles2::
-    ld   hl, InventoryEquipmentItemsTiles + $1A0
+    ld   hl, InventoryEquipmentItemsTilesGBC + $1A0
     ld   de, vTiles1 + $1A0
 
 ; Copy 3 tiles to VRAM,

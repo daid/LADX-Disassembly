@@ -1909,65 +1909,24 @@ func_020_54F5::
     cp   LINK_ANIMATION_STATE_HIDDEN              ;; 20:54F7 $FE $FF
     ret  z                                        ;; 20:54F9 $C8
 
-    ; Read the first byte in LinkAnimationStateTable
-    ld   hl, LinkAnimationStateTable              ;; 20:54FA $21 $19 $53
-    sla  a                                        ;; 20:54FD $CB $27
-    ld   c, a                                     ;; 20:54FF $4F
-    ld   b, $00                                   ;; 20:5500 $06 $00
-    add  hl, bc                                   ;; 20:5502 $09
-    ld   e, [hl]                                  ;; 20:5503 $5E
-    push hl                                       ;; 20:5504 $E5
+    ;LSD
+    ld   b, a
+    ld   c, 0
+    srl  b
+    rr   c
+    srl  b
+    rr   c
+    ld   a, [wPhotos2] ; wPhotos2 contains Link GFX High byte address
+    ld   h, a
+    ld   l, $00
+    add  hl, bc
+    ld   c, l
+    ld   b, h
+    ld   hl, $8000
+    ld   d, $40
+    call CopyLinkTilesPair ; CopyLinkTilesPair
+    ret
 
-    ld   hl, data_020_5407                        ;; 20:5505 $21 $07 $54
-    add  hl, bc                                   ;; 20:5508 $09
-    ld   a, [wC11D]                               ;; 20:5509 $FA $1D $C1
-    and  $98                                      ;; 20:550C $E6 $98
-    or   [hl]                                     ;; 20:550E $B6
-    ld   [wC11D], a                               ;; 20:550F $EA $1D $C1
-    inc  hl                                       ;; 20:5512 $23
-    ld   a, [wC11E]                               ;; 20:5513 $FA $1E $C1
-    and  $98                                      ;; 20:5516 $E6 $98
-    or   [hl]                                     ;; 20:5518 $B6
-    ld   [wC11E], a                               ;; 20:5519 $EA $1E $C1
-    ld   d, $00                                   ;; 20:551C $16 $00
-    sla  e                                        ;; 20:551E $CB $23
-    rl   d                                        ;; 20:5520 $CB $12
-    sla  e                                        ;; 20:5522 $CB $23
-    rl   d                                        ;; 20:5524 $CB $12
-    sla  e                                        ;; 20:5526 $CB $23
-    rl   d                                        ;; 20:5528 $CB $12
-    sla  e                                        ;; 20:552A $CB $23
-    rl   d                                        ;; 20:552C $CB $12
-    ld   hl, LinkCharacter2Tiles                  ;; 20:552E $21 $00 $58
-    add  hl, de                                   ;; 20:5531 $19
-    ld   c, l                                     ;; 20:5532 $4D
-    ld   b, h                                     ;; 20:5533 $44
-    ld   hl, vTiles0                              ;; 20:5534 $21 $00 $80
-    ld   d, $20                                   ;; 20:5537 $16 $20
-    call CopyLinkTilesPair                        ;; 20:5539 $CD $0A $1D
-
-    ; hl = LinkAnimationStateTable + hLinkAnimationState
-    pop  hl                                       ;; 20:553C $E1
-    ; Read the 2nd byte from the table
-    inc  hl                                       ;; 20:553D $23
-    ld   e, [hl]                                  ;; 20:553E $5E
-    ld   d, $00                                   ;; 20:553F $16 $00
-    sla  e                                        ;; 20:5541 $CB $23
-    rl   d                                        ;; 20:5543 $CB $12
-    sla  e                                        ;; 20:5545 $CB $23
-    rl   d                                        ;; 20:5547 $CB $12
-    sla  e                                        ;; 20:5549 $CB $23
-    rl   d                                        ;; 20:554B $CB $12
-    sla  e                                        ;; 20:554D $CB $23
-    rl   d                                        ;; 20:554F $CB $12
-    ld   hl, LinkCharacter2Tiles                  ;; 20:5551 $21 $00 $58
-    add  hl, de                                   ;; 20:5554 $19
-    ld   c, l                                     ;; 20:5555 $4D
-    ld   b, h                                     ;; 20:5556 $44
-    ld   hl, vTiles0 + $20                        ;; 20:5557 $21 $20 $80
-    ld   d, $20                                   ;; 20:555A $16 $20
-    call CopyLinkTilesPair                        ;; 20:555C $CD $0A $1D
-    ret                                           ;; 20:555F $C9
 
 ; amount of BG tiles to be updated for next row / column
 RegionUpdateTileAmount::

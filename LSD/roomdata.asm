@@ -827,9 +827,9 @@ random_room_16_entity_set_0:
   db $26, $17
 random_room_16_entity_set_1:
   db 6
-  db $23, $16
   db $26, $17
   db $68, $17
+  db $32, $16
 random_room_16_entity_set_2:
   db 8
   db $44, $15

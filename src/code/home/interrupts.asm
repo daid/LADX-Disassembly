@@ -756,9 +756,9 @@ TilesGfxSource::
 ._09 dw OcarinaSymbolsTilesGBC + $40                 ;; 00:07BD
 ._0A dw OcarinaSymbolsTilesGBC + $60                 ;; 00:07BF
 ; Shared GFX: shadows, explosions, etc.
-._0B dw CharacterVfxTiles                         ;; 00:07C1
-._0C dw CharacterVfxTiles + $40                   ;; 00:07C3
-._0D dw CharacterVfxTiles + $60                   ;; 00:07C5
+._0B dw CharacterVfxTilesGBC                      ;; 00:07C1
+._0C dw CharacterVfxTilesGBC + $40                ;; 00:07C3
+._0D dw CharacterVfxTilesGBC + $60                ;; 00:07C5
 
 ; Data destination table
 TilesDestination::

@@ -514,6 +514,9 @@ FileCreationEntryPoint::
 ._00 dw FileCreationInit1Handler                  ;; 01:4A0B
 ._01 dw FileCreationInit2Handler                  ;; 01:4A0D
 ._02 dw FileCreationInteractiveHandler            ;; 01:4A0F
+._03 dw LSD_FileCreationPrepareGfxSelect1
+._04 dw LSD_FileCreationPrepareGfxSelect2
+._05 dw LSD_FileCreationInteractiveGfxSelect
 
 FileCreationInit1Handler::
     call IncrementGameplaySubtype                 ;; 01:4A11 $CD $D6 $44
@@ -715,7 +718,7 @@ ENDC
     xor  a                                        ;; 01:4B23 $AF
     ldi  [hl], a                                  ;; 01:4B24 $22
     ld   [hl], a                                  ;; 01:4B25 $77
-    jp   label_001_4555                           ;; 01:4B26 $C3 $55 $45
+    jp   IncrementGameplaySubtype
 
 .validationEnd
     call func_001_4BF5                            ;; 01:4B29 $CD $F5 $4B

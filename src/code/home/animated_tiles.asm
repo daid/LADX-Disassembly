@@ -420,8 +420,7 @@ AnimatePhotoTilesGroup::
 ;   bc   source address
 ;   hl   target address in VRAM
 CopyLinkTilesPair::
-    ld   a, BANK(LinkCharacterTiles)              ;; 00:1D0A $3E $0C
-    call AdjustBankNumberForGBC                   ;; 00:1D0C $CD $0B $0B
+    ld   a, [wPhotos1] ; Photos1 store the LinkGFX rom bank
     ld   [rSelectROMBank], a                      ;; 00:1D0F $EA $00 $21
 
 .loop
@@ -589,7 +588,7 @@ label_1DDB::
     jr   nz, label_1DE7                           ;; 00:1DE3 $20 $02
 
 label_1DE5::
-    ld   [hl], $23                                ;; 00:1DE5 $36 $23
+    ld   [hl], $03                                ;; 00:1DE5 $36 $23
 
 label_1DE7::
     inc  hl                                       ;; 00:1DE7 $23
@@ -603,8 +602,8 @@ AnimateTiles_return::
 ReplaceMarinTiles::
 .standingUp
     ; Marin default tile
-    ld   hl, Npc1Tiles + $F00                     ;; 00:1DE9 $21 $00 $4F
-    ld   a, BANK(Npc1Tiles)                       ;; 00:1DEC $3E $0E
+    ld   hl, Npc1TilesGBC + $F00                  ;; 00:1DE9 $21 $00 $4F
+    ld   a, BANK(Npc1TilesGBC)                    ;; 00:1DEC $3E $0E
     jr   .copyTiles                               ;; 00:1DEE $18 $05
 
 .sitting
@@ -637,12 +636,11 @@ ReplaceTradingItemTiles::
     rr   e                                        ;; 00:1E14 $CB $1B
 
     ; Copy 4 tiles from Items1Tiles + de to VRAM
-    ld   hl, Items1Tiles                          ;; 00:1E16 $21 $00 $44
+    ld   hl, Items1TilesGBC                       ;; 00:1E16 $21 $00 $44
     add  hl, de                                   ;; 00:1E19 $19
     ld   de, vTiles1 + $1A0                       ;; 00:1E1A $11 $A0 $89
     ld   bc, TILE_SIZE * 4                        ;; 00:1E1D $01 $40 $00
-    ld   a, BANK(Items1Tiles)                     ;; 00:1E20 $3E $0C
-    call AdjustBankNumberForGBC                   ;; 00:1E22 $CD $0B $0B
+    ld   a, BANK(Items1TilesGBC)                  ;; 00:1E20 $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:1E25 $EA $00 $21
 
     jp   CopyDataAndDrawLinkSprite                ;; 00:1E28 $C3 $3B $1F

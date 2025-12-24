@@ -2867,7 +2867,7 @@ LoadSirenInstrumentTiles::
     add  hl, bc                                   ;; 01:6C95 $09
     ld   e, l                                     ;; 01:6C96 $5D
     ld   d, h                                     ;; 01:6C97 $54
-    ld   hl, SirenInstrumentsTiles                ;; 01:6C98 $21 $00 $4D
+    ld   hl, SirenInstrumentsTilesGBC             ;; 01:6C98 $21 $00 $4D
     add  hl, bc                                   ;; 01:6C9B $09
     call CopySirenInstrumentTiles                 ;; 01:6C9C $CD $3A $0C
     ldh  a, [hBGTilesLoadingStage]                ;; 01:6C9F $F0 $92

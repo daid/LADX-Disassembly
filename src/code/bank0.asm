@@ -503,7 +503,7 @@ SpawnPhotographer_trampoline::
 
 ; Load Background map and attributes for photo
 LoadPhotoBgMap_trampoline::
-    callsb LoadPhotoBgMap                         ;; 00:0B02 $3E $3D $EA $00 $21 $CD $29 $40
+    ; callsb LoadPhotoBgMap                         ;; 00:0B02 $3E $3D $EA $00 $21 $CD $29 $40
     ret                                           ;; 00:0B0A $C9
 
 IF __PATCH_3__
@@ -800,7 +800,7 @@ ReadValueInDialogsBank::
 ; Inputs:
 ;   hl:  target address of the instrument tiles
 CopySirenInstrumentTiles::
-    ld   a, BANK(SirenInstrumentsTiles)           ;; 00:0C3A $3E $0C
+    ld   a, BANK(SirenInstrumentsTilesGBC)        ;; 00:0C3A $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:0C3C $EA $00 $21
     ld   bc, $40                                  ;; 00:0C3F $01 $40 $00
     call CopyData                                 ;; 00:0C42 $CD $14 $29
@@ -1283,7 +1283,7 @@ PhotoAlbumHandler::
     jp   returnFromGameplayHandler                ;; 00:0F3D $C3 $1A $10
 
 PhotoPictureHandler::
-    jpsw PhotosEntryPoint                         ;; 00:0F40 $3E $37 $CD $0C $08 $C3 $00 $40
+    ret ;jpsw PhotosEntryPoint                         ;; 00:0F40 $3E $37 $CD $0C $08 $C3 $00 $40
 
 ; World handler for GAMEPLAY_WORLD_INTERACTIVE (dispatched from WorldHandlerEntryPoint)
 WorldInteractiveHandler::
@@ -2989,8 +2989,7 @@ ReplaceMagicPowderTilesByToadstool::
 ; Inputs:
 ;   wCreditsScratch0  index of the instrument to load (0-7)
 ReplaceDialogTilesByInstruments::
-    ld   a, BANK(Npc2Tiles)                       ;; 00:1E33 $3E $11
-    call AdjustBankNumberForGBC                   ;; 00:1E35 $CD $0B $0B
+    ld   a, BANK(Npc2TilesGBC)                    ;; 00:1E33 $3E $11
     ld   [rSelectROMBank], a                      ;; 00:1E38 $EA $00 $21
 
     ld   a, [wCreditsScratch0]                    ;; 00:1E3B $FA $00 $D0
@@ -3006,7 +3005,7 @@ ReplaceDialogTilesByInstruments::
     ld   hl, vTiles1 + $500                       ;; 00:1E4D $21 $00 $8D
     add  hl, de                                   ;; 00:1E50 $19
     push hl                                       ;; 00:1E51 $E5
-    ld   hl, Npc2Tiles + $1000                    ;; 00:1E52 $21 $00 $50
+    ld   hl, Npc2TilesGBC + $1000                 ;; 00:1E52 $21 $00 $50
 
 ReplaceEndCreditsTiles::
     add  hl, de                                   ;; 00:1E55 $19
@@ -3043,10 +3042,9 @@ ReplaceTiles_08::
     jr   ReplaceEndCreditsTiles                   ;; 00:1E8B $18 $C8
 
 ReplaceToadstoolTilesByMagicPowder::
-    ld   hl, InventoryEquipmentItemsTiles + $E0   ;; 00:1E8D $21 $E0 $48
+    ld   hl, InventoryEquipmentItemsTilesGBC + $E0 ;; 00:1E8D $21 $E0 $48
     ld   de, $88E0                                ;; 00:1E90 $11 $E0 $88
-    ld   a, BANK(InventoryEquipmentItemsTiles)    ;; 00:1E93 $3E $0C
-    call AdjustBankNumberForGBC                   ;; 00:1E95 $CD $0B $0B
+    ld   a, BANK(InventoryEquipmentItemsTilesGBC) ;; 00:1E93 $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:1E98 $EA $00 $21
     ld   bc, TILE_SIZE * 2                        ;; 00:1E9B $01 $20 $00
     jp   CopyDataAndDrawLinkSprite                ;; 00:1E9E $C3 $3B $1F
@@ -3214,7 +3212,7 @@ CopyDataAndDrawLinkSprite::
 .drawLinkSprite
     xor  a                                        ;; 00:1F3E $AF
     ldh  [hReplaceTiles], a                       ;; 00:1F3F $E0 $A5
-    ld   a, BANK(LinkCharacterTiles)              ;; 00:1F41 $3E $0C
+    ld   a, BANK(LinkCharacterTilesGBC)           ;; 00:1F41 $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:1F43 $EA $00 $21
     jp   DrawLinkSpriteAndReturn                  ;; 00:1F46 $C3 $2E $1D
 
@@ -4367,10 +4365,9 @@ LoadTileset15::
     ld   bc, TILE_SIZE * $180                     ;; 00:2A74 $01 $00 $18
     call CopyData                                 ;; 00:2A77 $CD $14 $29
 
-    ld   a, BANK(Overworld1Tiles)                 ;; 00:2A7A $3E $0C
-    call AdjustBankNumberForGBC                   ;; 00:2A7C $CD $0B $0B
+    ld   a, BANK(Overworld1TilesGBC)              ;; 00:2A7A $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:2A7F $EA $00 $21
-    ld   hl, Overworld1Tiles + $8E0 ; filler color ;; 00:2A82 $21 $E0 $57
+    ld   hl, Overworld1TilesGBC + $8E0 ; filler color ;; 00:2A82 $21 $E0 $57
     ld   de, vTiles2 + $7F0                       ;; 00:2A85 $11 $F0 $97
     ld   bc, TILE_SIZE                            ;; 00:2A88 $01 $10 $00
     call CopyData                                 ;; 00:2A8B $CD $14 $29
@@ -4391,10 +4388,9 @@ LoadTileset15::
 ; Copy tiles for the various Koholint views while the instruments are
 ; playing to tiles memory
 LoadCreditsKoholintViewsTiles::
-    ld   a, BANK(Overworld1Tiles)                 ;; 00:2AAE $3E $0C
-    call AdjustBankNumberForGBC                   ;; 00:2AB0 $CD $0B $0B
+    ld   a, BANK(Overworld1TilesGBC)              ;; 00:2AAE $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:2AB3 $EA $00 $21
-    ld   hl, Overworld1Tiles + $100               ;; 00:2AB6 $21 $00 $50
+    ld   hl, Overworld1TilesGBC + $100            ;; 00:2AB6 $21 $00 $50
     ld   de, vTiles2                              ;; 00:2AB9 $11 $00 $90
     ld   bc, TILE_SIZE * $80                      ;; 00:2ABC $01 $00 $08
     call CopyData                                 ;; 00:2ABF $CD $14 $29
@@ -4469,9 +4465,9 @@ LoadCreditsRollTiles::
     call PlayAudioStep                            ;; 00:2B48 $CD $A4 $08
 
 IF __PATCH_1__
-    ld   a, BANK(CharacterVfxTiles)
+    ld   a, BANK(CharacterVfxTilesGBC)
     ld   [rSelectROMBank], a
-    ld   hl, CharacterVfxTiles + TILE_SIZE * $2
+    ld   hl, CharacterVfxTilesGBC + TILE_SIZE * $2
     ld   de, $8080
     ld   bc, TILE_SIZE * $2
     call CopyData
@@ -4574,25 +4570,25 @@ GetRoomStatusAddressForMapPosition_trampoline::
 ; Load the basic tiles (Link's character, items icons) to tile memory
 LoadBaseTiles::
     ; Select the tiles sheet bank ($0C on DMG, $2C on GBC)
-    ld   a, BANK(LinkCharacterTiles)              ;; 00:2BCF $3E $0C
-    call SwitchAdjustedBank                       ;; 00:2BD1 $CD $13 $08
+    ld   a, BANK(LinkCharacterTilesGBC)           ;; 00:2BCF $3E $0C
+    call SwitchBank
     ; Copy $400 bytes from the link's tile sheet to Tiles map 0
-    ld   hl, LinkCharacterTiles                   ;; 00:2BD4 $21 $00 $40
+    ld   hl, LinkCharacterTilesGBC                ;; 00:2BD4 $21 $00 $40
     ld   de, vTiles0                              ;; 00:2BD7 $11 $00 $80
     ld   bc, TILE_SIZE * $40                      ;; 00:2BDA $01 $00 $04
     call CopyData                                 ;; 00:2BDD $CD $14 $29
 
     ; Select the tiles sheet bank ($0C on DMG, $2C on GBC)
-    ld   a, BANK(InventoryEquipmentItemsTiles)    ;; 00:2BE0 $3E $0C
-    call SwitchAdjustedBank                       ;; 00:2BE2 $CD $13 $08
+    ld   a, BANK(InventoryEquipmentItemsTilesGBC) ;; 00:2BE0 $3E $0C
+    call SwitchBank
     ; Copy $1000 bytes from the items tile sheet to Tiles Map 1
-    ld   hl, InventoryEquipmentItemsTiles         ;; 00:2BE5 $21 $00 $48
+    ld   hl, InventoryEquipmentItemsTilesGBC      ;; 00:2BE5 $21 $00 $48
     ld   de, vTiles1                              ;; 00:2BE8 $11 $00 $88
     ld   bc, TILE_SIZE * $100                     ;; 00:2BEB $01 $00 $10
     call CopyData                                 ;; 00:2BEE $CD $14 $29
 
     ; Copy two tiles from the items tile sheet to a portion of Tiles Map 1
-    ld   hl, Items1Tiles + $3A0                   ;; 00:2BF1 $21 $A0 $47
+    ld   hl, Items1TilesGBC + $3A0                ;; 00:2BF1 $21 $A0 $47
     ld   de, vTiles1 + $600                       ;; 00:2BF4 $11 $00 $8E
     ld   bc, TILE_SIZE * $2                       ;; 00:2BF7 $01 $20 $00
     call CopyData                                 ;; 00:2BFA $CD $14 $29
@@ -4703,10 +4699,10 @@ LoadIndoorTiles::
     ld   bc, TILE_SIZE * $20                      ;; 00:2C94 $01 $00 $02
     call CopyData                                 ;; 00:2C97 $CD $14 $29
 
-    ld   a, BANK(Items1Tiles)                     ;; 00:2C9A $3E $0C
+    ld   a, BANK(Items1TilesGBC)                  ;; 00:2C9A $3E $0C
     call AdjustBankNumberForGBC                   ;; 00:2C9C $CD $0B $0B
     ld   [rSelectROMBank], a                      ;; 00:2C9F $EA $00 $21
-    ld   hl, Items1Tiles + $3C0                   ;; 00:2CA2 $21 $C0 $47
+    ld   hl, Items1TilesGBC + $3C0                ;; 00:2CA2 $21 $C0 $47
     ld   de, wAnimatedScrollingTilesStorage       ;; 00:2CA5 $11 $C0 $DC
     ld   bc, TILE_SIZE * $4                       ;; 00:2CA8 $01 $40 $00
     call CopyData                                 ;; 00:2CAB $CD $14 $29
@@ -4794,9 +4790,9 @@ LoadBaseOverworldTiles::
     ; Load Overworld landscape
     ;
 
-    ld   a, BANK(OverworldLandscapeTiles)         ;; 00:2D2D $3E $0C
-    call SwitchAdjustedBank                       ;; 00:2D2F $CD $13 $08
-    ld   hl, OverworldLandscapeTiles              ;; 00:2D32 $21 $00 $52
+    ld   a, BANK(OverworldLandscapeTilesGBC)      ;; 00:2D2D $3E $0C
+    call SwitchBank                               ;; 00:2D2F $CD $13 $08
+    ld   hl, OverworldLandscapeTilesGBC           ;; 00:2D32 $21 $00 $52
     ld   de, vTiles2 + $200                       ;; 00:2D35 $11 $00 $92
     ld   bc, TILE_SIZE * $60                      ;; 00:2D38 $01 $00 $06
     call CopyData                                 ;; 00:2D3B $CD $14 $29
@@ -4805,7 +4801,7 @@ LoadBaseOverworldTiles::
     ; Load dungeon keys
     ;
 
-    ld   hl, InventoryOverworldItemsTiles         ;; 00:2D3E $21 $00 $4C
+    ld   hl, InventoryOverworldItemsTilesGBC      ;; 00:2D3E $21 $00 $4C
     ld   de, vTiles1 + $400                       ;; 00:2D41 $11 $00 $8C
     ld   bc, TILE_SIZE * $40                      ;; 00:2D44 $01 $00 $04
     call CopyData                                 ;; 00:2D47 $CD $14 $29
@@ -4821,16 +4817,15 @@ func_2D50::
     ldh  [hAnimatedTilesDataOffset], a            ;; 00:2D53 $E0 $A7
     call AnimateTiles.jumpTable                   ;; 00:2D55 $CD $D2 $1B
 
-    ld   a, BANK(InventoryEquipmentItemsTiles)    ;; 00:2D58 $3E $0C
-    call AdjustBankNumberForGBC                   ;; 00:2D5A $CD $0B $0B
+    ld   a, BANK(InventoryEquipmentItemsTilesGBC) ;; 00:2D58 $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:2D5D $EA $00 $21
 
-    ld   hl, InventoryEquipmentItemsTiles         ;; 00:2D60 $21 $00 $48
+    ld   hl, InventoryEquipmentItemsTilesGBC      ;; 00:2D60 $21 $00 $48
     ld   de, vTiles1                              ;; 00:2D63 $11 $00 $88
     ld   bc, TILE_SIZE * $80                      ;; 00:2D66 $01 $00 $08
     call CopyData                                 ;; 00:2D69 $CD $14 $29
 
-    ld   hl, LinkCharacterTiles + $200            ;; 00:2D6C $21 $00 $42
+    ld   hl, LinkCharacterTilesGBC + $200         ;; 00:2D6C $21 $00 $42
     ld   de, vTiles0 + $200                       ;; 00:2D6F $11 $00 $82
     ld   bc, TILE_SIZE * $10                      ;; 00:2D72 $01 $00 $01
     call CopyData                                 ;; 00:2D75 $CD $14 $29
@@ -4914,7 +4909,7 @@ LoadWorldMapTiles::
 
     ; Load some overworld objects tiles (house, owl, etc),
     ; to display them when the cursor hovers a specific room.
-    ld   hl, Overworld1Tiles + $100               ;; 00:2DFA $21 $00 $50
+    ld   hl, Overworld1TilesGBC + $100            ;; 00:2DFA $21 $00 $50
     ld   de, vTiles0 + $200                       ;; 00:2DFD $11 $00 $82
     ld   bc, TILE_SIZE * $10                      ;; 00:2E00 $01 $00 $01
     jp   CopyData                                 ;; 00:2E03 $C3 $14 $29
@@ -4984,7 +4979,7 @@ LoadSaveMenuTiles::
 
 ; NPC tiles banks
 NpcTilesBankTable::
-    db   $15, BANK(Npc2Tiles), BANK(Npc1Tiles), BANK(Npc3Tiles) ;; 00:2E6F
+    db   $35, BANK(Npc2TilesGBC), BANK(Npc1TilesGBC), BANK(Npc3TilesGBC) ;; 00:2E6F
 
 ; For overworld or indoor rooms, load room-specific tiles.
 ;
@@ -5084,7 +5079,6 @@ LoadRoomSpecificTiles::
     ld   a, [hl]                                  ;; 00:2EEB $7E
     and  a                                        ;; 00:2EEC $A7
     jr   z, .bankAdjustmentEnd                    ;; 00:2EED $28 $03
-    call AdjustBankNumberForGBC                   ;; 00:2EEF $CD $0B $0B
 .bankAdjustmentEnd
 
     ; Do the actual copy to OAM tiles
@@ -5098,7 +5092,7 @@ LoadRoomSpecificTiles::
     ld   e, l                                     ;; 00:2EFE $5D
     ld   d, h                                     ;; 00:2EFF $54
     ; Source: NpcTilesDataStart + bc
-    ld   hl, NpcTilesDataStart                    ;; 00:2F00 $21 $00 $40
+    ld   hl, NpcTilesDataStartGBC                 ;; 00:2F00 $21 $00 $40
     add  hl, bc                                   ;; 00:2F03 $09
     ld   bc, TILE_SIZE * $10                      ;; 00:2F04 $01 $00 $01
     call CopyData                                 ;; 00:2F07 $CD $14 $29
@@ -7340,7 +7334,7 @@ ReplaceEvilEagleRiderHiddenTiles::
     xor  a                                        ;; 00:3FC6 $AF
     ldh  [hReplaceTiles], a                       ;; 00:3FC7 $E0 $A5
 
-    ld   a, BANK(LinkCharacterTiles)              ;; 00:3FC9 $3E $0C
+    ld   a, BANK(LinkCharacterTilesGBC)           ;; 00:3FC9 $3E $0C
     ld   [rSelectROMBank], a                      ;; 00:3FCB $EA $00 $21
     jp   DrawLinkSpriteAndReturn                  ;; 00:3FCE $C3 $2E $1D
 

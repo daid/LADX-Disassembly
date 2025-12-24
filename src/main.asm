@@ -97,38 +97,38 @@ section "bank0B", romx[$4000], bank[$0B]
 ; include "data/rooms/indoors_b.asm"
 
 section "bank0C",romx[$4000],bank[$0C]
-LinkCharacterTiles::
-incbin "gfx/characters/oam_link_1.dmg.2bpp"
-CharacterVfxTiles::
-incbin "gfx/characters/oam_vfx.dmg.2bpp"
-Items1Tiles::
-incbin "gfx/items/items_1.dmg.2bpp"
-InventoryEquipmentItemsTiles::
-incbin "gfx/items/items_2.dmg.2bpp"
-InventoryOverworldItemsTiles::
-incbin "gfx/items/inventory_overworld_items.dmg.2bpp"
-SirenInstrumentsTiles::
-incbin "gfx/items/instruments.dmg.2bpp"
-Overworld1Tiles::
-incbin "gfx/world/overworld_1.dmg.2bpp"
-OverworldLandscapeTiles::
-incbin "gfx/world/overworld_landscape.dmg.2bpp"
-LinkCharacter2Tiles::
-incbin "gfx/characters/oam_link_2.dmg.2bpp"
-SwitchBlockTiles::
-incbin "gfx/items/switch_block.dmg.2bpp"
-MushroomTiles::
-incbin "gfx/items/mushroom.dmg.2bpp"
-SlimeKeyTiles::
-incbin "gfx/items/slime_key.dmg.2bpp"
-PieceOfHeartMeterTiles::
-incbin "gfx/items/piece_of_heart_meter.dmg.2bpp"
-OcarinaSymbolsTiles::
-incbin "gfx/items/ocarina_symbols.dmg.2bpp"
-AnimatedTiles::
-incbin "gfx/world/animated_tiles.w32.dmg.2bpp"
-WorldMapTiles::
-incbin "gfx/world/minimap.dmg.2bpp"
+; LinkCharacterTiles::
+; incbin "gfx/characters/oam_link_1.dmg.2bpp"
+; CharacterVfxTiles::
+; incbin "gfx/characters/oam_vfx.dmg.2bpp"
+; Items1Tiles::
+; incbin "gfx/items/items_1.dmg.2bpp"
+; InventoryEquipmentItemsTiles::
+; incbin "gfx/items/items_2.dmg.2bpp"
+; InventoryOverworldItemsTiles::
+; incbin "gfx/items/inventory_overworld_items.dmg.2bpp"
+; SirenInstrumentsTiles::
+; incbin "gfx/items/instruments.dmg.2bpp"
+; Overworld1Tiles::
+; incbin "gfx/world/overworld_1.dmg.2bpp"
+; OverworldLandscapeTiles::
+; incbin "gfx/world/overworld_landscape.dmg.2bpp"
+; LinkCharacter2Tiles::
+; incbin "gfx/characters/oam_link_2.dmg.2bpp"
+; SwitchBlockTiles::
+; incbin "gfx/items/switch_block.dmg.2bpp"
+; MushroomTiles::
+; incbin "gfx/items/mushroom.dmg.2bpp"
+; SlimeKeyTiles::
+; incbin "gfx/items/slime_key.dmg.2bpp"
+; PieceOfHeartMeterTiles::
+; incbin "gfx/items/piece_of_heart_meter.dmg.2bpp"
+; OcarinaSymbolsTiles::
+; incbin "gfx/items/ocarina_symbols.dmg.2bpp"
+; AnimatedTiles::
+; incbin "gfx/world/animated_tiles.w32.dmg.2bpp"
+; WorldMapTiles::
+; incbin "gfx/world/minimap.dmg.2bpp"
 
 section "bankOD",romx[$4000],bank[$0D]
 DungeonsTiles::
@@ -217,9 +217,9 @@ DungeonSideview2Tiles::
 incbin "gfx/dungeons/sideview_2.dmg.2bpp"
 
 section "bankOE",romx[$4000],bank[$0E]
-NpcTilesDataStart::
-Npc1Tiles::
-incbin "gfx/characters/oam_npc_1.dmg.2bpp"
+; NpcTilesDataStart::
+; Npc1Tiles::
+; incbin "gfx/characters/oam_npc_1.dmg.2bpp"
 
 section "bankOF",romx[$4000],bank[$0F]
 MenuTiles::
@@ -294,8 +294,8 @@ PaintingTiles::
 incbin "gfx/scenes/painting.dmg.2bpp"
 
 section "bank11",romx[$4000],bank[$11]
-Npc2Tiles::
-incbin "gfx/characters/oam_npc_2.dmg.2bpp"
+; Npc2Tiles::
+; incbin "gfx/characters/oam_npc_2.dmg.2bpp"
 
 section "bank12",romx[$4000],bank[$12]
 Npc3Tiles::
@@ -482,49 +482,59 @@ section "bank28",romx[$4000],bank[$28]
 ;include "data/photo_album/background.asm"
 
 section "bank29",romx[$4000],bank[$29]
-PhotoNiceLinkTiles:
-incbin "gfx/photos/photo_nice_link.2bpp"
-PhotoMarinCliffTiles:
-incbin "gfx/photos/photo_marin_cliff.2bpp"
-PhotoMarinWellTiles:
-incbin "gfx/photos/photo_marin_well.2bpp"
-PhotoMabeTiles:
-incbin "gfx/photos/photo_mabe.2bpp"
+; PhotoNiceLinkTiles:
+; incbin "gfx/photos/photo_nice_link.2bpp"
+; PhotoMarinCliffTiles:
+; incbin "gfx/photos/photo_marin_cliff.2bpp"
+; PhotoMarinWellTiles:
+; incbin "gfx/photos/photo_marin_well.2bpp"
+; PhotoMabeTiles:
+; incbin "gfx/photos/photo_mabe.2bpp"
 
 section "bank2A",romx[$4000],bank[$2A]
-PhotoUlriraTiles:
-incbin "gfx/photos/photo_ulrira.2bpp"
-PhotoBowWowTiles:
-incbin "gfx/photos/photo_bow_wow.2bpp"
-PhotoShopTiles:
-incbin "gfx/photos/photo_shop.2bpp"
-PhotoFishermanTiles:
-incbin "gfx/photos/photo_fisherman.2bpp"
+; PhotoUlriraTiles:
+; incbin "gfx/photos/photo_ulrira.2bpp"
+; PhotoBowWowTiles:
+; incbin "gfx/photos/photo_bow_wow.2bpp"
+; PhotoShopTiles:
+; incbin "gfx/photos/photo_shop.2bpp"
+; PhotoFishermanTiles:
+; incbin "gfx/photos/photo_fisherman.2bpp"
 
 section "bank2B",romx[$4000],bank[$2B]
-PhotoZoraTiles:
-incbin "gfx/photos/photo_zora.2bpp"
-PhotoKanaletTiles:
-incbin "gfx/photos/photo_kanalet.2bpp"
-PhotoGhostTiles:
-incbin "gfx/photos/photo_ghost.2bpp"
-PhotoBridgeTiles:
-incbin "gfx/photos/photo_bridge.2bpp"
+; PhotoZoraTiles:
+; incbin "gfx/photos/photo_zora.2bpp"
+; PhotoKanaletTiles:
+; incbin "gfx/photos/photo_kanalet.2bpp"
+; PhotoGhostTiles:
+; incbin "gfx/photos/photo_ghost.2bpp"
+; PhotoBridgeTiles:
+; incbin "gfx/photos/photo_bridge.2bpp"
 
 section "bank2C",romx[$4000],bank[$2C]
+LinkCharacterTilesGBC::
 incbin "gfx/characters/oam_link_1.cgb.2bpp"
+CharacterVfxTilesGBC::
 incbin "gfx/characters/oam_vfx.cgb.2bpp"
+Items1TilesGBC::
 incbin "gfx/items/items_1.cgb.2bpp"
+InventoryEquipmentItemsTilesGBC::
 incbin "gfx/items/items_2.cgb.2bpp"
+InventoryOverworldItemsTilesGBC::
 incbin "gfx/items/inventory_overworld_items.cgb.2bpp"
+SirenInstrumentsTilesGBC::
 incbin "gfx/items/instruments.cgb.2bpp"
+Overworld1TilesGBC::
 incbin "gfx/world/overworld_1.cgb.2bpp"
+OverworldLandscapeTilesGBC::
 incbin "gfx/world/overworld_landscape.cgb.2bpp"
 LinkCharacter2TilesGBC::
 incbin "gfx/characters/oam_link_2.cgb.2bpp"
 SwitchBlockTilesGBC::
 incbin "gfx/items/switch_block.cgb.2bpp"
+MushroomTilesGBC::
 incbin "gfx/items/mushroom.cgb.2bpp"
+SlimeKeyTilesGBC::
 incbin "gfx/items/slime_key.cgb.2bpp"
 PieceOfHeartMeterTilesGBC::
 incbin "gfx/items/piece_of_heart_meter.cgb.2bpp"
@@ -622,7 +632,9 @@ DungeonSideview2TilesCGB::
 incbin "gfx/dungeons/sideview_2.cgb.2bpp"
 
 section "bank2E",romx[$4000],bank[$2E]
+NpcTilesDataStartGBC::
 Npc1TilesCGB::
+Npc1TilesGBC::
 incbin "gfx/characters/oam_npc_1.cgb.2bpp"
 
 section "bank2F",romx[$4000],bank[$2F]
@@ -684,9 +696,11 @@ incbin "gfx/scenes/painting.cgb.2bpp"
 
 section "bank31",romx[$4000],bank[$31]
 Npc2TilesCGB::
+Npc2TilesGBC::
 incbin "gfx/characters/oam_npc_2.cgb.2bpp"
 
 section "bank32",romx[$4000],bank[$32]
+Npc3TilesGBC::
 incbin "gfx/characters/oam_npc_3.cgb.2bpp"
 incbin "gfx/characters/oam_nightmare.cgb.2bpp"
 incbin "gfx/characters/oam_npc_4.cgb.2bpp"
@@ -729,7 +743,7 @@ section "bank36",romx[$4000],bank[$36]
 include "code/entities/bank36.asm"
 
 section "bank37",romx[$4000],bank[$37]
-include "code/photos.asm"
+; include "code/photos.asm"
 
 section "bank38",romx[$4000],bank[$38]
 PhotographerTiles::
@@ -754,15 +768,15 @@ incbin "gfx/photos/photo_elements_4.2bpp"
 include "code/photos_animations.asm"
 
 section "bank39",romx[$4000],bank[$39]
-incbin "gfx/photos/photo_elements_1.2bpp"
+; incbin "gfx/photos/photo_elements_1.2bpp"
 
 section "bank3A",romx[$4000],bank[$3A]
-incbin "gfx/photos/photo_elements_2.2bpp"
+; incbin "gfx/photos/photo_elements_2.2bpp"
 
 section "bank3B",romx[$4000],bank[$3B]
-incbin "gfx/photos/photo_elements_3.2bpp"
-PhotoDizzyLinkTiles:
-incbin "gfx/photos/photo_dizzy_link.2bpp"
+; incbin "gfx/photos/photo_elements_3.2bpp"
+; PhotoDizzyLinkTiles:
+; incbin "gfx/photos/photo_dizzy_link.2bpp"
 
 section "bank3C",romx[$4000],bank[$3C]
 SGBFrameTilesA:
@@ -778,7 +792,7 @@ include "data/super_gameboy/commands.asm"
 include "code/super_gameboy.asm"
 
 section "bank3D",romx[$4000],bank[$3D]
-include "code/photos_bg.asm"
+; include "code/photos_bg.asm"
 
 ; Unused banks; make blank sections so they are filled with $00 instead of $ff to match
 ; the rom

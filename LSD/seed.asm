@@ -249,6 +249,7 @@ setupHexDigits:
 }
 
 #SECTION "LSD_CopyDataFromBank", ROM0 {
+; Copy C bytes from DE in bank A to HL
 LSD_CopyDataFromBank:
     ld  [$2100], a
     loop c {
