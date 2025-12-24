@@ -226,6 +226,11 @@ ShopItemState:
     add  $08
     cp   $10
     ret  nc
+
+    ; Prevent usable item usage
+    ld   hl, wItemUsageContext
+    ld   [hl], $01 ; ITEM_USAGE_NEAR_NPC
+
     ; Check for button press
     ldh  a, [hJoypadState]
     and  $30 ; A/B
