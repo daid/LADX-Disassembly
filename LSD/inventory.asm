@@ -352,6 +352,17 @@ EntityInventoryDropHandler:
     }
     ld   [hl], a
 
+    ldh  a, [hActiveEntitySpriteVariant]
+    cp   INVENTORY_SHIELD
+    if z {
+        ld   hl, wShieldLevel
+        ld   a, [hl]
+        and  a, a
+        if z {
+            ld [hl], $01
+        }
+    }
+
 .wrapupPickup:
     ld   a, $01 ; JINGLE_TREASURE_FOUND
     ldh  [hJingle], a
