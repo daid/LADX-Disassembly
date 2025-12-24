@@ -27,6 +27,17 @@ LSD_GenerateMap:
     ret  nz
     ld   hl, wDungeonDepth
     inc  [hl]
+    ld   a, [hl]
+    cp   1 ; First floor, reset IGT
+    if z {
+      call EnableSRAM
+      ld   hl, sLSDIngameTimer
+      xor  a
+      ld   [hl+], a ; 1/32 of a second
+      ld   [hl+], a ; seconds
+      ld   [hl+], a ; minutes
+      ld   [hl+], a ; hours
+    }
 
     call EnableSRAM
     ld   a, BANK(sDungeonMinimap)

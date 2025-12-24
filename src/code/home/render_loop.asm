@@ -350,10 +350,10 @@ ENDC
 .waitForNextFrame
     ; Animate inventory window
     callsw func_01F_7F80                          ;; 00:035F $3E $1F $CD $0C $08 $CD $80 $7F
+    call LSD_updateIngameTimer
 
     ; Switch to first graphics bank ($0C on DMG, $2C on GBC)
-    ld   a, $0C                                   ;; 00:0367 $3E $0C
-    call AdjustBankNumberForGBC                   ;; 00:0369 $CD $0B $0B
+    ld   a, $2C                                   ;; 00:0367 $3E $0C
     call SwitchBank                               ;; 00:036C $CD $0C $08
 
     ; Mark the frame as being ready

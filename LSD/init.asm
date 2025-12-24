@@ -25,5 +25,12 @@ LSD_VRAM1_init:
 
     xor  a
     ldh  [rVBK], a
+
+    ; Enable the timer to run 32 times per second
+    xor  a
+    ldh  [rTMA], a
+    ld   a, $04
+    ldh  [rTAC], a
+
     ret
 }
