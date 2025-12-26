@@ -184,6 +184,8 @@ LSD_SeedEntityHandler:
     call IncrementEntityState
     ld   [hl], b
     call LSD_CopyRandStateToSRAM
+    xor  a
+    ld   [wC1AB], a
     ret
 
 .drawCurrentSeedDigit:

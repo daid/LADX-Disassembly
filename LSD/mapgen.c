@@ -278,7 +278,7 @@ getDifferentRoomData:
                 *dynamic_room_data_ptr++ = 0xF3;
             }
         } else if (randomMapDataFlags[n] & ROOM_LOCK_RIGHT) {
-            *dynamic_room_data_ptr++ = 0x39;
+            *dynamic_room_data_ptr++ = 0x49;
             *dynamic_room_data_ptr++ = 0x42;
         }
         if (randomMapDataFlags[n] & ROOM_DOOR_LEFT) {
@@ -289,7 +289,7 @@ getDifferentRoomData:
                 *dynamic_room_data_ptr++ = 0xF2;
             }
         } else if (randomMapDataFlags[n] & ROOM_LOCK_LEFT) {
-            *dynamic_room_data_ptr++ = 0x30;
+            *dynamic_room_data_ptr++ = 0x40;
             *dynamic_room_data_ptr++ = 0x41;
         }
         if (randomMapDataFlags[n] & ROOM_DOOR_DOWN) {
