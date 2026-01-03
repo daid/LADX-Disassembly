@@ -707,6 +707,7 @@ Farcall_trampoline::
     ld   h, a                                     ;; 00:0BEA $67
     ld   a, [wFarcallAdressLow]                   ;; 00:0BEB $FA $03 $DE
     ld   l, a                                     ;; 00:0BEE $6F
+jumpHL:
     jp   hl                                       ;; 00:0BEF $E9
 
 UpdateLinkWalkingAnimation_trampoline::

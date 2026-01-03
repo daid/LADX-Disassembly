@@ -841,40 +841,6 @@ EntityInitAvalaunch::
     ld   [hl], $00                                ;; 03:4BE6 $36 $00
     jp   EntityInitNoop                           ;; 03:4BE8 $C3 $56 $4B
 
-EntityInitColorGuardianBlue::
-    ldh  a, [hIsGBC]                              ;; 03:4BEB $F0 $FE
-    and  a                                        ;; 03:4BED $A7
-    jp   z, EntityInitNoop                        ;; 03:4BEE $CA $56 $4B
-
-    call GetColorDungeonRoomStatus                ;; 03:4BF1 $CD $84 $4B
-    and  $10                                      ;; 03:4BF4 $E6 $10
-    jp   z, EntityInitNoop                        ;; 03:4BF6 $CA $56 $4B
-
-    ld   hl, wEntitiesPosXTable                   ;; 03:4BF9 $21 $00 $C2
-    add  hl, bc                                   ;; 03:4BFC $09
-    ld   a, $3C                                   ;; 03:4BFD $3E $3C
-    jr   jr_003_4C15                              ;; 03:4BFF $18 $14
-
-EntityInitColorGuardianRed::
-    ldh  a, [hIsGBC]                              ;; 03:4C01 $F0 $FE
-    and  a                                        ;; 03:4C03 $A7
-    jp   z, EntityInitNoop                        ;; 03:4C04 $CA $56 $4B
-
-    call GetColorDungeonRoomStatus                ;; 03:4C07 $CD $84 $4B
-    and  $10                                      ;; 03:4C0A $E6 $10
-    jp   z, EntityInitNoop                        ;; 03:4C0C $CA $56 $4B
-
-    ld   hl, wEntitiesPosXTable                   ;; 03:4C0F $21 $00 $C2
-    add  hl, bc                                   ;; 03:4C12 $09
-    ld   a, $63                                   ;; 03:4C13 $3E $63
-
-jr_003_4C15:
-    ld   [hl], a                                  ;; 03:4C15 $77
-    ld   hl, wEntitiesStateTable                  ;; 03:4C16 $21 $90 $C2
-    add  hl, bc                                   ;; 03:4C19 $09
-    ld   [hl], $04                                ;; 03:4C1A $36 $04
-    jp   EntityInitNoop                           ;; 03:4C1C $C3 $56 $4B
-
 EntityInitColorDungeonBook::
     ld   hl, wEntitiesPosYTable                   ;; 03:4C1F $21 $10 $C2
     add  hl, bc                                   ;; 03:4C22 $09

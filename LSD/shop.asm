@@ -236,6 +236,12 @@ ShopItemState:
     and  $30 ; A/B
     ret  z
 
+    ; Do not allow buying if we are still counting down rupees
+    ld   a, [wSubstractRupeeBufferLow]
+    ld   hl, wSubstractRupeeBufferHigh
+    or   [hl]
+    ret  z
+
     ; Check if we have enough money
     ld   hl, wEntitiesPrivateState1Table
     add  hl, bc

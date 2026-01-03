@@ -10,6 +10,25 @@ BANKED_WRAM = 1
 
 GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 
+#SECTION "LSDfarcall", ROM0 {
+; call function hl in bank a
+LSDfarcall:
+    ldh  [hLSDTemporary0], a
+    ld   a, [wCurrentBank]
+    pushpop af {
+        ldh  a, [hLSDTemporary0]
+        call SwitchBank
+        call jumpHL
+    }
+    call SwitchBank
+    ret
+}
+#MACRO farcall _target {
+    ld a, BANK(_target)
+    ld hl, _target
+    call LSDfarcall
+}
+
 #INCLUDE "LSD/const.asm"
 #INCLUDE "LSD/roomdata.asm"
 #INCLUDE "LSD/levelgen.asm"
@@ -20,43 +39,9 @@ GBC_SGB_HEADER "Dreams", GB_MBC5_RAM_BATTERY, Start
 #INCLUDE "LSD/pop.asm"
 #INCLUDE "LSD/playergfx.asm"
 #INCLUDE "LSD/init.asm"
+#INCLUDE "LSD/timer.asm"
 
 #INCLUDE "LSD/exitroom.asm"
 #INCLUDE "LSD/shop.asm"
 #INCLUDE "LSD/seed.asm"
-
-#SECTION "LSD_updateIngameTimer", ROM0 {
-LSD_updateIngameTimer:
-    ld   a, [wGameplayType] ;Get the gameplay type
-    dec  a          ; and if it was 1
-    ret  z          ; we are at the credits and the counter should stop.
-
-    ; Check if the timer expired
-    ld   hl, $FF0F
-    bit  2, [hl]
-    ret  z
-    res  2, [hl]
-
-    ; Increase the "subsecond" counter, and continue if it "overflows"
-    call EnableSRAM ; Enable SRAM
-    ld   hl, sLSDIngameTimer
-    ld   a, [hl]
-    inc  a
-    cp   $20
-    ld   [hl], a
-    ret  nz
-    xor  a
-    ld   [hl+], a
-
-    ; Increase the seconds counter/minutes/hours counter
-increaseSecMinHours:
-    ld   a, [hl]
-    inc  a
-    daa
-    ld   [hl], a
-    cp   $60
-    ret  nz
-    xor  a
-    ld   [hl+], a
-    jr   increaseSecMinHours
-}
+#INCLUDE "LSD/colorguardian.asm"

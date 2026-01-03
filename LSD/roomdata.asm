@@ -8,7 +8,7 @@ _RandomRoomDataTable:
   dw RandomRoomDataTable2
   db 6
   dw RandomRoomDataTable3
-  db 3
+  db 4
   dw RandomRoomDataTable4
   db 1
   dw RandomRoomDataTable5
@@ -19,7 +19,7 @@ RandomRoomDataTable0:
   dw random_room_3 ; Random Corners
   dw random_room_8 ; H-Split
   dw random_room_15 ; Water Room
-  dw random_room_18 ; Room18
+  dw random_room_18 ; Corner UL
 RandomRoomDataTable1:
   dw random_room_5 ; Entrance 1
 RandomRoomDataTable2:
@@ -35,6 +35,7 @@ RandomRoomDataTable4:
   dw random_room_12 ; Big Fairy
   dw random_room_13 ; Shop 1
   dw random_room_14 ; Shop 2
+  dw random_room_19 ; Pick One
 RandomRoomDataTable5:
   dw random_room_10 ; Final Nightmare
 random_room_0: ; Basic Room
@@ -893,7 +894,7 @@ random_room_17_variation_5:
 random_room_17_entity_set_0:
   db 2
   db $42, $B1
-random_room_18: ; Room18
+random_room_18: ; Corner UL
   db $0F, $0A ; allowed filter
   db $00 ; event
   ; Primary data
@@ -931,4 +932,30 @@ random_room_18_entity_set_1:
 random_room_18_entity_set_2:
   db 2
   db $34, $BA
+random_room_19: ; Pick One
+  db $00, $00 ; allowed filter
+  db $00 ; event
+  ; Primary data
+  db 47, $04, $0D, $00, $03, $01, $25, $03, $C7, $06, $C7, $08, $26, $09, $03, $10, $25, $11, $29, $18, $2A, $19, $26, $86, $22, $0F, $86, $32, $0F, $86, $42, $0F, $60, $27, $61, $2B, $68, $2C, $69, $28, $70, $03, $71, $27, $78, $28, $79, $03
+  ; Variations
+  db 3
+  db $80
+  dw random_room_19_variation_0
+  db $80
+  dw random_room_19_variation_1
+  db $80
+  dw random_room_19_variation_2
+  ; Entity sets
+  db 1
+  db $00, $FF
+  dw random_room_19_entity_set_0
+random_room_19_variation_0:
+  db 4, $12, $AC, $17, $AC
+random_room_19_variation_1:
+  db 4, $52, $C0, $57, $C0
+random_room_19_variation_2:
+  db 6, $82, $62, $AF, $82, $66, $AF
+random_room_19_entity_set_0:
+  db 2
+  db $24, $F6
 }

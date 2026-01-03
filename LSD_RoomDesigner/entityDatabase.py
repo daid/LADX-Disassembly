@@ -201,6 +201,8 @@ entities_list = [
     {'id': 0xEF, 'tiles': [0, 0], 'attr': [2, 34]},  # ENTITY_ROTOSWITCH_RED
     {'id': 0xF0, 'tiles': [1, 2], 'attr': [1, 1]},  # ENTITY_ROTOSWITCH_YELLOW
     {'id': 0xF1, 'tiles': [0, 0], 'attr': [3, 35]},  # ENTITY_ROTOSWITCH_BLUE
+    {'id': 0xF6, 'tiles': [0, 1], 'attr': [3, 3]},  # COLOR_GUARDIAN_BLUE
+    {'id': 0xF7, 'tiles': [0, 1], 'attr': [2, 2]},  # COLOR_GUARDIAN_RED
     # {'id': 0xFA},  # PHOTOGRAPHER
 ]
 entities_dict = {e['id']: e for e in entities_list}

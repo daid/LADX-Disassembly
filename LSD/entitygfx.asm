@@ -371,7 +371,7 @@ EntitySpriteRequirementsTable:
     db $FF ; f3 HOPPER
     db $FF ; f4 AVALAUNCH
     db $FF ; f5 BOUNCING_BOULDER
-    db $FF ; f6 COLOR_GUARDIAN_BLUE
+    db $0E ; f6 COLOR_GUARDIAN_BLUE
     db $FF ; f7 COLOR_GUARDIAN_RED
     db $FF ; f8 GIANT_BUZZ_BLOB
     db $FF ; f9 HARDHIT_BEETLE
