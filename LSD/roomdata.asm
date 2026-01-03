@@ -1,6 +1,6 @@
 #SECTION "RandomRoomData", ROMX, BANK[$0A] {
 _RandomRoomDataTable:
-  db 6
+  db 7
   dw RandomRoomDataTable0
   db 1
   dw RandomRoomDataTable1
@@ -19,6 +19,7 @@ RandomRoomDataTable0:
   dw random_room_3 ; Random Corners
   dw random_room_8 ; H-Split
   dw random_room_15 ; Water Room
+  dw random_room_18 ; Room18
 RandomRoomDataTable1:
   dw random_room_5 ; Entrance 1
 RandomRoomDataTable2:
@@ -304,11 +305,17 @@ random_room_4: ; Exit 1
   db $80
   dw random_room_4_variation_4
   ; Entity sets
-  db 2
-  db $00, $FF
+  db 5
+  db $00, $03
   dw random_room_4_entity_set_0
   db $02, $FF
   dw random_room_4_entity_set_1
+  db $03, $FF
+  dw random_room_4_entity_set_2
+  db $04, $FF
+  dw random_room_4_entity_set_3
+  db $00, $02
+  dw random_room_4_entity_set_4
 random_room_4_variation_0:
   db 7, $58, $AF, $82, $66, $AF, $68, $01
 random_room_4_variation_1:
@@ -326,6 +333,18 @@ random_room_4_entity_set_0:
 random_room_4_entity_set_1:
   db 4
   db $34, $59
+  db $00, $E7
+random_room_4_entity_set_2:
+  db 4
+  db $34, $5B
+  db $00, $E7
+random_room_4_entity_set_3:
+  db 4
+  db $24, $5C
+  db $00, $E7
+random_room_4_entity_set_4:
+  db 4
+  db $25, $51
   db $00, $E7
 random_room_5: ; Entrance 1
   db $00, $00 ; allowed filter
@@ -874,4 +893,42 @@ random_room_17_variation_5:
 random_room_17_entity_set_0:
   db 2
   db $42, $B1
+random_room_18: ; Room18
+  db $0F, $0A ; allowed filter
+  db $00 ; event
+  ; Primary data
+  db 72, $04, $0D, $83, $00, $03, $03, $25, $06, $26, $83, $07, $03, $82, $10, $03, $12, $25, $13, $29, $16, $2A, $17, $21, $18, $26, $C2, $19, $03, $20, $25, $21, $21, $22, $29, $28, $24, $85, $35, $2C, $36, $97, $37, $22, $38, $28, $45, $24, $50, $27, $84, $51, $22, $52, $97, $55, $28, $60, $2C, $61, $2B, $68, $2C, $69, $28, $70, $24, $71, $27, $78, $28, $79, $03
+  ; Variations
+  db 3
+  db $80
+  dw random_room_18_variation_0
+  db $80
+  dw random_room_18_variation_1
+  db $80
+  dw random_room_18_variation_2
+  ; Entity sets
+  db 3
+  db $00, $FF
+  dw random_room_18_entity_set_0
+  db $00, $FF
+  dw random_room_18_entity_set_1
+  db $00, $FF
+  dw random_room_18_entity_set_2
+random_room_18_variation_0:
+  db 2, $24, $A9
+random_room_18_variation_1:
+  db 4, $23, $AB, $67, $AB
+random_room_18_variation_2:
+  db 9, $C2, $33, $DF, $C2, $34, $DF, $82, $47, $DF
+random_room_18_entity_set_0:
+  db 6
+  db $58, $A1
+  db $63, $A1
+  db $27, $16
+random_room_18_entity_set_1:
+  db 2
+  db $57, $12
+random_room_18_entity_set_2:
+  db 2
+  db $34, $BA
 }

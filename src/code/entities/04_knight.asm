@@ -172,14 +172,14 @@ KnightAttackingHandler::
 ; define sprite variants by selecting tile n° and setting OAM attributes (palette + flags) in a list
 KnightSpriteVariants::
 .variant0
-    db $70, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $72, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $40, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $42, OAM_GBC_PAL_2 | OAMF_PAL0
 .variant1
-    db $74, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $76, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $44, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $46, OAM_GBC_PAL_2 | OAMF_PAL0
 .variant2
-    db $78, OAM_GBC_PAL_2 | OAMF_PAL0
-    db $78, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
+    db $48, OAM_GBC_PAL_2 | OAMF_PAL0
+    db $48, OAM_GBC_PAL_2 | OAMF_PAL0 | OAMF_XFLIP
 
 ; Approximately 0x0A - 0x0A * sin(pi/8 * index)
 KnightIronBallSpinningYOffsets::

@@ -141,9 +141,9 @@ EntitySpriteRequirementsTable:
     db $87 ; 0d TEKTITE
     db $81 ; 0e LEEVER
     db $FF ; 0f ARMOS_STATUE
-    db $FF ; 10 HIDING_GHINI
+    db $42 ; 10 HIDING_GHINI
     db $8A ; 11 GIANT_GHINI
-    db $FF ; 12 GHINI
+    db $42 ; 12 GHINI
     db $FF ; 13 BROKEN_HEART_CONTAINER
     db $7C ; 14 MOBLIN_SWORD
     db $91 ; 15 ANTI_FAIRY
@@ -206,7 +206,7 @@ EntitySpriteRequirementsTable:
     db $FF ; 4e 4D
     db $FF ; 4f TRENDY_GAME_OWNER
     db $FF ; 50 BOO_BUDDY
-    db $FF ; 51 KNIGHT
+    db $9A ; 51 KNIGHT
     db $FF ; 52 TRACTOR_DEVICE
     db $FF ; 53 TRACTOR_DEVICE_REVERSE
     db $FF ; 54 FISHERMAN_FISHING_GAME
@@ -311,7 +311,7 @@ EntitySpriteRequirementsTable:
     db $FF ; b7 MERMAID
     db $FF ; b8 FISHERMAN_UNDER_BRIDGE
     db $79 ; b9 BUZZ_BLOB
-    db $FF ; ba BOMBER
+    db $76 ; ba BOMBER
     db $FF ; bb BUSH_CRAWLER
     db $FF ; bc GRIM_CREEPER
     db $FF ; bd VIRE
@@ -382,6 +382,7 @@ EntitySpriteRequirementsTableBig:
     db $E6, $E8, $E9 ; FINAL_NIGHTMARE ; Also: $EA, $EB
     db $5B, $B4, $B5 ; SLIME_EYE
     db $5C, $B6, $B7 ; GENIE
+    db $5D, $B8, $B9 ; SLIME_EEL
     db $00
 }
 
