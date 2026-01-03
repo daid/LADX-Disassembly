@@ -1175,7 +1175,7 @@ BossIntro::
     add  hl, de                                   ;; 00:3F43 $19
     ld   a, [hl]                                  ;; 00:3F44 $7E
 .openDialog:
-    jp   OpenDialogInTable0                       ;; 00:3F45 $C3 $85 $23
+    ret; LSD: No boss dialog jp   OpenDialogInTable0                       ;; 00:3F45 $C3 $85 $23
 
 data_3F48::
     db 1, 2, 4, 8, $10, $20, $40, $80             ;; 00:3F48

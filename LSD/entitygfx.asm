@@ -216,9 +216,9 @@ EntitySpriteRequirementsTable:
     db $FF ; 58 PAIRODD_PROJECTILE
     db $FE ; 59 MOLDORM
     db $FF ; 5a FACADE
-    db $FF ; 5b SLIME_EYE
-    db $FF ; 5c GENIE
-    db $FF ; 5d SLIME_EEL
+    db $FE ; 5b SLIME_EYE
+    db $FE ; 5c GENIE
+    db $FE ; 5d SLIME_EEL
     db $FF ; 5e GHOMA
     db $FF ; 5f MASTER_STALFOS
     db $FF ; 60 DODONGO_SNAKE
@@ -380,6 +380,8 @@ EntitySpriteRequirementsTable:
 EntitySpriteRequirementsTableBig:
     db $59, $B0, $B1 ; MOLDORM
     db $E6, $E8, $E9 ; FINAL_NIGHTMARE ; Also: $EA, $EB
+    db $5B, $B4, $B5 ; SLIME_EYE
+    db $5C, $B6, $B7 ; GENIE
     db $00
 }
 

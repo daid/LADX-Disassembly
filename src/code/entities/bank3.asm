@@ -5809,7 +5809,7 @@ ENDC
 
     ld   a, [wIsRunningWithPegasusBoots]          ;; 03:7090 $FA $4A $C1
     and  a                                        ;; 03:7093 $A7
-    jr   z, .continueDefaultCollision             ;; 03:7094 $28 $6C
+    ; LSD: Slime eye split without boots. jr   z, .continueDefaultCollision             ;; 03:7094 $28 $6C
 
     ld   hl, wEntitiesPrivateCountdown2Table      ;; 03:7096 $21 $00 $C3
     add  hl, bc                                   ;; 03:7099 $09
