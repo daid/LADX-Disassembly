@@ -744,7 +744,8 @@ PhotoAlbumPictureInteractiveHandler:
 IF DEF(VIRTUAL_CONSOLE)
     jr   .else_4492_28                            ; $4481: PhotoAlbumPictureInteractiveHandler $18 $0F
 ELSE
-    jr   z, .else_4492_28                         ; $4481: PhotoAlbumPictureInteractiveHandler $28 $0F
+    ; Hack-base, prevent photo printing
+    jr   .else_4492_28                         ; $4481: PhotoAlbumPictureInteractiveHandler $28 $0F
 ENDC
     ld   a, JINGLE_VALIDATE                       ; $4483: PhotoAlbumPictureInteractiveHandler $3E $13
     ldh  [hJingle], a                             ; $4485: PhotoAlbumPictureInteractiveHandler $E0 $F2

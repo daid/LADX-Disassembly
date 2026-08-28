@@ -4801,23 +4801,11 @@ label_002_5C33:
     jr   .replaceRoomObject                       ;; 02:5D1F $18 $DD
 
 .jr_5D21
-    ld   hl, wOverworldRoomStatus                 ;; 02:5D21 $21 $00 $D8
-    ld   a, [wIsIndoor]                           ;; 02:5D24 $FA $A5 $DB
-    and  a                                        ;; 02:5D27 $A7
-    jr   z, .jr_5D36                              ;; 02:5D28 $28 $0C
+    ; Hack-base: Fix that the wrong room status can be updated here.
+    ;   Else closing doors in D7/D8 can cause doors to lock in D1-D6
+    call GetRoomStatusAddress
+    ds   24, $00 ; Pad out with nops to minimize patch diff
 
-    ld   hl, wIndoorARoomStatus                   ;; 02:5D2A $21 $00 $D9
-    ldh  a, [hMapId]                              ;; 02:5D2D $F0 $F7
-    cp   MAP_COLOR_DUNGEON                        ;; 02:5D2F $FE $FF
-    jr   nz, .jr_5D36                             ;; 02:5D31 $20 $03
-
-    ld   hl, wColorDungeonRoomStatus              ;; 02:5D33 $21 $E0 $DD
-
-.jr_5D36
-    ldh  a, [hMapRoom]                            ;; 02:5D36 $F0 $F6
-    ld   e, a                                     ;; 02:5D38 $5F
-    ld   d, $00                                   ;; 02:5D39 $16 $00
-    add  hl, de                                   ;; 02:5D3B $19
     push hl                                       ;; 02:5D3C $E5
     ld   a, [wDoorEvent]                          ;; 02:5D3D $FA $89 $C1
     ld   e, a                                     ;; 02:5D40 $5F
