@@ -1686,7 +1686,8 @@ SynchronizeDungeonsItemFlags::
 
 .notColorDungeon
     ; If the map is not a dungeon, return.
-    cp   MAP_CAVE_B                               ;; 01:5E79 $FE $0A
+    ; Hack-base: Used to be MAP_CAVE_B, however, this can can problems with dungeon items if you die in the egg.
+    cp   MAP_WINDFISHS_EGG                        ;; 01:5E79 $FE $0A
     jr   nc, .return                              ;; 01:5E7B $30 $18
 
     ; Select the correct item flags slot for the current dungeon

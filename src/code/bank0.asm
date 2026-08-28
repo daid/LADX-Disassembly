@@ -2808,7 +2808,7 @@ LinkMotionMapFadeOutHandler::
     inc  hl                                       ;; 00:18CB $23
     inc  c                                        ;; 00:18CC $0C
     ld   a, c                                     ;; 00:18CD $79
-    cp   $04                                      ;; 00:18CE $FE $04
+    cp   $03 ;Hack-base: Changed from 4 to 3 to minimize wrong warp effect ;; 00:18CE $FE $04
     jr   nz, .loop                                ;; 00:18D0 $20 $E8
 
 .break
@@ -5200,7 +5200,9 @@ LoadSaveMenuTiles::
 
 ; NPC tiles banks
 NpcTilesBankTable::
-    db   $00, BANK(Npc2Tiles), BANK(Npc1Tiles), BANK(Npc3Tiles) ;; 00:2E6F
+    ; Hack-base: First entry points to color dungeon NPCs (corrected with $20 for DMG vs CGB)
+    ;               This allows color dungeon entities outside of color dungeon on CGB
+    db   BANK(ColorDungeonNpcTiles) - $20, BANK(Npc2Tiles), BANK(Npc1Tiles), BANK(Npc3Tiles) ;; 00:2E6F
 
 ; For overworld or indoor rooms, load room-specific tiles.
 ;
