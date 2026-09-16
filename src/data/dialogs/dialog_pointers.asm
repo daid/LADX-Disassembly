@@ -696,3 +696,11 @@ DialogPointerTable::
     dialog_pointer Dialog2AD
     dialog_pointer Dialog2AE
     dialog_pointer Dialog2AF
+
+FOR IDX, $00, $2F
+    DEF DialogLabelCmd EQUS "dialog_pointer ChestDialog{02X:IDX}"
+    DialogLabelCmd
+    PURGE DialogLabelCmd
+ENDR
+
+    include "data/dialogs/generated_dialog_pointers.asm"

@@ -13,6 +13,7 @@ include "code/audio_macros.asm"
 
 ; ROM header
 include "code/home/header.asm"
+include "code/home/hackadditions.asm"
 
 ; Sources
 section "Main", rom0[$0150]
@@ -778,5 +779,7 @@ include "code/photos_bg.asm"
 ; Unused banks; make blank sections so they are filled with $00 instead of $ff to match
 ; the rom
 section "bank3E",romx[$4000],bank[$3E]
+include "code/entities/3E_common.asm"
+include "code/entities/3E_chest_with_item.asm"
 section "bank3F",romx[$4000],bank[$3F]
 include "text/dialog_5.asm"

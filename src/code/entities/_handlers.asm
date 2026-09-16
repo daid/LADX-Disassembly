@@ -20,7 +20,7 @@ EntityHandlersTable::
 ._04 far_pointer MagicRodFireballEntityHandler
 ._05 far_pointer LiftableRockEntityHandler
 ._06 far_pointer PushedBlockEntityHandler
-._07 far_pointer ChestWithItemEntityHandler
+._07 far_pointer ChestWithItemEntityHandlerExtended
 ._08 far_pointer MagicPowderSprinkleEntityHandler
 ._09 far_pointer OctorokEntityHandler
 ._0A far_pointer OctorokRockEntityHandler

@@ -1,0 +1,1 @@
+; Placeholder for automatically generated dialog pointers

@@ -706,3 +706,11 @@ DialogBankTable::
     db BANK(Dialog2AD)
     db BANK(Dialog2AE)
     db BANK(Dialog2AF) | DIALOG_UNSKIPPABLE
+
+FOR IDX, $00, $2F
+    DEF DialogLabelCmd EQUS "db BANK(ChestDialog{02X:IDX})"
+    DialogLabelCmd
+    PURGE DialogLabelCmd
+ENDR
+
+    include "data/dialogs/generated_dialog_banks.asm"

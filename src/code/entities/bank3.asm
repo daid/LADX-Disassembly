@@ -1717,7 +1717,8 @@ EntityInitChestWithItem::
 .jr_50AC
     ld   e, a                                     ;; 03:50AC $5F
     cp   CHEST_MESSAGE                            ;; 03:50AD $FE $21
-    jp   nc, MarkRoomCompleted                    ;; 03:50AF $D2 $2A $51
+    ; Hack-base: skip the item giving code, handled by ChestWithItemEntityHandlerExtended (but keep code size same to minimize patch size)
+    jp   MarkRoomCompleted                        ;; 03:50AF $D2 $2A $51
 
     cp   CHEST_SEASHELL                           ;; 03:50B2 $FE $20
 IF __OPTIMIZATIONS_3__
